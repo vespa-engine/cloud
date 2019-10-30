@@ -1,0 +1,6 @@
+# Copyright 2019 Oath Inc. All rights reserved.
+docs:
+  - title: WELCOME
+    documents:
+      - page: Welcome to Vespa Cloud
+        url: /

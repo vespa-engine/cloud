@@ -1,0 +1,13 @@
+*~
+#*#
+_site
+.sass-cache
+.jekyll-metadata
+.DS_Store
+Gemfile.lock
+.idea/
+Pipfile
+_work/
+*.pyc
+documentation.iml
+
