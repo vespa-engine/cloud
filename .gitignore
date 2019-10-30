@@ -10,4 +10,4 @@ Pipfile
 _work/
 *.pyc
 documentation.iml
-
+.jekyll-cache
