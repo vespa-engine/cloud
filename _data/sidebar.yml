@@ -2,5 +2,7 @@
 docs:
   - title: WELCOME
     documents:
-      - page: Welcome to Vespa Cloud
+      - page: Vespa Cloud
         url: /
+      - page: Pricing
+        url: /pricing
