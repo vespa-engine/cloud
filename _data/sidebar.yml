@@ -6,3 +6,5 @@ docs:
         url: /
       - page: Pricing
         url: /pricing
+      - page: Sign Up
+        url: /sign-up
