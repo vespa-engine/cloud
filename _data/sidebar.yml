@@ -8,3 +8,17 @@ docs:
         url: /pricing
       - page: Sign Up
         url: /sign-up
+      - page: Getting Started
+        url: /getting-started
+      - page: Automated Deployments
+        url: /automated-deployments
+      - page: Environments
+        url: /reference/environments
+      - page: Zones
+        url: /reference/zones
+      - page: Security Model
+        url: /security-model
+      - page: services.xml
+        url: /reference/services-hosted
+      - page: deployment.xml
+        url: /reference/deployment
