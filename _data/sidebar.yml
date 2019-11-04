@@ -1,22 +1,20 @@
 # Copyright 2019 Oath Inc. All rights reserved.
 docs:
-  - title: WELCOME
-    documents:
-      - page: Vespa Cloud
-        url: /
-      - page: Pricing
-        url: /pricing
-      - page: Getting Started
-        url: /getting-started
-      - page: Automated Deployments
-        url: /automated-deployments
-      - page: Environments
-        url: /reference/environments
-      - page: Zones
-        url: /reference/zones
-      - page: Security Model
-        url: /security-model
-      - page: services.xml
-        url: /reference/services-hosted
-      - page: deployment.xml
-        url: /reference/deployment
+    - page: Vespa Cloud
+      url: /
+    - page: Pricing
+      url: /pricing.html
+    - page: Getting Started
+      url: /getting-started.html
+    - page: Automated Deployments
+      url: /automated-deployments.html
+    - page: Environments
+      url: /reference/environments.html
+    - page: Zones
+      url: /reference/zones.html
+    - page: Security Model
+      url: /security-model.html
+    - page: services.xml
+      url: /reference/services-hosted.html
+    - page: deployment.xml
+      url: /reference/deployment.html
