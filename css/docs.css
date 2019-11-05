@@ -108,7 +108,7 @@ h3,
     color: #FFC43C;
 }
 
-.form-control {
+#searchinput {
     background: #71B5E1;
     border-radius: 2px 0 0 2px;
     color: #fff;
@@ -116,16 +116,16 @@ h3,
     margin: auto;
 }
 
-.form-control::-moz-placeholder {
+#searchinput::-moz-placeholder {
     color: #fff;
     opacity: 1;
 }
 
-.form-control:-ms-input-placeholder {
+#searchinput::-ms-input-placeholder {
     color: #fff;
 }
 
-.form-control::-webkit-input-placeholder {
+#searchinput::-webkit-input-placeholder {
     color: #fff;
 }
 
@@ -246,7 +246,7 @@ h3,
 }
 
 .welcome > li {
-    line-height: 2.0;
+    padding-bottom: 0.5em;
 }
 
 .welcome-border {
@@ -265,12 +265,6 @@ h3,
     color: #3f9dd8;
     border-radius: 0;
     padding-top: 0;
-}
-
-/* fix anchored links to vespadoc */
-#main-content *[id]:not([href]) {
-    margin-top: -75px;
-    padding-top: 75px;
 }
 
 .filepath {
@@ -297,7 +291,6 @@ h3,
 
 @media (min-width: 768px) {
   .footer {
-    position: fixed;
     bottom: 0;
     left: 0px;
     z-index: 1000;
