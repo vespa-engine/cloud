@@ -4,8 +4,6 @@ docs:
       url: /
     - page: Pricing
       url: /pricing.html
-    - page: Sign Up
-      url: /sign-up.html
     - page: Getting Started
       url: /getting-started.html
     - page: Automated Deployments
