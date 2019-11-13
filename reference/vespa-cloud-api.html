@@ -1,0 +1,229 @@
+---
+title: Vespa cloud API
+---
+
+<p>The Vespa APIs are described in detail in the <a href="https://docs.vespa.ai">general documentation</a>.
+This document describes the additional APIs of the Vespa cloud that a Vespa application developer needs,
+in addition to the <a href="https://console.vespa.ai">Vespa cloud console</a>.,
+to deploy an application to <a href="/automated-deployments">production</a> or during
+<a href="/reference/environments">development</a> for <a href="/automated-deployments#system-tests">testing</a> purposes.</p>
+
+<p>A developer will use both a dedicated Maven plugin as well as JUnit5 code to communicate with the Vespa cloud API, but the
+configuration for these is the same: a set of properties set in the application's <code>pom.xml</code>,
+or as command line arguments using <code>-D&lt;propertyName&gt;=&lt;propertyValue&gt;</code>. Some of these
+properties are common to all plugin goals and the test library, while others are valid only for specific actions.</p>
+
+
+<h2 id="vespa-maven-plugin">Vespa Maven plugin</h2>
+<p>
+The <code>com.yahoo.vespa:vespa-maven-plugin</code>, found <a href="https://github.com/vespa-engine/vespa/tree/master/vespa-maven-plugin">here</a>,
+contains the following goals:
+<table class="table">
+  <tr>
+    <th style="width:150px">Property Name</th>
+    <th>Values</th>
+  </tr><tr>
+    <td>submit</td>
+    <td>Submit an application package and its accompanying set of tests, created with <code>mvn package -Pfat-test-application</code>,
+      for automated deployment to production. Requires a headless API key. </td>
+  </tr><tr>
+    <td>deploy</td>
+    <td>Deploy an application package, created with <code>mvn package</code>, to a development zone. Requires a developer API key.</td>
+  </tr><tr>
+    <td>delete</td>
+    <td>Delete a development deployment, created with <code>mvn vespa:deploy</code>. Requires a developer API key.</td>
+  </tr><tr>
+    <td>compileVersion</td>
+    <td>Find the latest Vespa version to compile against, which is guaranteed to be compatible with the oldest production version of the application.
+    Requires either kind of API key.</td>
+  </tr><tr>
+    <td>effectiveServices</td>
+    <td>Compute the effective <code>services.xml</code>, based on
+      <a href="services-hosted#instance-environment-and-region-variants">region and environment variants</a>. Requires no key.</td>
+  </tr>
+</table>
+This plugin, required configuration, and quite a bit more, is inherited from the common parent <code>pom.xml</code> of all
+Vespa cloud applications, found <a href="https://github.com/vespa-engine/vespa/tree/master/tenant-base/pom.xml">here</a>. 
+</p>
+
+
+<h2 id="common-properties">Common properties</h2>
+<p>
+Used to identify the application, and to authenticate against the Vespa cloud API, these properties should be set for any plugin invocation
+or test execution.
+<table class="table">
+  <tr>
+    <th style="width:150px">Property Name</th>
+    <th>Values</th>
+    <th>Mandatory</th>
+  </tr><tr>
+    <td>tenant</td>
+    <td>Name registered for the tenant in the cloud console, used for production submissions, developer deployments and tests.</td>
+    <td>Yes</td>
+  </tr><tr>
+    <td>application</td>
+    <td>Name registered for the application in the cloud console, used for production submissions, developer deployments and tests.</td>
+    <td>Yes</td>
+  </tr><tr>
+    <td>apiKey</td>
+    <td>Value of the API key for the current application (for submissions) or developer (for deployments and tests).</td>
+    <td>This or <code>apiKeyFile</code> must be specified</td>
+  </tr>
+  </tr><tr>
+    <td>apiKeyFile</td>
+    <td>File location of the API key for the current application (for submissions) or developer (for deployments and tests).</td>
+    <td>This or <code>apiKey</code> must be specified</td>
+  </tr>
+  </tr><tr>
+    <td>apiCertificateFile</td>
+    <td>File location of the API certificate for the current application (for submissions) or developer (for deployments and tests).
+      Certificates are not generally available.</td>
+    <td>No</td>
+  </tr>
+</table>
+</p>
+
+
+<h2 id="submission-properties">Submission properties</h2>
+<p>
+Used when submitting an application package and tests for automated deployment to production, with <code>mvn vespa:submit</code>.
+<table class="table">
+  <tr>
+    <th style="width:150px">Property Name</th>
+    <th>Values</th>
+    <th>Mandatory</th>
+  </tr><tr>
+    <td>applicationZip</td>
+    <td>File location of the application package to submit or deploy.</td>
+    <td>No; defaults to <code>target/application.zip</code></td>
+  </tr><tr>
+    <td>applicationTestZip</td>
+    <td>File location of the application tests package to submit.</td>
+    <td>No; defaults to <code>target/application-test.zip</code></td>
+  </tr><tr>
+    <td>authorEmail</td>
+    <td>Email of the author of the commit being submitted.</td>
+    <td>Yes</td>
+  </tr><tr>
+    <td>sourceUrl</td>
+    <td>URL which points to the source code being submitted.</td>
+    <td>No</td>
+  </tr>
+</table>
+</p>
+
+
+<h2 id="deployment-properties">Deployment properties</h2>
+<p>
+Used to manipulate or test deployments in the <code>dev</code> or <code>perf</code> environments, with <code>mvn vespa:deploy</code>,
+<code>mvn vespa:delete</code>, <code>mvn test</code> or by running unit tests in an IDE. 
+<table class="table">
+  <tr>
+    <th style="width:150px">Property Name</th>
+    <th>Values</th>
+    <th>Mandatory</th>
+  </tr><tr>
+    <td>instance</td>
+    <td>Instance of the application to create, delete or test. This defaults to the user name of the current user, which lets each
+      developer have their own development deployment by default, and is intentionally not set in the sample application's <code>pom.xml</code>.</td>
+    <td>No; defaults to <code>$USER</code>.</td>
+  </tr><tr>
+    <td>environment</td>
+    <td>The environment to deploy to, delete from, or run tests against. List of options <a href="/reference/environments">here</a>.</td>
+    <td>No; defaults to <code>dev</code></td>
+  </tr>
+  </tr><tr>
+    <td>region</td>
+    <td>The region to deploy to, delete from, or run tests against. May only be specified if <code>environment</code> is,
+      and <em>must</em> be if that is <code>prod</code>. List of combinations <a href="/reference/zones">here</a>.</td>
+    <td>If <code>environment</code> is set to <code>prod</code>; otherwise has a system default</td>
+  </tr>
+</table>
+</p>
+
+
+<h2 id="deploy-properties">Deploy properties</h2>
+<p>
+Used for deployments to <code>dev/perf</code>, with <code>mvn vespa:deploy</code>.
+<table class="table">
+  <tr>
+    <th style="width:150px">Property Name</th>
+    <th>Values</th>
+    <th>Mandatory</th>
+  </tr><tr>
+    <td>applicationZip</td>
+    <td>File location of the application package to submit or deploy.</td>
+    <td>No; defaults to <code>target/application.zip</code></td>
+  </tr>
+  </tr><tr>
+    <td>vespaVersion</td>
+    <td>Runtime Vespa version of the deployment.</td>
+    <td>No; defaults to the latest, normal confidence Vespa release</td>
+  </tr>
+  </tr><tr>
+    <td>follow</td>
+    <td>Whether to follow the deployment log, or exit immediately after the deployment is accepted.</td>
+    <td>No; defaults to <code>true</code></td>
+  </tr>
+  </tr><tr>
+    <td>vespaLogLevel</td>
+    <td>Lowest log level to print from the Vespa log while deployment is ongoing.</td>
+    <td>No; defaults to <code>error</code></td>
+  </tr>
+</table>
+</p>
+
+
+<h2 id="test-properties">Test properties</h2>
+<p>
+Used for running system, staging or production tests against an existing deployment,
+with <code>mvn test -Dtest.categories=&lt;categories&gt;</code>; supported categories are <code>system staging production</code>,
+as defined in the <a href="https://github.com/vespa-engine/vespa/tree/master/tenant-cd/src/main/java/ai/vespa/hosted/cd/">test library</a>.
+Tests may also be run from an IDE, by specifying any mandatory properties not set in <code>pom.xml</code> as VM options.
+<em>Be careful not to run destructive tests against a production deployment!</em>
+<table class="table">
+  <tr>
+    <th style="width:150px">Property Name</th>
+    <th>Values</th>
+    <th>Mandatory</th>
+  </tr><tr>
+    <td>dataPlaneCertificateFile</td>
+    <td>File location of the data plane certificate for the deployment to run tests against —
+      typically <code>src/main/application/security/clients.pem</code></td>
+    <td>No</td>
+  </tr><tr>
+    <td>dataPlaneKeyFile</td>
+    <td>File location of the private key corresponding to the data plane certificate for the deployment to run tests against.</td>
+    <td>No</td>
+  </tr>
+  </tr>
+</table>
+</p>
+
+
+<h2 id="miscellaneous-properties">Miscellaneous properties</h2>
+<p>
+Properties used in various other plugin goals.
+<table class="table">
+  <tr>
+    <th style="width:150px">Property Name</th>
+    <th>Values</th>
+    <th>Mandatory</th>
+  </tr><tr>
+    <td>outputFile</td>
+    <td>File location where the compile version is written, when invoking <code>mvn vepspa:compileVersion</code>.</td>
+    <td>No; defaults to target/vespa.compile.version</td>
+  </tr>
+  </tr><tr>
+    <td>servicesFile</td>
+    <td>File location of the <code>services.xml</code> for the application, when invoking <code>mvn vespa:effectiveServices</code>.</td>
+    <td>No; defaults to <code>src/main/application/services.xml</code></td>
+  </tr>
+  </tr><tr>
+    <td>outputDirectory</td>
+    <td>Directory location where the effective <code>services.xml</code> is written, when invoking <code>mvn vespa:effectiveServices</code>..</td>
+    <td>No; defaults to <code>target</code></td>
+  </tr>
+</table>
+</p>
+

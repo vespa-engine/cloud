@@ -2,10 +2,10 @@
 title: Automated Deployments
 ---
 
-<p>This document explains the process - and safety mechanisms - which allows application changes and Vespa platform
+<p>This document explains the process — and safety mechanisms — which allows application changes and Vespa platform
 releases to be continuously deployed to production.</p>
 
-<h2 id="continous-deployment-on-vespa">Continous deployment on Vespa</h2>
+<h2 id="continuous-deployment-on-vespa">Continuous deployment on Vespa</h2>
 <p>
 Each application package build which is submitted to Vespa Cloud constitutes an application change which
 must be tested and, if found healthy, deployed.
@@ -17,7 +17,7 @@ Vespa Cloud automates all these tests and deployments, with features including:
     (application changes are always allowed when an upgrade fails, as they may be necessary to fix the breakage);</li>
   <li>cancellation of any current application roll-out, upon submission of a new application revision;</li>
   <li>throttling of platform upgrades, to detect unhealthy upgrades with a subset of applications; and</li>
-  <li>cancellation of platform upgrades which seem unhealthy, across all applications.</li>
+  <li>cancellation of platform upgrades which are found unhealthy, across all applications.</li>
 </ul>
 With <em>Continuous Integration (CI)</em> <!-- link to something later -->
 that builds and submits changes to the application as they are committed, Vespa Cloud thus provides
@@ -27,19 +27,13 @@ full-fledged Continuous Deployment (CD) of all its applications, both for applic
 
 
 <h2 id="setting-up-deployment-to-production">Setting up deployment to production</h2>
-<p>Follow these steps to set up deployment to production of an application.</p>
+<p>Follow these steps to set up deployment to production of an application. See the
+<a href="/reference/vespa-cloud-api.html">Vespa cloud API reference</a> for configuration details.</p>
 
 
 <h3 id="create-deployment-xml">1. Create deployment.xml</h3>
-<p>Create a <a href="reference/deployment">deployment.xml</a> file alongside services.xml
-to configure where and when to deploy - supported zones:
-<table class="table">
-<tr>
-  <th>Zone</th><th>Description</th>
-</tr><tr>
-  <td>prod.aws-us-east-1c</td><td>US East coast production zone. Status: being set up</td>
-</tr>
-</table>
+<p>Create a <a href="/reference/deployment">deployment.xml</a> file alongside services.xml
+to configure where and when to deploy — supported zones are listed <a href="/reference/zones">here</a>.
 </p>
 
 
@@ -68,8 +62,9 @@ mvn -P fat-test-application \
   -DauthorEmail=$(git log -1 --format=%aE)
 </pre>
 
-<p>The deployment job must have access to the private key of your application which is pointed to from the pom.xml.
-If you need a Docker image in which to run this you can use <code>vespaengine/vespa-pipeline</code>.</p>
+<p>If you need a Docker image in which to run this you can use <code>vespaengine/vespa-pipeline</code>.</p>
+
+<p>The deployment job must have access to the API key of your application, which is configured in <code>pom.xml</code>.</p>
 
 <p>Once this is set up you can make any change to your application in production simply by checking in
 the change to your application source repository. The rest of this document will explain how deployments are
@@ -98,10 +93,10 @@ negatively, typically by asserting on application metrics after a delay. If the 
 zones, this makes it possible to revert to the old version quickly by shifting traffic to another production zone.
 </p><p>
 Status of ongoing tests and deployments is found by clicking <em>Deployment</em> in the application view in the
-<a href="http://console.vespa.ai">console</a>. <!--It is possible to delay the deployment to a region
+<a href="https://console.vespa.ai">console</a>. <!--It is possible to delay the deployment to a region
 by clicking the <em>pause</em> button, and to force through a deployment by clicking the <em>deploy</em> button. -->
 Examples of advanced deployment configuration which can be set in
-<a href="reference/deployment">deployment.xml</a> include:
+<a href="/reference/deployment">deployment.xml</a> include:
 <ul>
   <li>Deployment order and parallelism</li>
   <li>Time windows with no deployments</li>
@@ -115,20 +110,21 @@ Examples of advanced deployment configuration which can be set in
 <p>
 When a Vespa application is built with the <code>fat-test-application</code> profile —
 <code>mvn package -Pfat-test-application</code> — all Java JUnit5 tests with the <code>@SystemTest</code> annotation, 
-and all their dependencies, are stored in a separate test code artifact, which is submitted to Vespa Cloud
+and all their dependencies, are stored in a separate test code artifact, which is submitted to the Vespa cloud
 together with the application package. During an automated system test, a fresh test deployment is created, and
 the system tests in the test artifact are run to verify the test deployment behaves as expected.
 </p><p>
 The <em>system test framework</em> in <code>com.yahoo.vespa:tenant-cd</code> contains tools for runtime-dependent authentication
 against the Vespa deployment to test, and for endpoint discovery. The default behavior of <code>mvn package vespa:deploy</code>
-  is to deploy to the <a href="reference/environments.html#dev">dev</a> environment,
+  is to deploy to the <a href="/reference/environments#dev">dev</a> environment,
 and the default behavior of <code>mvn test -Dtest.categories=system</code> is to run system tests against this dev deployment.
-The <em>tenant</em>, <em>application</em> and <em>instance</em> (or <code>"default"</code>) properties from the <em>pom.xml</em>
-are used for this. Tests can also be run from an IDE without additional setup. 
+The <em>tenant</em> and <em>application</em> properties from the <em>pom.xml</em>, together with the <em>instance</em> property
+which defaults to the current user's username, determines the deployment to create or test. Read more about this
+<a href="/reference/vespa-cloud-api">here</a>. Tests can also be run from an IDE without additional setup. 
 See <a href="https://github.com/vespa-cloud/sample-apps/tree/master/album-recommendation-java">this application</a> for sample system tests.
 </p><p>
 During automated tests, the deployment is instead done to the
-<a href="reference/environments.html#test">test environment</a>, with the same application package and Vespa runtime
+<a href="/reference/environments#test">test environment</a>, with the same application package and Vespa runtime
 combination as is to be deployed in production; and when the tests are run, the endpoints from the test deployment are used.
 The test deployment is empty when the test execution begins, and is torn down again when it ends, so documents must be fed
 as part of the system test. The size of each test cluster is by default reduced to 1 node.
@@ -137,7 +133,7 @@ as part of the system test. The size of each test cluster is by default reduced 
 </p><p>
 It's also possible to use local endpoints, e.g., in a docker container on the development machine, in the system tests;
 specify <code>-Dvespa.test.config=/some/path/to/test/config/json</code> and put a JSON file there, which has the endpoints
-for each of the clusters defined in <a href="https://docs.vespa.ai/documentation/reference/services.html">services.xml</a>, <!-- ToDo: link to cloud-specific services.xml -->
+for each of the clusters defined in <a href="/reference/services-hosted">services.xml</a>,
 like:
 <pre>
 {
@@ -162,7 +158,7 @@ of an existing production cluster is safe, and compatible with the behaviour exp
 A staging test may, for instance, test an upgrade from application package <code>X</code> to <code>X+1</code>, and from
 platform version <code>Y</code> to <code>Y+1</code>. The staging test then consists of the following steps:
 <ol>
-  <li>Deploy the initial pair <code>X, Y</code> to the <a href="reference/environments#staging">staging environment</a>.</li>
+  <li>Deploy the initial pair <code>X, Y</code> to the <a href="/reference/environments#staging">staging environment</a>.</li>
   <li>Populate the deployment with data, making it reasonably similar to a production deployment. This is done by the <code>@StagingSetup</code>-annotated code, which typically feeds a set of static documents.</li>
   <li>Upgrade the deployment to the target pair <code>X+1, Y+1</code>.</li>
   <li>Verify the deployment works as expected after the upgrade. This is done by the <code>@StagingTest</code>-annotated code.</li>
@@ -191,7 +187,7 @@ Finally, tests may also be annotated with the <code>@ProductionTest</code> annot
 and any failure will prevent roll-out to further production zones. Make sure the tests do not modify production data in an unintended fashion.
 </p><p>
 Production jobs run sequentially by default, but can be configured to run in parallel,
-in <a href="reference/deployment">deployment.xml</a>; inside each zone, Vespa itself orchestrates
+in <a href="/reference/deployment">deployment.xml</a>; inside each zone, Vespa itself orchestrates
 the deployment, such that the application may continue to serve, even as subsets of its nodes are down for upgrade.
 </p><p>
 To run production tests manually, use an IDE, or run all tests with <code>mvn test -Dtest.categories=production</code>.
@@ -205,7 +201,7 @@ or as a VM argument in your IDE. <strong>Be careful not to run system or staging
 <h2 id="deleting-an-application">Deleting an application</h2>
 <p>
 <ol>
-  <li><a href="reference/deployment#region">Remove deployments in all regions</a>, then run the CI job.</li>
+  <li><a href="/reference/deployment#region">Remove deployments in all regions</a>, then run the CI job.</li>
   <li>Delete the application in the <a href="http://console.vespa.ai">console</a>.</li>
   <li>Delete the CI job that builds and pushes new artifacts.</li>
 </ol>
@@ -226,11 +222,11 @@ This is common practice when releasing new science models,
 as they are difficult to verify in test, but can also be used for other features.
 </p><p>
 To test new behavior in Vespa, use a combination of
-<a href="https://docs.vespa.ai/documentation/chained-components.html">search chains</a>
+<a href="https://docs.vespa.ai/documentation/chained-components">search chains</a>
 and
-<a href="https://docs.vespa.ai/documentation/reference/search-definitions-reference.html#rank-profile">rank profiles</a>,
+<a href="https://docs.vespa.ai/documentation/reference/search-definitions-reference#rank-profile">rank profiles</a>,
 controlled by
-<a href="https://docs.vespa.ai/documentation/query-profiles.html">query profiles</a>,
+<a href="https://docs.vespa.ai/documentation/query-profiles">query profiles</a>,
 where one query profiles correspond to one bucket.
 These features support inheritance to make it easy to express variation without repetition.
 </p><p>
@@ -268,12 +264,12 @@ separate instance.
 <p>Changing a field's type is a breaking change and not allowed. The CD way of changing field type is
   to do such changes in multiple steps: Add a new field with the new desired type, populate the new field,
 change all operations to use the new field, then remove the old field.
-See <a href="http://docs.vespa.ai/documentation/reference/search-definitions-reference.html#modify-search-definitions">
+See <a href="http://docs.vespa.ai/documentation/reference/search-definitions-reference#modify-search-definitions">
 changing live search definitions</a>.
 
 <p>Note that removing a field from the search definition does not drop the data immediately.
-This is to prevent accidental data loss from bad configuration - one can revert the change and get the data back.
-An implication is that you cannot remove a field and add it again immediately with another data type -
+This is to prevent accidental data loss from bad configuration — one can revert the change and get the data back.
+An implication is that you cannot remove a field and add it again immediately with another data type —
 updates to documents with the new type will fail.
 The field data will automatically be removed by Vespa as sufficient time has passed.
 </p>
