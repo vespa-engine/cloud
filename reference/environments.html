@@ -7,7 +7,7 @@ title: Environments
 An application can be deployed to a <em>zone</em>,
 which is a combination of an <em>environment</em> and a <em>region</em>.
 This explains the rules governing the various environments.
-A <a href="zones.html">list of all zones</a> is also available.
+A <a href="zones">list of all zones</a> is also available.
 <table class="table">
   <tr><th style="width:100px">Name</th><th>Description</th><th>Expiry</th><th>Cluster sizes</th></tr>
   <tr id="dev">
@@ -22,12 +22,12 @@ A <a href="zones.html">list of all zones</a> is also available.
     <td><code>min(3, spec)</code></td>
   </tr><tr id="test">
     <td><code>test</code></td>
-    <td>Used for <a href="../automated-deployments.html#system-test">automated system tests</a>.</td>
+    <td>Used for <a href="../automated-deployments#system-tests">automated system tests</a>.</td>
     <td>2 hours</td>
     <td><code>1</code></td>
   </tr><tr id="staging">
     <td><code>staging</code></td>
-    <td>Used for <a href="../automated-deployments.html#staging-test">automated staging tests</a>.</td>
+    <td>Used for <a href="../automated-deployments#staging-tests">automated staging tests</a>.</td>
     <td>6 hours</td>
     <td><code>min(max(2, 0.1 * spec), spec)</code></td>
   </tr><tr id="prod">
@@ -53,6 +53,6 @@ A minimal, typical <code>prod</code> deployment therefore has 4 nodes.
 <h2 id="other-environments">Other environments</h2>
 <p>
 To keep the specified cluster sizes, for very particular testing, outside <code>prod</code>, specify
-<a href="services-hosted.html#instance-environment-and-region-variants">environment and region variants</a>.
+<a href="services-hosted#instance-environment-and-region-variants">environment and region variants</a>.
 Example: <pre>&lt;nodes deploy:environment="perf" count="5"/&gt;</pre>
 </p>

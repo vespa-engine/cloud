@@ -31,7 +31,7 @@ full-fledged Continuous Deployment (CD) of all its applications, both for applic
 
 
 <h3 id="create-deployment-xml">1. Create deployment.xml</h3>
-<p>Create a <a href="reference/deployment.html">deployment.xml</a> file alongside services.xml
+<p>Create a <a href="reference/deployment">deployment.xml</a> file alongside services.xml
 to configure where and when to deploy - supported zones:
 <table class="table">
 <tr>
@@ -101,7 +101,7 @@ Status of ongoing tests and deployments is found by clicking <em>Deployment</em>
 <a href="http://console.vespa.ai">console</a>. <!--It is possible to delay the deployment to a region
 by clicking the <em>pause</em> button, and to force through a deployment by clicking the <em>deploy</em> button. -->
 Examples of advanced deployment configuration which can be set in
-<a href="reference/deployment.html">deployment.xml</a> include:
+<a href="reference/deployment">deployment.xml</a> include:
 <ul>
   <li>Deployment order and parallelism</li>
   <li>Time windows with no deployments</li>
@@ -162,7 +162,7 @@ of an existing production cluster is safe, and compatible with the behaviour exp
 A staging test may, for instance, test an upgrade from application package <code>X</code> to <code>X+1</code>, and from
 platform version <code>Y</code> to <code>Y+1</code>. The staging test then consists of the following steps:
 <ol>
-  <li>Deploy the initial pair <code>X, Y</code> to the <a href="reference/environments.html#staging">staging environment</a>.</li>
+  <li>Deploy the initial pair <code>X, Y</code> to the <a href="reference/environments#staging">staging environment</a>.</li>
   <li>Populate the deployment with data, making it reasonably similar to a production deployment. This is done by the <code>@StagingSetup</code>-annotated code, which typically feeds a set of static documents.</li>
   <li>Upgrade the deployment to the target pair <code>X+1, Y+1</code>.</li>
   <li>Verify the deployment works as expected after the upgrade. This is done by the <code>@StagingTest</code>-annotated code.</li>
@@ -191,7 +191,7 @@ Finally, tests may also be annotated with the <code>@ProductionTest</code> annot
 and any failure will prevent roll-out to further production zones. Make sure the tests do not modify production data in an unintended fashion.
 </p><p>
 Production jobs run sequentially by default, but can be configured to run in parallel,
-in <a href="reference/deployment.html">deployment.xml</a>; inside each zone, Vespa itself orchestrates
+in <a href="reference/deployment">deployment.xml</a>; inside each zone, Vespa itself orchestrates
 the deployment, such that the application may continue to serve, even as subsets of its nodes are down for upgrade.
 </p><p>
 To run production tests manually, use an IDE, or run all tests with <code>mvn test -Dtest.categories=production</code>.
@@ -205,7 +205,7 @@ or as a VM argument in your IDE. <strong>Be careful not to run system or staging
 <h2 id="deleting-an-application">Deleting an application</h2>
 <p>
 <ol>
-  <li><a href="reference/deployment.html#region">Remove deployments in all regions</a>, then run the CI job.</li>
+  <li><a href="reference/deployment#region">Remove deployments in all regions</a>, then run the CI job.</li>
   <li>Delete the application in the <a href="http://console.vespa.ai">console</a>.</li>
   <li>Delete the CI job that builds and pushes new artifacts.</li>
 </ol>
