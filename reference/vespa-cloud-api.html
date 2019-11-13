@@ -5,8 +5,8 @@ title: Vespa cloud API
 <p>The Vespa APIs are described in detail in the <a href="https://docs.vespa.ai">general documentation</a>.
 This document describes the additional APIs of the Vespa cloud that a Vespa application developer needs,
 in addition to the <a href="https://console.vespa.ai">Vespa cloud console</a>.,
-to deploy an application to <a href="/automated-deployments.html">production</a> or during
-<a href="/reference/environments.html">development</a> for <a href="/automated-deployments.html#system-tests">testing</a> purposes.</p>
+to deploy an application to <a href="/automated-deployments">production</a> or during
+<a href="/reference/environments">development</a> for <a href="/automated-deployments#system-tests">testing</a> purposes.</p>
 
 <p>A developer will use both a dedicated Maven plugin as well as JUnit5 code to communicate with the Vespa cloud API, but the
 configuration for these is the same: a set of properties set in the application's <code>pom.xml</code>,
@@ -16,7 +16,7 @@ properties are common to all plugin goals and the test library, while others are
 
 <h2 id="vespa-maven-plugin">Vespa Maven plugin</h2>
 <p>
-The <code>com.yahoo.vespa:vespa-maven-plugin</code>, found <a href="https://github.com/vespa-engine/vespa/vespa-maven-plugin">here</a>,
+The <code>com.yahoo.vespa:vespa-maven-plugin</code>, found <a href="https://github.com/vespa-engine/vespa/tree/master/vespa-maven-plugin">here</a>,
 contains the following goals:
 <table class="table">
   <tr>
@@ -39,11 +39,11 @@ contains the following goals:
   </tr><tr>
     <td>effectiveServices</td>
     <td>Compute the effective <code>services.xml</code>, based on
-      <a href="services-hosted.html#instance-environment-and-region-variants">region and environment variants</a>. Requires no key.</td>
+      <a href="services-hosted#instance-environment-and-region-variants">region and environment variants</a>. Requires no key.</td>
   </tr>
 </table>
 This plugin, required configuration, and quite a bit more, is inherited from the common parent <code>pom.xml</code> of all
-Vespa cloud applications, found <a href="https://github.com/vespa-engine/vespa/tenant-base/pom.xml">here</a>. 
+Vespa cloud applications, found <a href="https://github.com/vespa-engine/vespa/tree/master/tenant-base/pom.xml">here</a>. 
 </p>
 
 
@@ -129,13 +129,13 @@ Used to manipulate or test deployments in the <code>dev</code> or <code>perf</co
     <td>No; defaults to <code>$USER</code>.</td>
   </tr><tr>
     <td>environment</td>
-    <td>The environment to deploy to, delete from, or run tests against. List of options <a href="/reference/environments.html">here</a>.</td>
+    <td>The environment to deploy to, delete from, or run tests against. List of options <a href="/reference/environments">here</a>.</td>
     <td>No; defaults to <code>dev</code></td>
   </tr>
   </tr><tr>
     <td>region</td>
     <td>The region to deploy to, delete from, or run tests against. May only be specified if <code>environment</code> is,
-      and <em>must</em> be if that is <code>prod</code>. List of combinations <a href="/reference/zones.html">here</a>.</td>
+      and <em>must</em> be if that is <code>prod</code>. List of combinations <a href="/reference/zones">here</a>.</td>
     <td>If <code>environment</code> is set to <code>prod</code>; otherwise has a system default</td>
   </tr>
 </table>
@@ -178,7 +178,7 @@ Used for deployments to <code>dev/perf</code>, with <code>mvn vespa:deploy</code
 <p>
 Used for running system, staging or production tests against an existing deployment,
 with <code>mvn test -Dtest.categories=&lt;categories&gt;</code>; supported categories are <code>system staging production</code>,
-as defined in the <a href="https://github.com/vespa-engine/vespa/tenant-cd/src/main/java/ai/vespa/hosted/cd/">test library</a>.
+as defined in the <a href="https://github.com/vespa-engine/vespa/tree/master/tenant-cd/src/main/java/ai/vespa/hosted/cd/">test library</a>.
 Tests may also be run from an IDE, by specifying any mandatory properties not set in <code>pom.xml</code> as VM options.
 <em>Be careful not to run destructive tests against a production deployment!</em>
 <table class="table">
