@@ -3,18 +3,18 @@ docs:
     - page: Vespa Cloud
       url: /
     - page: Pricing
-      url: /pricing.html
+      url: /pricing
     - page: Getting Started
-      url: /getting-started.html
+      url: /getting-started
     - page: Automated Deployments
-      url: /automated-deployments.html
+      url: /automated-deployments
     - page: Environments
-      url: /reference/environments.html
+      url: /reference/environments
     - page: Zones
-      url: /reference/zones.html
+      url: /reference/zones
     - page: Security Model
-      url: /security-model.html
+      url: /security-model
     - page: services.xml
-      url: /reference/services-hosted.html
+      url: /reference/services-hosted
     - page: deployment.xml
-      url: /reference/deployment.html
+      url: /reference/deployment
