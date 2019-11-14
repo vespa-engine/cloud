@@ -25,9 +25,9 @@ $ git clone git@github.com:vespa-cloud/sample-apps.git &amp;&amp; cd sample-apps
     </li>
     <li>
         <p>
-        <strong>Create a self-signed certificate</strong>
+        <strong>Create a self-signed certificate</strong><!-- use ec:<(openssl ecparam -name prime256v1) for elliptic curve keys -->
 <pre>
-$ openssl req -x509 -nodes -days 14 -newkey ec:&lt;(openssl ecparam -name prime256v1) \
+$ openssl req -x509 -nodes -days 14 -newkey rsa:4096 \
   -keyout data-plane-private-key.pem -out data-plane-public-cert.pem
 </pre>
         Alternatively, copy existing keys to current work dir.
