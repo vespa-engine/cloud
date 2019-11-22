@@ -12,7 +12,7 @@ This documents services.xml for Vespa Cloud.
 
 <h2 id="nodes">nodes</h2>
 
-<p>In cloud applications nodes are specified by count and node resources instead.</p>
+<p>In cloud applications nodes are specified by count and node resources.</p>
 
 <p>
 <strong>Subelements:</strong> <a href="#node-resources">resources</a>
@@ -77,8 +77,7 @@ Contained in the nodes element and specifies the resources of each node to alloc
     <td>Memory</td></tr>
   <tr><td><b>disk</b></td><td>float followed by a byte unit, such as "Gb"</td>
     <td>Disk space</td></tr>
-  <tr><td><b>storage-type</b></td>
-  <tr><td><b>disk-speed</b> (optional)<td>string (enum)</td>
+  <tr><td><b>storage-type</b> (optional)<td>string (enum)</td>
     <td>The type of storage to use. This is useful to specify local storage when network storage provides insufficient
       io operations or too noisy io performance.
       <table class="table">
