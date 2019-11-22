@@ -11,11 +11,11 @@ This documents services.xml for Vespa Cloud.
 
 
 <h2 id="nodes">nodes</h2>
+
+<p>In cloud applications nodes are specified by count and node resources.</p>
+
 <p>
-In a standalone deployment, nodes for a cluster are specified by listing each node under the
-<em>&lt;nodes&gt;</em> element. In cloud applications nodes are specified by count and node resources instead.
-</p><p>
-<strong>Subelements:</strong> <a href="#node-resources">resources</a> (&lt;node&gt; is not allowed).
+<strong>Subelements:</strong> <a href="#node-resources">resources</a>
 </p><p>
 <strong>Attributes:</strong>
 <ul>
@@ -67,23 +67,31 @@ or if it should run on existing nodes. Attribute:
 <p>
 Contained in the nodes element and specifies the resources of each node to allocate.
 </p><p>
-<strong>Subelements:</strong> None
+<b>Subelements:</b> None
 </p><p>
-<strong>Attributes:</strong>
+<b>Attributes:</b>
 <table class="table">
-  <tr><td><strong>vcpu</strong></td><td>float</td>
-    <td>CPU, hardware threads</td></tr>
-  <tr><td><strong>memory</strong></td><td>float, followed by a byte unit, such as "Gb"</td>
+  <tr><td><b>vcpu</b></td><td>float</td>
+    <td>CPU, hardware threads.</td></tr>
+  <tr><td><b>memory</b></td><td>float, followed by a byte unit, such as "Gb"</td>
     <td>Memory</td></tr>
-  <tr><td><strong>disk</strong></td><td>float followed by a byte unit, such as "Gb"</td>
+  <tr><td><b>disk</b></td><td>float followed by a byte unit, such as "Gb"</td>
     <td>Disk space</td></tr>
-  <tr><td><strong>disk-speed</strong> (optional)<td>string (enum)</td>
-    <td>One of the three values. Container nodes normally uses the disk only for logging,
-      and can do with <code><strong>any</strong></code>.
+  <tr><td><b>storage-type</b> (optional)<td>string (enum)</td>
+    <td>The type of storage to use. This is useful to specify local storage when network storage provides insufficient
+      io operations or too noisy io performance.
       <table class="table">
-      <tr><td><code><strong>fast</strong></code> (default)</td><td>SSD-like disk speed is required</td></tr>
-      <tr><td><code><strong>slow</strong></code></td><td>This is sized for spinning disk speed</td></tr>
-      <tr><td><code><strong>any</strong></code></td> <td>Performance does not depend on disk speed</td></tr>
+        <tr><td><code><b>local</b></code></td><td>Node-local storage is required.</td></tr>
+        <tr><td><code><b>remote</b></code></td><td>Network storage must be used.</td></tr>
+        <tr><td><code><b>any</b></code> (default)</td><td>Both remote or local storage may be used.</td></tr>
+      </table>
+    </td></tr>
+  <tr><td><b>disk-speed</b> (optional)<td>string (enum)</td>
+    <td>The required disk speed category.
+      <table class="table">
+      <tr><td><code><b>fast</b></code> (default)</td><td>SSD-like disk speed is required</td></tr>
+      <tr><td><code><b>slow</b></code></td><td>This is sized for spinning disk speed</td></tr>
+      <tr><td><code><b>any</b></code></td> <td>Performance does not depend on disk speed (often suitable for container clusters).</td></tr>
       </table>
     </td></tr>
 </table>
