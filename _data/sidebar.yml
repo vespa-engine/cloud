@@ -8,6 +8,8 @@ docs:
       url: /getting-started
     - page: Automated Deployments
       url: /automated-deployments
+    - page: Use Cases
+      url: https://docs.vespa.ai/documentation/use-cases.html
     - page: Environments
       url: /reference/environments
     - page: Zones
