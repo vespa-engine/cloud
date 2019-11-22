@@ -10,6 +10,8 @@ docs:
       url: /automated-deployments
     - page: Use Cases
       url: https://docs.vespa.ai/documentation/use-cases.html
+    - page: Operational Use Cases
+      url: /ops-use-cases
     - page: Environments
       url: /reference/environments
     - page: Zones
