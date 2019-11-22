@@ -11,3 +11,4 @@ _work/
 *.pyc
 documentation.iml
 .jekyll-cache
+*.iml
