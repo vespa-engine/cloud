@@ -11,16 +11,36 @@ Vespa enables seemless resizing and change of instance types.
 Vespa has no shards, it uses buckets with dynamic number of bits for distribution.
 Using [cloud.vespa.ai](/) this is just a config change -
 self-hosted Vespa enables this by adding to _services/hosts.xml_ and some manual steps -
-[read more](https://docs.vespa.ai/documentation/elastic-vespa.html).
+read more in [elastic Vespa](https://docs.vespa.ai/documentation/elastic-vespa.html).
 
 As Vespa applications can be very large, node failures are automated as well,
 with configurable rebalancing to regenerate replicas.
 
 **Highlighted features**
 * No shards
-* Auto data redistribution - flavor migration
+* Auto data redistribution
 * Auto node failure
 * Scale up to 1000, down to 1
+
+
+## Flexible Content Engine for optimized costs
+The elastic features of Vespa cloud makes it easy to add or remove nodes by just a configuration change and some wait time for auto data migration.
+However, it is hard to get the node specifications right from the start -
+applications change with new features and changing load patterns.
+Trying to get everything right before launch will also push the launch date out,
+and requires must testing.
+
+Instead, launch with enough capacity, monitor, and then change both node count and node specifications
+based on real production load.
+Changing specifications, like double CPU or cut memory is a configuration change and subsequent auto data migration - read more about [resources](/reference/services-hosted#resources).
+Using this flexibility, teams migrating from self-hosted to Vespa Cloud:
+* cuts cost in half on average
+* launches with little risk using overcapacity first days
+* accelerates schedules as load test requirements are cut
+
+**Highlighted features**
+* Auto node capacity migration - move from one spec to another
+* Independent stateful/stateless node scaling
 
 
 ## High-performance Content Engine
@@ -45,6 +65,7 @@ Read more in [Vespa Performance](https://docs.vespa.ai/documentation/performance
 * Tensor representation
 * Performance groups
 * Sustained throughput for document partial updates
+* Data structures uses chunked memory - low peak-to-average gives better utilization, lower costs and small compaction footprint
 * LLVM
 
 
