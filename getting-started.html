@@ -19,7 +19,7 @@ A certificate is also generated below.
             <a href="https://github.com/vespa-engine/sample-apps/tree/master/album-recommendation">album-recommendation</a>
             sample app</strong>
 <pre>
-$ git clone git@github.com:vespa-engine/sample-apps.git &amp;&amp; cd sample-apps/album-recommendation
+$ git clone https://github.com/vespa-engine/sample-apps.git &amp;&amp; cd sample-apps/album-recommendation
 </pre>
         </p>
     </li>
@@ -28,6 +28,7 @@ $ git clone git@github.com:vespa-engine/sample-apps.git &amp;&amp; cd sample-app
         <strong>Create a self-signed certificate</strong><!-- use ec:<(openssl ecparam -name prime256v1) for elliptic curve keys -->
 <pre>
 $ openssl req -x509 -nodes -days 14 -newkey rsa:4096 \
+  -subj "/C=NO/ST=Trondheim/L=Trondheim/O=My Company/OU=My Department/CN=example.com" \
   -keyout data-plane-private-key.pem -out data-plane-public-cert.pem
 </pre>
         Alternatively, copy existing keys to current work dir.
@@ -39,7 +40,7 @@ $ openssl req -x509 -nodes -days 14 -newkey rsa:4096 \
         <p>
         <strong>Create the application package</strong>
 <pre>
-$ mkdir -p src/main/application/security &amp;&amp; cp data-plane-public-cert.pem src/main/application/security/data-plane-public-cert.pem
+$ mkdir -p src/main/application/security &amp;&amp; cp data-plane-public-cert.pem src/main/application/security/clients.pem
 $ cd src/main/application &amp;&amp; zip -r ../../../application.zip . &amp;&amp; cd ../../..
 </pre>
         </p>
@@ -53,7 +54,11 @@ $ cd src/main/application &amp;&amp; zip -r ../../../application.zip . &amp;&amp
         <p>
         <strong>Click <em>deployment log</em> to track the deployment</strong>
         </p><p>
-        The endpoint URLs are printed when the deployment is successful.
+        Now is a good time to read <a href="http://cloud.vespa.ai/automated-deployments">automated-deployments</a>,
+        as first time deployments takes a few minutes.
+        Seeing CERTIFICATE_NOT_READY / PARENT_HOST_NOT_READY / LOAD_BALANCER_NOT_READY is normal.
+        The endpoint URL is printed in the <em>Install application</em> section when the deployment is successful -
+        copy this for the next step.
         </p>
     </li>
     <li>
@@ -62,7 +67,7 @@ $ cd src/main/application &amp;&amp; zip -r ../../../application.zip . &amp;&amp
         </p><p>
         Try the endpoint to validate it is up:
 <pre>
-$ export ENDPOINT=https://end.point.name
+$ ENDPOINT=https://end.point.name
 $ curl --cert data-plane-public-cert.pem --key data-plane-private-key.pem $ENDPOINT
 </pre>
         </p>
