@@ -4,7 +4,7 @@ title: "Operational Use Cases"
 ---
 
 
-## Elastic, Content Engine
+## Elastic Content Engine
 Many organizations use cloud services like [AWS](https://aws.amazon.com/),
 [Google Cloud](https://cloud.google.com/) and [Azure](https://azure.microsoft.com/) to easily manage capacity.
 Vespa enables seemless resizing and change of instance types.
