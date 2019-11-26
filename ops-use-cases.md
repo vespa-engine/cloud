@@ -4,7 +4,7 @@ title: "Operational Use Cases"
 ---
 
 
-## Elastic, resilient Content Engine
+## Elastic, Content Engine
 Many organizations use cloud services like [AWS](https://aws.amazon.com/),
 [Google Cloud](https://cloud.google.com/) and [Azure](https://azure.microsoft.com/) to easily manage capacity.
 Vespa enables seemless resizing and change of instance types.
@@ -13,14 +13,22 @@ Using [cloud.vespa.ai](/) this is just a config change -
 self-hosted Vespa enables this by adding to _services/hosts.xml_ and some manual steps -
 read more in [elastic Vespa](https://docs.vespa.ai/documentation/elastic-vespa.html).
 
-As Vespa applications can be very large, node failures are automated as well,
-with configurable rebalancing to regenerate replicas.
+Equally important, Vespa applications scale down to 1 - developers can deploy the full application to to own laptop or development environment _with no configuration changes_. This lowers the bar for making changes, and also enables easy support, as the application can run anywhere (Vespa runs in a [Docker container](https://www.docker.com/)).
 
 **Highlighted features**
-* No shards
+* No shards - no need for manual operations for data copy when resizing
 * Auto data redistribution
-* Auto node failure
 * Scale up to 1000, down to 1
+
+
+## Resilient Content Engine
+As Vespa applications can be very large, node failures are automated as well,
+with configurable rebalancing speed to regenerate replicas.
+Within configured data redundancy, the application keeps serving while new instances are auto provisioned.
+Failed instances are kept for some time offline to preserve data in catastrophic events.
+
+**Highlighted features**
+* Auto node failure and provisioning
 
 
 ## Flexible Content Engine for optimized costs
@@ -88,6 +96,11 @@ With Vespa Cloud, this is automated and just happens several times a week
 * Submit/deploy interfaces to production push, no humans involved
 * Multi-zone deployments with failover
 * Metrics-based propagation to production zones
+
+
+<!--
+ToDo: BCP as a separate section here later
+-->
 
 
 ## Security
