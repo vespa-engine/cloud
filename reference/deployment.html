@@ -15,10 +15,6 @@ Test steps are added if production deployments are set up, even if not explicitl
 as these are deployed manually. Example:
 <pre>
 &lt;deployment version="1.0"&gt;
-  &lt;notifications&gt;
-    &lt;email address="user@domain.com" when="failing" /&gt;
-    &lt;email role="author" /&gt;
-  &lt;/notifications&gt;
   &lt;block-change revision="false" days="mon,wed-fri" hours="16-23" time-zone="UTC"/&gt;
   &lt;prod&gt;
     &lt;region active="true"&gt;aws-us-east-1c&lt;/region&gt;
@@ -59,61 +55,6 @@ The root element. Attributes:
     <td>No</td>
   </tr>
 </table>
-</p>
-
-
-
-<h2 id="notifications">notifications</h2>
-<p>
-In <code>&lt;deployment&gt;</code>. If present, allows notifications for failing jobs.
-A default setting for when to send notifications can be specified here;
-otherwise, the default is to send only for failing jobs which are deploying a new commit.
-<table class="table">
-  <tr><th style="width:150px">Name</th><th>Values</th><th>Mandatory</th></tr>
-  <tr>
-    <td>when
-      <td>Set to <code>failing</code> to default to sending notifications whenever a job fails.
-    <td>No: Default is <code>failing-commit</code>
-  </tr>
-</table>
-</p>
-
-
-
-<h2 id="email">email</h2>
-<p>
-In <code>&lt;notifications&gt;</code>. Causes an email to be sent for failing jobs,
-as specified under <a href="#notifications">notifications</a>. 
-Email can be sent to static email addresses,
-or to certain roles which are evaluated when an email is to be sent.
-Each <code>&lt;email&gt;</code> element must specify <em>either</em>
-<code>address="..."</code> <em>or</em> <code>role="..."</code>,
-and <em>may</em> override the conditions for when to be notififed.
-<table class="table">
-  <tr><th style="width:150px">Name</th><th>Values</th><th>Mandatory</th></tr>
-  <tr>
-    <td>address
-    <td>An email address to notify of failing jobs.
-    <td>Somewhat: Must be present if <code>role</code> is not.
-  </tr><tr>
-    <td>role
-    <td>The only supported value is <code>author</code>, which evaluates to the author of the git commit being deployed. 
-    <td>Somewhat: Must be present if <code>address</code> is not.
-  </tr><tr>
-    <td>when
-    <td>Overrides the default conditions for sending notifications, for this email recipient.
-      Use <code>failing</code> for any failing job, or <code>failing-commit</code> for jobs failing on new commits only.
-    <td>No: Default value is inherited from the parent <a href="#notifications">notifications</a>.
-  </tr>
-</table>
-This example configures notifications to be sent for all failing jobs by default, to "user@domain.com",
-and to the git commit author only on failing commits:
-<pre>
-&lt;notifications when="failing"&gt;
-  &lt;email address="user@domain.com" /&gt;
-  &lt;email role="author" when="failing-commit" /&gt;
-&lt;/notifications&gt;
-</pre>
 </p>
 
 
