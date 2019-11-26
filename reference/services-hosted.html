@@ -15,7 +15,7 @@ This documents services.xml for Vespa Cloud.
 <p>In cloud applications nodes are specified by count and node resources.</p>
 
 <p>
-<strong>Subelements:</strong> <a href="#node-resources">resources</a>
+<strong>Subelements:</strong> <a href="#resources">resources</a>
 </p><p>
 <strong>Attributes:</strong>
 <ul>
@@ -63,16 +63,22 @@ or if it should run on existing nodes. Attribute:
 
 
 
-<h2 id="node-resources">resources</h2>
+<h2 id="resources">resources</h2>
 <p>
-Contained in the nodes element and specifies the resources of each node to allocate.
+Contained in the <a href="#nodes">nodes</a> element, specifies each node's resource requirements.
+Resources is a powerful way to optimize cost and performance.
+For new launches, allocate enough to reduce risk -
+then use the <a href="https://docs.vespa.ai/documentation/performance/">performance guides</a>
+to find the sweet spot to balance cost and free capacity, based on real production load.
+Migration to new capacity is automated,
+read more in <a href="https://docs.vespa.ai/documentation/elastic-vespa.html">elastic Vespa</a>.
 </p><p>
 <b>Subelements:</b> None
 </p><p>
 <b>Attributes:</b>
 <table class="table">
   <tr><td><b>vcpu</b></td><td>float</td>
-    <td>CPU, hardware threads.</td></tr>
+    <td>CPU, virtual threads</td></tr>
   <tr><td><b>memory</b></td><td>float, followed by a byte unit, such as "Gb"</td>
     <td>Memory</td></tr>
   <tr><td><b>disk</b></td><td>float followed by a byte unit, such as "Gb"</td>
