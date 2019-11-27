@@ -21,6 +21,7 @@ Equally important, Vespa applications scale down to 1 - developers can deploy th
 * Scale up to 1000, down to 1
 
 
+
 ## Resilient Content Engine
 As Vespa applications can be very large, node failures are automated as well,
 with configurable rebalancing speed to regenerate replicas.
@@ -29,6 +30,7 @@ Failed instances are kept for some time offline to preserve data in catastrophic
 
 **Highlighted features**
 * Auto node failure and provisioning
+
 
 
 ## Flexible Content Engine for optimized costs
@@ -49,6 +51,7 @@ Using this flexibility, teams migrating from self-hosted to Vespa Cloud:
 **Highlighted features**
 * Auto node capacity migration - move from one spec to another
 * Independent stateful/stateless node scaling
+
 
 
 ## High-performance Content Engine
@@ -77,30 +80,48 @@ Read more in [Vespa Performance](https://docs.vespa.ai/documentation/performance
 * LLVM
 
 
-## Auto-upgraded, CI/CD applications, with failover
-Most teams use the Vespa [automated deployments](/automated-deployments)
-to continuously develop, test and deploy changes to applications.
-A Vespa-application is defined by its configuration and code -
-maintained in the [application package](https://docs.vespa.ai/documentation/cloudconfig/application-packages.html).
 
+## Automated, Secure Deployments - no humans involved
+A Vespa-application is defined by its configuration and code,
+maintained in the [application package](https://docs.vespa.ai/documentation/cloudconfig/application-packages.html).
+This changes over time as schemas change, code is modified.
+To deploy changes safely to production, an explicit [validation](https://docs.vespa.ai/documentation/reference/validation-overrides.html) is required for potentially destructive changes.
+
+This makes changes to production safe, most teams deploy daily or more often.
+This makes changes smaller, with less risk and easier roll-forward.
+Use [github actions](https://github.com/features/actions) or other automation
+to build a pipeline that automatically rolls out changes committed to the code repository.
+
+**Highlighted features**
+* [Deployments](/automated-deployments) with automated tests
+    * System tests
+    * Staging tests
+    * Production validation tests
+* [Safe changes](https://docs.vespa.ai/documentation/reference/search-definitions-reference.html#modify-search-definitions) -
+    potentially destructive changes are blocked
+
+
+
+## Multi-Datacenter deployments with failover
 Applications are most often deployed in multiple zones,
 with failover using a [global endpoint](/reference/deployment#endpoint).
 
+**Highlighted features**
+* Multi-zone deployments with failover
+* Metrics-based propagation to production zones when deploying changes
+
+
+
+## Automated Software upgrades
 Software upgrades take both calendar and work time.
 Testing is required to identify and fix performance regressions.
 With Vespa Cloud, this is automated and just happens several times a week
 
 **Highlighted features**
-* Automated deployments
-* Application packages for code and configuration consistency
-* Submit/deploy interfaces to production push, no humans involved
-* Multi-zone deployments with failover
-* Metrics-based propagation to production zones
+* Auto SW upgrades - zero time spent testing for regressions
+* Auto reboots with auto OS upgrades
+* Orchestrated restarts - no need for cold standby
 
-
-<!--
-ToDo: BCP as a separate section here later
--->
 
 
 ## Security
@@ -115,8 +136,6 @@ All external and internal communications is secured with mutual TLS with applica
 All applications run on in dedicated and network isolated containers.
 
 **Highlighted features**
-* Auto SW upgrades
-* Auto reboots
 * All communication is encrypted
 * Encryption at rest
 * Java 11
