@@ -12,6 +12,8 @@ docs:
       url: https://docs.vespa.ai/documentation/use-cases.html
     - page: Operational Use Cases
       url: /ops-use-cases
+    - page: Performance Use Cases
+      url: /performance-use-cases
     - page: Environments
       url: /reference/environments
     - page: Zones
