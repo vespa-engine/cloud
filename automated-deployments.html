@@ -13,6 +13,8 @@ Similarly, each change to the Vespa platform, by the Vespa team, must be tested 
 Vespa Cloud automates all these tests and deployments, with features including:
 <ul>
   <li>chained runs of tests and deployment, with retries of failed jobs;</li>
+  <li>multiple concurrent instances of an application in each zone, upgraded as specified by the user,
+    for testing application changes in a subset of the service before rolling them out further;</li>
   <li>separation of application and platform changes, making it easier to pinpoint breaking changes
     (application changes are always allowed when an upgrade fails, as they may be necessary to fix the breakage);</li>
   <li>cancellation of any current application roll-out, upon submission of a new application revision;</li>
@@ -100,7 +102,7 @@ Examples of advanced deployment configuration which can be set in
 <ul>
   <li>Deployment order and parallelism</li>
   <li>Time windows with no deployments</li>
-  <li>Grace periods between deployments</li>
+  <li>Grace periods between deployments, and before their tests</li>
 </ul>
 </p>
 
@@ -182,14 +184,26 @@ To deploy to a certain platform version, use, e.g., <code>mvn vespa:deploy -Dves
 
 
 
-<h2 id="production-tests">Production tests</h2>
+<h2 id="production-deployments">Production deployments</h2>
 <p>
-Finally, tests may also be annotated with the <code>@ProductionTest</code> annotation. These are run against production after deployment,
-and any failure will prevent roll-out to further production zones. Make sure the tests do not modify production data in an unintended fashion.
-</p><p>
 Production jobs run sequentially by default, but can be configured to run in parallel,
 in <a href="/reference/deployment">deployment.xml</a>; inside each zone, Vespa itself orchestrates
 the deployment, such that the application may continue to serve, even as subsets of its nodes are down for upgrade.
+A production deployment job is not complete before the upgrade is complete on all nodes, and the cluster has returned
+to a stable state. When the Vespa platform is upgraded, each node has to restart with the new runtime; this is typically
+slower than an application change by the user, which often amounts only to a reconfiguration of smaller parts of the deployment.
+</p>
+
+
+
+<h2 id="production-tests">Production tests</h2>
+<p>
+Finally, tests may also be annotated with the <code>@ProductionTest</code> annotation. These are run against production after deployment,
+and any failure will stop the roll-out. Make sure the tests do not modify production data in an unintended fashion.
+</p><p>
+Production tests must be specified with the <code>&lt;test&gt;</code> tag under <code>&lt;prod&gt;</code> in
+<a href="/reference/deployment">deployment.xml</a>, and it is also possible to add a <code>&lt;delay&gt;</code> between the deployment
+and the test tag to, e.g., allow time for gathering higher-level metrics which the production test will verify. 
 </p><p>
 To run production tests manually, use an IDE, or run all tests with <code>mvn test -Dtest.categories=production</code>.
 This, again, assumes there is a dev deployment to run the tests against. To run a production test against a production
