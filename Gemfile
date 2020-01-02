@@ -9,7 +9,7 @@ ruby RUBY_VERSION
 #
 # This will help ensure the proper Jekyll version is running.
 # Happy Jekylling!
-gem "jekyll", "3.7.4"
+gem "jekyll", "3.8.5"
 
 # This is the default theme for new Jekyll sites. You may change this to anything you like.
 gem 'agency-jekyll-theme', '~> 1.0'
@@ -29,3 +29,6 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 # Get the html-proofer to work
 gem 'rake'
 gem 'html-proofer'
+
+# Unbreak Octokit
+gem "faraday", "~> 0.16.0"
