@@ -1,0 +1,38 @@
+---
+layout: status
+---
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Vespa Cloud Status {{ site.time }}</title>
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
+    </head>
+    <body>
+        <div class="container">
+            <h1>Vespa Cloud Status</h1>
+            <p>Last updated: {{ site.time }}</p>
+            <p>
+                <table class="table" style="width: 90%; margin-left: auto; margin-right: auto;">
+                    <thead>
+                        <tr><th>Zone</th><th>Status</th></td></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Infrastructure</td>
+                            <td class="bg-success">OK</td>
+                        </tr>
+                        <tr>
+                            <td>aws.us-east1c</td>
+                            <td class="bg-success">OK</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </p>
+
+            <h3>Messages</h3>
+            <p>
+                No updates.
+            </p>
+        </div>
+    </body>
+</html>
