@@ -83,7 +83,7 @@ Rank profiles are just mathematical expressions, to enable almost any kind of co
 
 For text search using BM25, see the [text search tutorial](https://docs.vespa.ai/documentation/tutorials/text-search.html).
 
-Use [tensors](https://docs.vespa.ai/documentation/tensor-intro.html) to represent text embeddings and build a
+Use [tensors](https://docs.vespa.ai/documentation/tensor-user-guide.html) to represent text embeddings and build a
 [real time semantic search engine](https://docs.vespa.ai/documentation/semantic-qa-retrieval.html).
 
 **Highlighted features**
