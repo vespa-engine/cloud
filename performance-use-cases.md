@@ -15,7 +15,7 @@ Vespa supports [performance groups](https://docs.vespa.ai/documentation/elastic-
 for flexible replica placement to enable a wide range of use cases.
 All cases support a sustained, high throughput for updating documents.
 
-Vespa supports a wide range of ML models by transforming them to [tensors](https://docs.vespa.ai/documentation/tensor-intro.html) -
+Vespa supports a wide range of ML models by transforming them to [tensors](https://docs.vespa.ai/documentation/tensor-user-guide.html) -
 and uses [LLVM](https://llvm.org) for high-performance ranking.
 
 Read more in [Vespa Performance](https://docs.vespa.ai/documentation/performance/).
