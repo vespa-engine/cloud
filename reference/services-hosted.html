@@ -143,8 +143,7 @@ To use this you must import the <em>deploy</em> namespace:
 <pre>
 &lt;services version="1.0" <strong style="background-color: yellow;">xmlns:deploy="vespa"</strong>&gt;
 </pre>
-Deploy directives are used to specify in which environment and/or region an XML element should be included.
-Define a different configuration for different <em>environments</em> and <em>regions</em>:
+Deploy directives are used to specify in which instance, environment and/or region an XML element should be included:
 <pre>
 &lt;content version="1.0"&gt;
   &lt;redundancy&gt;1&lt;/redundancy&gt;
@@ -152,11 +151,12 @@ Define a different configuration for different <em>environments</em> and <em>reg
     &lt;document type="music.sd" mode="index" /&gt;
   &lt;/documents&gt;
   &lt;nodes <strong style="background-color: yellow;">deploy:environment="dev"</strong> count="1" /&gt;
-  &lt;nodes <strong style="background-color: yellow;">deploy:environment="prod"</strong> <strong style="background-color: yellow;">deploy:region="us-west-1"</strong> count="60" /&gt;
-  &lt;nodes <strong style="background-color: yellow;">deploy:environment="prod"</strong> <strong style="background-color: yellow;">deploy:region="us-east-3"</strong> count="80" /&gt;
+  &lt;nodes <strong style="background-color: yellow;">deploy:environment="prod"</strong> <strong style="background-color: yellow;">deploy:region="us-west-1"</strong> count="20" /&gt;
+  &lt;nodes <strong style="background-color: yellow;">deploy:environment="prod"</strong> <strong style="background-color: yellow;">deploy:region="us-east-3"</strong> count="40" /&gt;
+  &lt;nodes <strong style="background-color: yellow;">deploy:environment="prod"</strong> <strong style="background-color: yellow;">deploy:region="us-east-3"</strong> <strong style="background-color: yellow;">deploy:instance="alpha"</strong> count="4" /&gt;
 &lt;/content&gt;
 </pre>
-This example configures the number of content nodes in the different environment and regions.
+This example configures a different node count depending on the deployment target.
 Deploying the application in the <em>dev</em> environment gives:
 <pre>
 &lt;content version="1.0"&gt;
@@ -177,7 +177,7 @@ Whereas in <em>prod.us-west-1</em> it is:
   &lt;nodes count="60" /&gt;
 &lt;/content&gt;
 </pre>
-This feature can be used to modify any config per zone.
+This can be used to modify any config by deployment target.
 </p><p>
 The deploy directives have a set of override rules:
 <ul>
@@ -188,6 +188,9 @@ The deploy directives have a set of override rules:
     is used together with the element name when applying directives.</li>
 </ul>
 </p>
+
+<p>Some overrides are applied by default in some environments, see <a href="environments">environments</a>.
+Any override made explicitly for an environment will override the defaults for it.</p>
 
 
 <h3 id="advanced">Advanced</h3>
