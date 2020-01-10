@@ -3,7 +3,9 @@
 title: "Comparison to Elasticsearch"
 ---
 
-<div style="text-align:left"><img src="img/Vespa-ES.png" style="width: 50%; margin-right: 1%; margin-bottom: 0.8em;"></div>
+<div style="text-align:left">
+<img src="img/Vespa-ES.png" style="width: 50%; margin-right: 1%; margin-bottom: 0.8em;" alt="Venn diagram">
+</div>
 
 With focus on big data serving, Vespa is optimized for **low millisecond response**,
 **high write and query load**, **Machine Learning integration** and **automated high availability operations**.
