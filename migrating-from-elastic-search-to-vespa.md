@@ -97,7 +97,7 @@ $ docker exec vespa bash -c '/opt/vespa/bin/vespa-deploy prepare /app/applicatio
 ``` 
 
 (or alternatively, run the equivalent commands inside the docker container).
-After a short while, pointing a browser to [http://localhost:8080/ApplicationStatus](http://localhost:8080/ApplicationStatus)
+After a short while, pointing a browser to _http://localhost:8080/ApplicationStatus_
 returns JSON-formatted information about the active application.
 The Vespa node is now configured and ready for use.
 
@@ -130,7 +130,7 @@ $ curl -s http://localhost:8080/document/v1/application_name/doc_name/docid/elas
 
 
 #### 6. The first query
-Use the GUI for building queries at [http://localhost:8080/querybuilder/](http://localhost:8080/querybuilder/)
+Use the GUI for building queries at _http://localhost:8080/querybuilder_
 (with Vespa-container running) which can help you building queries with e.g. autocompletion of YQL.
 Also take a look at the [query API](https://docs.vespa.ai/documentation/search-api.html).
 
