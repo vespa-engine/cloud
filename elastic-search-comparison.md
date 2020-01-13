@@ -55,5 +55,4 @@ Other relevant sources:
 
 * [Vespa Elasticity](https://docs.vespa.ai/documentation/elastic-vespa.html)
 * [Vespa sizing guide](https://docs.vespa.ai/documentation/performance/sizing-search.html)
-* [QPS scaling using groups](https://docs.vespa.ai/documentation/qps-scaling-using-groups.html)
 * [Migrating from Elasticsearch to Vespa](migrating-from-elastic-search-to-vespa.html)
