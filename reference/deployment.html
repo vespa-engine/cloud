@@ -85,6 +85,19 @@ an <code>&lt;instance&gt;</code> with <code>id="default"</code>, as in the above
     <td>Yes</td>
   </tr>
 </table>
+To delete an application, remove all its instances, i.e., submit a deployment spec like
+<pre>
+&lt;deployment version="1.0" /&gt;
+</pre>
+To remove an instance with production deployments (see <a href="#region">region</a>), 
+add a <em>deployment-removal</em>
+<a href="http://docs.vespa.ai/documentation/reference/validation-overrides.html">
+validation override</a>. Example:
+<pre>
+&lt;validation-overrides&gt;
+  &lt;allow until="2019-11-23"&gt;deployment-removal&lt;/allow&gt;
+&lt;/validation-overrides&gt;
+</pre>
 </p>
 
 
