@@ -16,8 +16,8 @@ read more in [elastic Vespa](https://docs.vespa.ai/documentation/elastic-vespa.h
 Equally important, Vespa applications scale down to 1 - developers can deploy the full application to to own laptop or development environment _with no configuration changes_. This lowers the bar for making changes, and also enables easy support, as the application can run anywhere (Vespa runs in a [Docker container](https://www.docker.com/)).
 
 **Highlighted features**
-* No shards - no need for manual operations for data copy when resizing
-* Auto data redistribution
+* Change node count or node resource in config - deploy and just wait for auto data redistribution
+* No shards, no index management. No need for manual operations for data copy when resizing
 * Scale up to 1000, down to 1
 
 
@@ -42,15 +42,21 @@ and requires must testing.
 
 Instead, launch with enough capacity, monitor, and then change both node count and node specifications
 based on real production load.
-Changing specifications, like double CPU or cut memory is a configuration change and subsequent auto data migration - read more about [resources](/reference/services-hosted#resources).
+Changing specifications, like double CPU or cut memory is a configuration change and subsequent auto data migration - read more about [resources](/reference/services#resources):
+
+    <nodes count="4">
+        <resources vcpu="8" memory="32Gb" disk="100Gb"/>
+    </nodes>
+
 Using this flexibility, teams migrating from self-hosted to Vespa Cloud:
 * cuts cost in half on average
 * launches with little risk using overcapacity first days
 * accelerates schedules as load test requirements are cut
 
 **Highlighted features**
-* Auto node capacity migration - move from one spec to another
+* Auto node capacity migration - move from one resource specification to another
 * Independent stateful/stateless node scaling
+* Support for multiple clusters within an application - scale different content clusters based on size and read/write characteristics
 
 
 
