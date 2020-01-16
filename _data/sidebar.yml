@@ -21,6 +21,6 @@ docs:
     - page: Security Model
       url: /security-model
     - page: services.xml
-      url: /reference/services-hosted
+      url: /reference/services
     - page: deployment.xml
       url: /reference/deployment
