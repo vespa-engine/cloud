@@ -6,6 +6,8 @@ docs:
       url: /pricing
     - page: Getting Started
       url: /getting-started
+    - page: Quota
+      url: /quota
     - page: Automated Deployments
       url: /automated-deployments
     - page: Use Cases
