@@ -24,3 +24,69 @@ If the application application requires zone-specific configuration,
 use <a href="services#instance-environment-and-region-variants">
 environment and region variants</a>.
 </p>
+
+<h2 id="routing-control">Routing control</h2>
+
+<p>Vespa Cloud has two mechanisms for manully controlling routing of requests to a zone:</p>
+
+<ul>
+  <li>Endpoint configuration. This is changed by updating
+  your <a href="/reference/deployment">deployment.xml</a> and performing a new
+  deployment.</li>
+  <li>The application API.</li>
+</ul>
+
+<p>The example below describes the latter mechanism.</p>
+
+<h3>Inspect current routing status</h3>
+
+<p>With a tenant name <em>foo</em> and an application named <em>bar</em>, the
+routing status for the <em>default</em> instance of your application in
+zone <em>prod.aws-us-east-1c</em> can inspected at the following path:
+<pre>
+$ curl https://console.vespa.oath.cloud/api/routing/v1/status/tenant/foo/application/bar/instance/default/environment/prod/region/aws-us-east-1c | jq .
+{
+  "deployments": [
+    {
+      "routingMethod": "exclusive",
+      "instance": "foo:bar:default",
+      "environment": "prod",
+      "region": "aws-us-east-1c",
+      "status": "in",
+      "agent": "system",
+      "changedAt": 0
+    }
+  ]
+}
+</pre>
+</p>
+
+<p>
+In this particular example, the status of zone <em>prod.aws-us-east-1c</em>
+is <em>in</em> and the zone should be receiving requests.
+</p>
+
+<h3>Set zone out</h3>
+
+<p>In case of a production emergency a zone can be manully set out to prevent it
+  from receiving requests:
+<pre>
+$ curl -XPOST https://console.vespa.oath.cloud/api/routing/v1/inactive/tenant/foo/application/bar/instance/default/environment/prod/region/aws-us-east-1c | jq .
+{
+  "message": "Set global routing status for foo.bar in prod.aws-us-east-1c to OUT"
+}
+</pre>
+</p>
+
+<p>Inspecting the status will now show the status set to <em>out</em>.
+
+<h3>Set zone in</h3>
+
+<p>To set the zone back in and have it continue receiving requests:
+<pre>
+$ curl -XDELETE https://console.vespa.oath.cloud/api/routing/v1/inactive/tenant/foo/application/bar/instance/default/environment/prod/region/aws-us-east-1c | jq .
+{
+  "message": "Set global routing status for foo.bar in prod.aws-us-east-1c to IN"
+}
+</pre>
+</p>
