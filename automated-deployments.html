@@ -42,7 +42,7 @@ See the <a href="/reference/vespa-cloud-api.html">Vespa cloud API reference</a> 
 <h3 id="create-deployment-xml">1. Create deployment.xml</h3>
 <p>
 Create a <a href="/reference/deployment">deployment.xml</a> file alongside services.xml
-to configure where and when to deploy — supported zones are listed <a href="/reference/zones">here</a>.
+to configure where and when to deploy — <a href="/reference/zones">supported zones</a>.
 </p>
 
 
@@ -62,7 +62,7 @@ and ships it to the Vespa cloud.
 Trigger this job by a merge to the main branch in the source control system,
 where the Vespa application repository is stored.
 </p><p>
-The job should execute something like the following (adjust as needed if you don't use git):
+The job should execute something like the following (modify as needed if not using git):
 <pre>
 mvn clean vespa:compileVersion
 mvn -P fat-test-application \
@@ -73,10 +73,15 @@ mvn -P fat-test-application \
   -Dcommit=$(git rev-parse HEAD) \
   -DauthorEmail=$(git log -1 --format=%aE)
 </pre>
+Track deployment at
+<em>https://console.vespa.oath.cloud/tenant/mytenant/application/myapp/deployment</em> -
+click "Deployment" in the console / refresh page.
+</p><p>
 If you need a Docker image in which to run this you can use <code>vespaengine/vespa-pipeline</code>.
 </p><p>
 The deployment job must have access to the API key of your application,
-which is configured in <code>pom.xml</code>.
+configured in <code>pom.xml</code> - example
+<a href="https://github.com/vespa-engine/sample-apps/blob/master/album-recommendation-java/pom.xml">&lt;apiKeyFile&gt;</a>.
 </p><p>
 Once this is set up, you can make any change to your application in production simply by checking in
 the change to the application source repository.
@@ -127,9 +132,21 @@ When a Vespa application is built with the <code>fat-test-application</code> pro
 all Java JUnit5 tests with the <code>@SystemTest</code> annotation, and all their dependencies,
 are stored in a separate test code artifact, which is submitted to the Vespa cloud together with the application package.
 During an automated system test, a fresh test deployment is created,
-and the system tests in the test artifact are run to verify the test deployment behaves as expected.
+and the system tests in the test artifact are run to verify the test deployment behaves as expected. Minimal test:
+<pre>
+import ai.vespa.hosted.cd.SystemTest;
+import org.junit.jupiter.api.Test;
+
+@SystemTest
+public class MiminalSystemTest {
+    @Test
+    public void testSearchAndFeeding() throws Exception {
+        // Test code and assertions here
+    }
+}
+</pre>
 </p><p>
-The <em>system test framework</em> in <code>com.yahoo.vespa:tenant-cd</code> contains tools
+The <em>system test framework</em> in <code><a href="https://search.maven.org/artifact/com.yahoo.vespa/tenant-cd">com.yahoo.vespa:tenant-cd</a></code> contains tools
 for runtime-dependent authentication against the Vespa deployment to test, and for endpoint discovery.
 The default behavior of <code>mvn package vespa:deploy</code> is to deploy to the
 <a href="/reference/environments#dev">dev</a> environment,
@@ -175,6 +192,18 @@ These are run in the automated staging test job, also against a fresh deployment
 The goal of a staging test, however, is not to ensure the new deployment satisfies its functional specifications, like in the system test;
 rather, it is to ensure the upgradeof an existing production cluster is safe,
 and compatible with the behaviour expected by existing clients.
+<pre>
+import ai.vespa.hosted.cd.StagingTest;
+import org.junit.jupiter.api.Test;
+
+@StagingTest
+public class MiminalStagingTest {
+    @Test
+    public void testSearchAndFeeding() throws Exception {
+        // Test code and assertions here
+    }
+}
+</pre>
 </p><p>
 A staging test may, for instance, test an upgrade from application package <code>X</code> to <code>X+1</code>,
 and from platform version <code>Y</code> to <code>Y+1</code>.
