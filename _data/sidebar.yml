@@ -26,3 +26,5 @@ docs:
       url: /reference/services
     - page: deployment.xml
       url: /reference/deployment
+    - page: Benchmarking
+      url: /benchmarking
