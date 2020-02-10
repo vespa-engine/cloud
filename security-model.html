@@ -78,8 +78,6 @@ The certificate is signed by DigiCert or Globalsign.
 To enable TLS client side authentication:
 <ol>
     <li>Add trusted certificates (or issuer certificates) to the file <code>[application-package]/security/clients.pem</code></li>
-    <li>Add an element to the container element(s) in services.xml:
-        <code>&lt;client-authorize/&gt;</code></li>
 </ol>
 With this, only clients presenting a valid certificate will be able to access the application endpoints.
 In order to test application deployments,
