@@ -4,8 +4,8 @@ title: "Benchmarking"
 ---
 
 This guide describes how to benchmark using Vespa Cloud - resources:
-* [Vespa performance](https://docs.vespa.ai/documentation/performance/)
-* [vespa-fbench](https://docs.vespa.ai/documentation/performance/fbench.html) - replace with own benchmarking tool as needed
+* [Vespa Performance](https://docs.vespa.ai/documentation/performance/)
+* [Vespa Benchmarking](https://docs.vespa.ai/documentation/performance/vespa-benchmarking.html)
 * [Vespa Serving Scaling Guide](https://docs.vespa.ai/documentation/performance/sizing-search.html)
 
 Below is a step-by-step guide to get started benchmarking.
