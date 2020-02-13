@@ -9,6 +9,17 @@ This guide describes how to benchmark using Vespa Cloud - resources:
 * [Vespa Serving Scaling Guide](https://docs.vespa.ai/documentation/performance/sizing-search.html)
 
 Below is a step-by-step guide to get started benchmarking.
+It is based on [Vespa Benchmarking](https://docs.vespa.ai/documentation/performance/vespa-benchmarking.html),
+adding what is needed to benchmark using Vespa Cloud. Overview:
+
+<img src="img/cloud-benchmarks.svg" alt="Vespa Cloud Benchmarks" width="640" height="400" />
+
+Notes:
+* The application is deployed from anywhere, using the [control plane api key](security-model#control-plane)
+* Query files should be available in the same data center as where production load originates -
+or same zone as Vespa Cloud.
+Documents are normally stored in same location as query files, but not necessarily.
+Both need [data plane public and private key](security-model#data-plane) to access data in Vespa Cloud.
 
 
 
@@ -24,23 +35,36 @@ and then deploy the application package again.
 Run a test query to test credentials - count all documents using schema _music_ - using POST:
 
     $ curl --cert data-plane-public-cert.pem --key data-plane-private-key.pem \
-      -H "Content-Type: application/json" \
-      --data '{"yql" : "select * from sources * where sddocname contains \"music\";"}' \
-      https://myapp.mytenant.aws-us-east-1c.public.vespa.oath.cloud/search/
+        -H "Content-Type: application/json" \
+        --data '{"yql" : "select * from sources * where sddocname contains \"music\";"}' \
+        https://myapp.mytenant.aws-us-east-1c.public.vespa.oath.cloud/search/
 
 Equivalent, using GET:
 
     $ curl --cert data-plane-public-cert.pem --key data-plane-private-key.pem \
-      https://myapp.mytenant.aws-us-east-1c.public.vespa.oath.cloud/search/?yql=select%20%2A%20from%20sources%20%2A%20where%20sddocname%20contains%20%22music%22%3B%0A
+        https://myapp.mytenant.aws-us-east-1c.public.vespa.oath.cloud/search/?yql=select%20%2A%20from%20sources%20%2A%20where%20sddocname%20contains%20%22music%22%3B%0A
 
 Make sure the response is a proper Vespa query response - minimal example:
 
     {"root":{"id":"toplevel","relevance":1.0,"fields":{"totalCount":0},"coverage":{"coverage":100,"documents":0,"full":true,"nodes":2,"results":1,"resultsFull":1}}}
 
+Feed documents:
+
+    $ docker run -v /Users/me:/files -w /files --entrypoint '' vespaengine/vespa \
+        /usr/bin/java -jar /opt/vespa/lib/jars/vespa-http-client-jar-with-dependencies.jar \
+          --useTls --caCertificates /etc/ssl/certs/ca-bundle.crt \
+          --certificate data-plane-public-cert.pem --privateKey data-plane-private-key.pem \
+          --file docs.json --endpoint https://myapp.mytenant.aws-us-east-1c.public.vespa.oath.cloud
+
+Expected reponse:
+
+    Thu Feb 13 14:05:44 UTC 2020 Result received: 0 (0 failed so far, 382 sent, success rate 0.00 docs/sec).
+    Thu Feb 13 14:05:49 UTC 2020 Result received: 382 (0 failed so far, 382 sent, success rate 77.39 docs/sec).
+
 
 
 ## Test using vespa-fbench
-Test a single query, sent from  `vespa-fbench` benchmarking tool running in a docker container
+Test a single query, using [vespa-fbench](https://docs.vespa.ai/documentation/reference/vespa-cmdline-tools.html#vespa-fbench) running in a docker container:
 
     $ ls -1 *.pem
       data-plane-private-key.pem
@@ -50,8 +74,8 @@ Test a single query, sent from  `vespa-fbench` benchmarking tool running in a do
       /search/?yql=select%20%2A%20from%20sources%20%2A%20where%20sddocname%20contains%20%22music%22%3B
 
     $ docker run -v /Users/myself/tmp:/testfiles \
-      -w /testfiles --entrypoint '' vespaengine/vespa \
-      /opt/vespa/bin/vespa-fbench \
+        -w /testfiles --entrypoint '' vespaengine/vespa \
+        /opt/vespa/bin/vespa-fbench \
           -C data-plane-public-cert.pem -K data-plane-private-key.pem -T /etc/ssl/certs/ca-bundle.crt \
           -n 1 -q query001.txt -s 1 -c 0 \
           myapp.mytenant.aws-us-east-1c.public.vespa.oath.cloud 443
@@ -126,10 +150,10 @@ No need to do anything other than default.
 1. Run vespa-fbench and verify 200 response:
 
        [ec2-user]$ docker run -v /home/ec2-user:/testfiles -w /testfiles --entrypoint '' vespaengine/vespa \
-         /opt/vespa/bin/vespa-fbench \
-           -C data-plane-public-cert.pem -K data-plane-private-key.pem -T /etc/ssl/certs/ca-bundle.crt \
-           -n 1 -q query001.txt -s 1 -c 0 \
-           myapp.mytenant.aws-us-east-1c.public.vespa.oath.cloud 443
+                     /opt/vespa/bin/vespa-fbench \
+                       -C data-plane-public-cert.pem -K data-plane-private-key.pem -T /etc/ssl/certs/ca-bundle.crt \
+                       -n 1 -q query001.txt -s 1 -c 0 \
+                       myapp.mytenant.aws-us-east-1c.public.vespa.oath.cloud 443
 
 
 
@@ -143,4 +167,5 @@ Make sure the client running the becnhmark tool has sufficient resources (the ex
 Use _metrics/v2_ to dump metrics:
 
     $ curl --cert data-plane-public-cert.pem --key data-plane-private-key.pem \
-      https://myapp.mytenant.aws-us-east-1c.dev.public.vespa.oath.cloud/metrics/v2/values
+        https://myapp.mytenant.aws-us-east-1c.dev.public.vespa.oath.cloud/metrics/v2/values | \
+        jq '.nodes[] | select(.role=="content/mysearchcluster/0/0") | .node.metrics[].values'
