@@ -193,6 +193,21 @@ The goal of a staging test, however, is not to ensure the new deployment satisfi
 rather, it is to ensure the upgradeof an existing production cluster is safe,
 and compatible with the behaviour expected by existing clients.
 <pre>
+import ai.vespa.hosted.cd.StagingSetup;
+import org.junit.jupiter.api.Test;
+
+@StagingSetup
+class StagingSetupTest {
+
+    @Test
+    void feedAndSearch() throws IOException {
+        // Feed the static staging test documents; staging clusters are always empty when setup is run.
+        // Verify documents are searchable and rendered as expected, prior to upgrade.
+    }
+
+}
+</pre>
+<pre>
 import ai.vespa.hosted.cd.StagingTest;
 import org.junit.jupiter.api.Test;
 
