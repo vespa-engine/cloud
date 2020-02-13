@@ -50,7 +50,7 @@ Make sure the response is a proper Vespa query response - minimal example:
 
 Feed documents:
 
-    $ docker run -v /Users/me:/files -w /files --entrypoint '' vespaengine/vespa \
+    $ docker run -v $(pwd):/files -w /files --entrypoint '' vespaengine/vespa \
         /usr/bin/java -jar /opt/vespa/lib/jars/vespa-http-client-jar-with-dependencies.jar \
           --useTls --caCertificates /etc/ssl/certs/ca-bundle.crt \
           --certificate data-plane-public-cert.pem --privateKey data-plane-private-key.pem \
@@ -73,8 +73,7 @@ Test a single query, using [vespa-fbench](https://docs.vespa.ai/documentation/re
     $ cat query001.txt
       /search/?yql=select%20%2A%20from%20sources%20%2A%20where%20sddocname%20contains%20%22music%22%3B
 
-    $ docker run -v /Users/myself/tmp:/testfiles \
-        -w /testfiles --entrypoint '' vespaengine/vespa \
+    $ docker run -v $(pwd):/files -w /files --entrypoint '' vespaengine/vespa \
         /opt/vespa/bin/vespa-fbench \
           -C data-plane-public-cert.pem -K data-plane-private-key.pem -T /etc/ssl/certs/ca-bundle.crt \
           -n 1 -q query001.txt -s 1 -c 0 \
@@ -149,7 +148,7 @@ No need to do anything other than default.
 
 1. Run vespa-fbench and verify 200 response:
 
-       [ec2-user]$ docker run -v /home/ec2-user:/testfiles -w /testfiles --entrypoint '' vespaengine/vespa \
+       [ec2-user]$ docker run -v $(pwd):/files -w /files --entrypoint '' vespaengine/vespa \
                      /opt/vespa/bin/vespa-fbench \
                        -C data-plane-public-cert.pem -K data-plane-private-key.pem -T /etc/ssl/certs/ca-bundle.crt \
                        -n 1 -q query001.txt -s 1 -c 0 \
