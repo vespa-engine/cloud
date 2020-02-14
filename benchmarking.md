@@ -3,12 +3,7 @@
 title: "Benchmarking"
 ---
 
-This guide describes how to benchmark using Vespa Cloud - resources:
-* [Vespa Performance](https://docs.vespa.ai/documentation/performance/)
-* [Vespa Benchmarking](https://docs.vespa.ai/documentation/performance/vespa-benchmarking.html)
-* [Vespa Serving Scaling Guide](https://docs.vespa.ai/documentation/performance/sizing-search.html)
-
-Below is a step-by-step guide to get started benchmarking.
+Welcome to the step-by-step guide to get started benchmarking.
 It is based on [Vespa Benchmarking](https://docs.vespa.ai/documentation/performance/vespa-benchmarking.html),
 adding what is needed to benchmark using Vespa Cloud. Overview:
 
@@ -157,7 +152,8 @@ No need to do anything other than default.
 
 
 ## Run benchmark
-Use the [Vespa Serving Scaling Guide](https://docs.vespa.ai/documentation/performance/sizing-search.html) to run benchmarks.
+Use the [Vespa Benchmarking Guide](https://docs.vespa.ai/documentation/performance/vespa-benchmarking.html) and
+[Vespa Serving Scaling Guide](https://docs.vespa.ai/documentation/performance/sizing-search.html) to plan and run benchmarks.
 
 Make sure the client running the becnhmark tool has sufficient resources (the example above used am AWS free-tier host).
 
