@@ -10,11 +10,12 @@ adding what is needed to benchmark using Vespa Cloud. Overview:
 <img src="img/cloud-benchmarks.svg" alt="Vespa Cloud Benchmarks" width="640" height="400" />
 
 Notes:
-* The application is deployed from anywhere, using the [control plane api key](security-model#control-plane)
+* The application is deployed from anywhere, using the [control plane api key](security-model#control-plane).
 * Query files should be available in the same data center as where production load originates -
 or same zone as Vespa Cloud.
 Documents are normally stored in same location as query files, but not necessarily.
-Both need [data plane public and private key](security-model#data-plane) to access data in Vespa Cloud.
+Both need [data plane public and private key](security-model#data-plane) to access data in Vespa Cloud,
+as well as getting metrics.
 
 
 
