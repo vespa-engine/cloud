@@ -3,23 +3,19 @@
 title: "Benchmarking"
 ---
 
-This guide describes how to benchmark using Vespa Cloud - resources:
-* [Vespa Performance](https://docs.vespa.ai/documentation/performance/)
-* [Vespa Benchmarking](https://docs.vespa.ai/documentation/performance/vespa-benchmarking.html)
-* [Vespa Serving Scaling Guide](https://docs.vespa.ai/documentation/performance/sizing-search.html)
-
-Below is a step-by-step guide to get started benchmarking.
+Welcome to the step-by-step guide to get started benchmarking.
 It is based on [Vespa Benchmarking](https://docs.vespa.ai/documentation/performance/vespa-benchmarking.html),
 adding what is needed to benchmark using Vespa Cloud. Overview:
 
 <img src="img/cloud-benchmarks.svg" alt="Vespa Cloud Benchmarks" width="640" height="400" />
 
 Notes:
-* The application is deployed from anywhere, using the [control plane api key](security-model#control-plane)
+* The application is deployed from anywhere, using the [control plane api key](security-model#control-plane).
 * Query files should be available in the same data center as where production load originates -
 or same zone as Vespa Cloud.
 Documents are normally stored in same location as query files, but not necessarily.
-Both need [data plane public and private key](security-model#data-plane) to access data in Vespa Cloud.
+Both need [data plane public and private key](security-model#data-plane) to access data in Vespa Cloud,
+as well as getting metrics.
 
 
 
@@ -50,7 +46,7 @@ Make sure the response is a proper Vespa query response - minimal example:
 
 Feed documents:
 
-    $ docker run -v /Users/me:/files -w /files --entrypoint '' vespaengine/vespa \
+    $ docker run -v $(pwd):/files -w /files --entrypoint '' vespaengine/vespa \
         /usr/bin/java -jar /opt/vespa/lib/jars/vespa-http-client-jar-with-dependencies.jar \
           --useTls --caCertificates /etc/ssl/certs/ca-bundle.crt \
           --certificate data-plane-public-cert.pem --privateKey data-plane-private-key.pem \
@@ -73,8 +69,7 @@ Test a single query, using [vespa-fbench](https://docs.vespa.ai/documentation/re
     $ cat query001.txt
       /search/?yql=select%20%2A%20from%20sources%20%2A%20where%20sddocname%20contains%20%22music%22%3B
 
-    $ docker run -v /Users/myself/tmp:/testfiles \
-        -w /testfiles --entrypoint '' vespaengine/vespa \
+    $ docker run -v $(pwd):/files -w /files --entrypoint '' vespaengine/vespa \
         /opt/vespa/bin/vespa-fbench \
           -C data-plane-public-cert.pem -K data-plane-private-key.pem -T /etc/ssl/certs/ca-bundle.crt \
           -n 1 -q query001.txt -s 1 -c 0 \
@@ -149,7 +144,7 @@ No need to do anything other than default.
 
 1. Run vespa-fbench and verify 200 response:
 
-       [ec2-user]$ docker run -v /home/ec2-user:/testfiles -w /testfiles --entrypoint '' vespaengine/vespa \
+       [ec2-user]$ docker run -v $(pwd):/files -w /files --entrypoint '' vespaengine/vespa \
                      /opt/vespa/bin/vespa-fbench \
                        -C data-plane-public-cert.pem -K data-plane-private-key.pem -T /etc/ssl/certs/ca-bundle.crt \
                        -n 1 -q query001.txt -s 1 -c 0 \
@@ -158,7 +153,8 @@ No need to do anything other than default.
 
 
 ## Run benchmark
-Use the [Vespa Serving Scaling Guide](https://docs.vespa.ai/documentation/performance/sizing-search.html) to run benchmarks.
+Use the [Vespa Benchmarking Guide](https://docs.vespa.ai/documentation/performance/vespa-benchmarking.html) and
+[Vespa Serving Scaling Guide](https://docs.vespa.ai/documentation/performance/sizing-search.html) to plan and run benchmarks.
 
 Make sure the client running the becnhmark tool has sufficient resources (the example above used am AWS free-tier host).
 
