@@ -158,6 +158,10 @@ Use the [Vespa Benchmarking Guide](https://docs.vespa.ai/documentation/performan
 
 Make sure the client running the becnhmark tool has sufficient resources (the example above used am AWS free-tier host).
 
+Whenever deploying changes to configuration, track progress in the Deployment dashboard.
+Some changes, like changing _requestthreads_ will restart content nodes, and this is done in sequence and takes time.
+Wait for successful completion in _Wait for services and endpoints to come online_
+
 
 ### Metrics
 Use _metrics/v2_ to dump metrics:
@@ -165,3 +169,17 @@ Use _metrics/v2_ to dump metrics:
     $ curl --cert data-plane-public-cert.pem --key data-plane-private-key.pem \
         https://myapp.mytenant.aws-us-east-1c.dev.public.vespa.oath.cloud/metrics/v2/values | \
         jq '.nodes[] | select(.role=="content/mysearchcluster/0/0") | .node.metrics[].values'
+
+When changing node type/count, wait for auto data redistribution to complete,
+watching the _vds.idealstate.merge_bucket.pending.average_ metric:
+
+    $ while true; do curl -s --cert data-plane-public-cert.pem --key data-plane-private-key.pem \
+        https://myapp.mytenant.aws-us-east-1c.dev.public.vespa.oath.cloud/metrics/v2/values?consumer=Vespa | \
+        jq '.nodes[] | select(.role=="content/search/0/1") | .services[] | select (.name=="vespa.distributor") | .metrics[].values."vds.idealstate.merge_bucket.pending.average"'; \
+        sleep 10; done
+
+Notes:
+* Dump _all_ metrics using _consumer=Vespa_
+* _.role=="content/search/0/1"_ - the host index will vary, depending on number of changes to such nodes
+* E.g. after adding mode nodes, this metric will jump, then decrease (not necessarily linearly) - speed depending on data volume
+* This is checking just one node, check all _vespa.distributor_ for progress
