@@ -67,7 +67,7 @@ The job should execute something like the following (modify as needed if not usi
 mvn clean vespa:compileVersion
 mvn -P fat-test-application \
   package vespa:submit \
-  -Dvespaversion="$(cat target/vespa.compile.version)"  \
+  -Dvespa.compile.version="$(cat target/vespa.compile.version)"  \
   -Drepository=$(git config --get remote.origin.url) \
   -Dbranch=$(git rev-parse --abbrev-ref HEAD) \
   -Dcommit=$(git rev-parse HEAD) \
