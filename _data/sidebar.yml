@@ -6,6 +6,8 @@ docs:
       url: /pricing
     - page: Getting Started
       url: /getting-started
+    - page: Getting to Production
+      url: /getting-to-production
     - page: Quota
       url: /quota
     - page: Automated Deployments
