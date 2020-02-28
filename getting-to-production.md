@@ -60,7 +60,7 @@ and follow the progress of the deployment job running.
 Now you have a running Vespa Cloud application running in a production zone.  Congratulations!  After this you can further enhance
 your production application:
 
-* Create a CI/CD pipeline.  You can follow our guide to set up deployment from [GitHub Actions](/github-actions).
+* Create a CI/CD pipeline (e.g. using GitHub Actions).
 * Get BCP for your application by deploying in multiple zones and use a [global endpoint](/reference/deployment#endpoints).
 
 
