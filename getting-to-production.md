@@ -17,14 +17,25 @@ the application used in the Getting Started guide.
 1. Add a `pom.xml` file to the root of your application.  This is the Maven project configuration,
    and is needed to build with the Vespa Cloud test framework.  See this [example](https://github.com/vespa-engine/sample-apps/tree/master/vespa-cloud/album-recommendation-prod).
 
+1. Update the `tenant` and `application` properties in `pom.xml` to match the names for your tenant and application.
+   ```xml
+   ...
+   <properties>
+     ...
+     <tenant>MYTENANT</tenant>
+     <application>MYAPP</tenant>
+   </properties>
+   ...
+   ```
+
 1. Add the tests that build the test framework.  These tests reside in the `src/test/java` directory
    of your application.  You can copy the sample tests that are in [this directory](https://github.com/vespa-engine/sample-apps/tree/master/vespa-cloud/album-recommendation-prod/src/test/java/ai/vespa/example).
 
 
 ### Adding deployment files
 Vespa Cloud uses a file called `deployment.xml` to tell where your production deployments reside.
-To get your application into the `prod.aws-us-east-1c` zone add `deployment.xml` at the root of
-your application directory.
+To get your application into the `prod.aws-us-east-1c` zone add `deployment.xml` together with your
+`services.xml` file in `src/main/application`.
 
 ```xml
 <deployment version="1.0">
