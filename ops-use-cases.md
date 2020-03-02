@@ -49,9 +49,9 @@ Changing specifications, like double CPU or cut memory is a configuration change
     </nodes>
 
 Using this flexibility, teams migrating from self-hosted to Vespa Cloud:
-* cuts cost in half on average
-* launches with little risk using overcapacity first days
-* accelerates schedules as load test requirements are cut
+* cut costs in half on average
+* launch with little risk using over-capacity first days
+* accelerate schedules as load test requirements are cut
 
 **Highlighted features**
 * Auto node capacity migration - move from one resource specification to another
@@ -63,7 +63,7 @@ Using this flexibility, teams migrating from self-hosted to Vespa Cloud:
 ## Automated, Secure Deployments - no humans involved
 A Vespa-application is defined by its configuration and code,
 maintained in the [application package](https://docs.vespa.ai/documentation/cloudconfig/application-packages.html).
-This changes over time as schemas change, code is modified.
+This changes over time as schemas change and code is modified.
 To deploy changes safely to production, an explicit [validation](https://docs.vespa.ai/documentation/reference/validation-overrides.html) is required for potentially destructive changes.
 
 This makes changes to production safe, most teams deploy daily or more often.
