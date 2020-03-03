@@ -92,5 +92,6 @@ your application.
    <validation-overrides>
      <allow until="2020-02-28" comment="Removing aws-us-east-1c">deployment-removal</allow>
    </validation-overrides>
+   ```
 
 1. Build the application package and submit it as you would any deployment.
