@@ -30,3 +30,5 @@ docs:
       url: /reference/deployment
     - page: Benchmarking
       url: /benchmarking
+    - page: Data Dump / Purge
+      url: /data-dump
