@@ -118,13 +118,17 @@ $ git clone https://github.com/vespa-engine/sample-apps.git &amp;&amp; cd sample
     </li>
     <li>
         <p>
-        <strong>Create a self-signed certificate</strong><!-- use ec:<(openssl ecparam -name prime256v1) for elliptic curve keys -->
+        <strong>Create a self-signed certificate</strong>
+        </p>
+        <p>
+          This certificate and key will be used to send requests to Vespa Cloud later.
+        </p>
 <pre>
 $ openssl req -x509 -nodes -days 14 -newkey rsa:4096 \
-  -subj "/C=NO/ST=Trondheim/L=Trondheim/O=My Company/OU=My Department/CN=example.com" \
+  -subj "/CN=example.com" \
   -keyout data-plane-private-key.pem -out data-plane-public-cert.pem
 </pre>
-        Alternatively, copy existing keys to current work dir.
+        Alternatively, copy an existing keys to current working directory, if you have one.
         More details in <a href="security-model#data-plane">Data Plane</a>,
         see <em>Client certificate</em>.
         </p>
