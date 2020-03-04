@@ -1,0 +1,163 @@
+---
+title: Testing
+---
+
+<p>
+This is the Vespa Cloud Testing reference.
+Refer to <a href="../automated-deployments">Automated Deployments</a> for context
+</p>
+
+
+
+<h2 id="system-tests">System tests</h2>
+<p>
+When a Vespa application is built with the <code>fat-test-application</code> profile —
+<code>mvn package -Pfat-test-application</code> —
+all Java JUnit5 tests with the <code>@SystemTest</code> annotation, and all their dependencies,
+are stored in a separate test code artifact, which is submitted to the Vespa cloud together with the application package.
+During an automated system test, a fresh test deployment is created,
+and the system tests in the test artifact are run to verify the test deployment behaves as expected. Minimal test:
+<pre>
+import ai.vespa.hosted.cd.SystemTest;
+import org.junit.jupiter.api.Test;
+
+@SystemTest
+public class MiminalSystemTest {
+    @Test
+    public void testSearchAndFeeding() throws Exception {
+        // Test code and assertions here
+    }
+}
+</pre>
+</p><p>
+The <em>system test framework</em> in <code><a href="https://search.maven.org/artifact/com.yahoo.vespa/tenant-cd">com.yahoo.vespa:tenant-cd</a></code> contains tools
+for runtime-dependent authentication against the Vespa deployment to test, and for endpoint discovery.
+The default behavior of <code>mvn package vespa:deploy</code> is to deploy to the
+<a href="/reference/environments#dev">dev</a> environment,
+and the default behavior of <code>mvn test -Dtest.categories=system</code> is to run system tests against this dev deployment.
+The <em>tenant</em> and <em>application</em> properties from the <em>pom.xml</em>,
+together with the <em>instance</em> property which defaults to the current user's username,
+determines the deployment to create or test.
+Read more about this <a href="/reference/vespa-cloud-api">here</a>.
+Tests can also be run from an IDE without additional setup.
+See <a href="https://github.com/vespa-engine/sample-apps/tree/master/vespa-cloud/album-recommendation-java">
+album-recommendation-java</a> for sample system tests.
+</p><p>
+During automated tests, the deployment is instead done to the
+<a href="/reference/environments#test">test environment</a>,
+with the same application package and Vespa runtime combination as is to be deployed in production;
+and when the tests are run, the endpoints from the test deployment are used.
+The test deployment is empty when the test execution begins, and is torn down again when it ends,
+so documents must be fed as part of the system test.
+The size of each test cluster is by default reduced to 1 node.
+</p><p>
+<img src="/img/vespa-CD-system-test.svg" alt="Vespa CD" width="580" height="220" />
+</p><p>
+It's also possible to use local endpoints, e.g., in a docker container on the development machine, in the system tests;
+specify <code>-Dvespa.test.config=/some/path/to/test/config/json</code> and put a JSON file there,
+which has the endpoints for each of the clusters defined in <a href="/reference/services">services.xml</a>, like:
+<pre>
+{
+  "localEndpoints": {
+    "default": "https://localhost:8080/",
+    "container": "https://localhost:8081/"
+  }
+}
+</pre>
+</p>
+
+
+
+<h2 id="staging-tests">Staging tests</h2>
+<p>
+Just like tests with the <code>@SystemTest</code> annotation, tests with the <code>@StagingTest</code> and
+<code>@StagingSetup</code> annotations are also included in the test artifact.
+These are run in the automated staging test job, also against a fresh deployment.
+The goal of a staging test, however, is not to ensure the new deployment satisfies its functional specifications, like in the system test;
+rather, it is to ensure the upgradeof an existing production cluster is safe,
+and compatible with the behaviour expected by existing clients.
+<pre>
+import ai.vespa.hosted.cd.StagingSetup;
+import org.junit.jupiter.api.Test;
+
+@StagingSetup
+class StagingSetupTest {
+
+    @Test
+    void feedAndSearch() throws IOException {
+        // Feed the static staging test documents; staging clusters are always empty when setup is run.
+        // Verify documents are searchable and rendered as expected, prior to upgrade.
+    }
+
+}
+</pre>
+<pre>
+import ai.vespa.hosted.cd.StagingTest;
+import org.junit.jupiter.api.Test;
+
+@StagingTest
+public class MiminalStagingTest {
+    @Test
+    public void testSearchAndFeeding() throws Exception {
+        // Test code and assertions here
+    }
+}
+</pre>
+</p><p>
+A staging test may, for instance, test an upgrade from application package <code>X</code> to <code>X+1</code>,
+and from platform version <code>Y</code> to <code>Y+1</code>.
+The staging test then consists of the following steps:
+<ol>
+  <li>Deploy the initial pair <code>X, Y</code> to the <a href="/reference/environments#staging">staging environment</a>.</li>
+  <li>Populate the deployment with data, making it reasonably similar to a production deployment.
+      This is done by the <code>@StagingSetup</code>-annotated code, which typically feeds a set of static documents.</li>
+  <li>Upgrade the deployment to the target pair <code>X+1, Y+1</code>.</li>
+  <li>Verify the deployment works as expected after the upgrade.
+      This is done by the <code>@StagingTest</code>-annotated code.</li>
+</ol>
+Because the staging tests are there to verify continued service during an upgrade,
+it is important to hold off changes in the staging tests until new application changes are completely rolled out, and all clients updated.
+With a significant change, the workflow is to
+<ol>
+  <li>update the application code and the system and production tests,</li>
+  <li>deploy the change,</li>
+  <li>update all clients, and, possibly, the documents of the application, and <em>then</em></li>
+  <li>update the staging tests to expect the new functionality, and, possibly, its setup phase to use the new documents.</li>
+</ol>
+Staging tests can also be run against a dev deployment, or against a local Vespa deployment, just like system tests.
+Specify <code>-Dtest.categories=staging-setup</code> for the setup code,
+and <code>-Dtest.categories=staging</code> for the actual tests.
+To deploy to a certain platform version, use, e.g., <code>mvn vespa:deploy -DvespaVersion=1.2.3</code>.
+</p><p>
+The sizes of clusters in staging are by default reduced to 10% of the size specified in services.xml, or at least 2 nodes.
+</p>
+
+
+
+<h2 id="production-tests">Production tests</h2>
+<p>
+Finally, tests may also be annotated with the <code>@ProductionTest</code> annotation.
+These are run against production after deployment,
+and any failure will stop the roll-out.
+Make sure the tests do not modify production data in an unintended fashion.
+</p><p>
+Production tests must be specified with the <code>&lt;test&gt;</code> tag
+under <code>&lt;prod&gt;</code> in <a href="/reference/deployment">deployment.xml</a>,
+and it is also possible to add a <code>&lt;delay&gt;</code> between the deployment and the test tag to, e.g.,
+allow time for gathering higher-level metrics which the production test will verify.
+</p><p>
+To run production tests manually, use an IDE, or run all tests with <code>mvn test -Dtest.categories=production</code>.
+This, again, assumes there is a dev deployment to run the tests against.
+To run a production test against a production deployment,
+specify <code>-Denvironment=prod -Dregion=&lt;region name&gt;</code> to <code>mvn test</code> on the command line,
+or as a VM argument in your IDE.
+<strong>Be careful not to run system or staging tests against production deployments.</strong>
+</p>
+
+
+
+<h2 id="developing-tests">Developing tests</h2>
+<p>
+Use the <code>vespaengine/vespa-pipeline</code> Docker image to develop tests.
+<!-- ToDo: more here -->
+</p>

@@ -32,3 +32,5 @@ docs:
       url: /benchmarking
     - page: Data Dump / Purge
       url: /data-dump
+    - page: Testing
+      url: /reference/testing
