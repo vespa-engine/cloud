@@ -94,8 +94,10 @@ Instead of a simple <em>pipeline</em>, Vespa deployments are <em>orchestrated</e
 <code>X</code> to a production cluster with platform version <code>Y</code> is preceded by <em>system</em> and <em>staging</em>
 tests using the same version pair; and likewise for any upgrade of the platform to version <code>Y</code> of a production
 cluster running an application package <code>X</code>.
-Good system and staging tests therefore guard against both unfortunate changes in the application, and in the Vespa platform. 
-<em><a href="#system-tests">System</a> and <a href="#staging-tests">staging</a> tests are mandatory</em>; see below for how to write them.
+Good system and staging tests therefore guard against both unfortunate changes in the application, and in the Vespa platform.
+</p><p>
+<em><a href="/reference/testing#system-tests">System</a> and
+<a href="/reference/testing#staging-tests">staging</a> tests are mandatory</em>; see below for how to write them.
 </p><p>
 When an application or platform change has been successfully verified in a system and staging tests,
 it is deployed to a <a href="/reference/zones">production zone</a>.
