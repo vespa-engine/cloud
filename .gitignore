@@ -12,4 +12,5 @@ documentation.iml
 .jekyll-cache
 *.iml
 Gemfile.lock
-
+cloud_index.json
+*.pem

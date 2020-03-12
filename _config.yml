@@ -17,5 +17,16 @@ defaults:
             layout: "default"
             index: true
 
+search:
+    namespace: "cloud"
+    doctype  : "cloud"
+    endpoint : "https://vespa-documentation-search.vespa.global.vespa.oath.cloud"
+    do_feed  : true
+    do_index_removal_before_feed: false
+    feed_endpoints:
+        - url: https://vespacloud-docsearch.vespa-team.aws-us-east-1c.public.vespa.oath.cloud/
+          indexes:
+              - cloud_index.json
+
 # Build settings
 markdown: kramdown
