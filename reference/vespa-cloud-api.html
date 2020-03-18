@@ -80,14 +80,28 @@ these properties should be set for any plugin invocation or test execution.
         used for production submissions, developer deployments and tests.</td>
   </tr><tr>
     <td>apiKey</td>
-    <td>This or <code>apiKeyFile</code> must be specified</td>
-    <td>Value of the API key for the current application (for submissions)
-        or developer (for deployments and tests).</td>
+    <td>(Yes)</td>
+    <td><p>
+        This or <code>apiKeyFile</code> must be specified.
+        Value of the API key for the current application (for submissions)
+        or developer (for deployments and tests).
+        </p><p>
+        The value is a multiline private key, like:
+<pre>
+-----BEGIN PRIVATE KEY-----
+MIIEpAIBAAKCAQEA04up8hoqzS1+APIB0RhjXyObwHQnOzhAk5Bd7mhkSbPkyhP1 ...
+iWlX9HNavcydATJc1f0DpzF0u4zY8PY24RVoW8vk+bJANPp1o2IAkeajCaF3w9nf
+q/SyqAWVmvwYuIhDiHDaV2A==
+-----END PRIVATE KEY-----
+</pre>
+        See <a href="../automated-deployments">automated deployments</a> for sample usage
+        </p></td>
   </tr>
   </tr><tr>
     <td>apiKeyFile</td>
-    <td>This or <code>apiKey</code> must be specified</td>
-    <td>File location of the API key for the current application (for submissions)
+    <td>(Yes)</td>
+    <td>This or <code>apiKey</code> must be specified.
+        File location of the API key for the current application (for submissions)
         or developer (for deployments and tests).</td>
   </tr>
   </tr><tr>
