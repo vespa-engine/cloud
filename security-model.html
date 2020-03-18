@@ -4,23 +4,26 @@ title: "Security model"
 
 <p>
 This document details Vespa Cloud's security model.
+</p><p>
+For use of keys in automation, refer to examples in
+<a href="/automated-deployments.html#continuous-deployment">automated deployments</a> and the
+<a href="/reference/vespa-cloud-api#common-properties">api key</a> reference.
 </p>
 
-<h2 id="keys">Keys</h2>
-<p>
-Vespa Cloud has a few different types of keys.
 
+
+<h2 id="keys">Keys</h2>
 <table class="table">
     <thead>
         <tr><th>Name</th><th>What</th><th>Description</th></tr>
     </thead>
     <tbody>
         <tr>
-            <td style="min-width: 10em;">User API Key</td>
-            <td style="min-width: 10em;"><a href="#control-plane">Control plane</a></td>
+            <td>User API Key</td>
+            <td><a href="#control-plane">Control plane</a></td>
             <td>
-                This key is used to access the Vespa Cloud control APIs.  Use this key when you want to
-                deploy your applications with Maven (see <a href="/getting-started.html">Getting Started</a>).
+                This key is used to access the Vespa Cloud control APIs. Use this key when you want to
+                deploy applications with Maven (see <a href="/getting-started.html">Getting Started</a>).
                 The key is associated with your user and can be uploaded or generated in the "Keys" tab in the
                 <a href="http://console.vespa.ai/">Console</a>.
             </td>
@@ -36,8 +39,8 @@ Vespa Cloud has a few different types of keys.
             </td>
         </tr>
         <tr>
-            <td>Vespa API Certificate</td>
-            <td><a href="#data-plane">Data plane</a></td>
+            <td style="white-space: nowrap">Vespa API Certificate</td>
+            <td style="white-space: nowrap"><a href="#data-plane">Data plane</a></td>
             <td>
                 The key is your private key and X.509 certificate you generated for your client.  Only
                 clients that use your private key and certificate will be allowed to send requests to your
@@ -49,7 +52,6 @@ Vespa Cloud has a few different types of keys.
     </tbody>
 </table>
 
-</p>
 
 
 <h2 id="control-plane">Control plane</h2>
@@ -65,7 +67,7 @@ This is bootstrapped by creating a <em>tenant</em> with an <em>owner</em>.
 From this, additional users, as well as <em>applications</em> can be created under the tenant.
 Access is granted based membership in the following roles:
 <table class="table">
-    <tr><td>administrator</td><td>Can manages users and tenant information inside the tenant</td></tr>
+    <tr><td>administrator</td><td>Can manage users and tenant information inside the tenant</td></tr>
     <tr><td>developer</td><td>Can manage applications and their deployments</td></tr>
 </table>
 </p>

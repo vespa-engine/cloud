@@ -61,12 +61,15 @@ and ships it to the Vespa cloud.
 Trigger this job by a merge to the main branch in the source control system,
 where the Vespa application repository is stored.
 </p><p>
-The deployment job must have access to the <a href="/reference/vespa-cloud-api#common-properties">API key</a> -
-e.g. a <em>secret</em> in GitHub, see ToDo example.
+The deployment job must have access to the <a href="/reference/vespa-cloud-api#common-properties">API key</a>.
+See the <a href="https://github.com/vespa-engine/sample-apps/blob/master/.github/workflows/deploy-vespa-documentation-search.yaml">
+deploy-vespa-documentation-search.yaml</a> GitHub workflow for an example -
+the API key is stored as a secret in the repository.
 </p><p>
 The job should execute something like the following (modify as needed if not using git):
 <pre>
-$ mvn clean vespa:compileVersion
+$ mvn clean vespa:compileVersion \
+  -DapiKey="${MY_API_KEY}"
 
 $ mvn -P fat-test-application \
   package vespa:submit \
@@ -74,11 +77,30 @@ $ mvn -P fat-test-application \
   -Drepository=$(git config --get remote.origin.url) \
   -Dbranch=$(git rev-parse --abbrev-ref HEAD) \
   -Dcommit=$(git rev-parse HEAD) \
-  -DauthorEmail=$(git log -1 --format=%aE)
+  -DauthorEmail=$(git log -1 --format=%aE) \
+  -DapiKey="${MY_API_KEY}"
 </pre>
 Track deployment at
 <em>https://console.vespa.oath.cloud/tenant/mytenant/application/myapp/deployment</em> -
 click "Deployment" in the console / refresh page.
+</p>
+<!-- ToDo: there should be a badge as well, add here when ready -->
+
+
+<h3 id="vespa-compile-version">vespa:compileVersion</h3>
+<p>
+Vespa Cloud is <em>backwards compatible</em> on major versions.
+Meaning, code compiled with an older version of Vespa APIs
+can always be deployed to Vespa Cloud on same major version.
+However, if the application package is compiled with a newer API version,
+then deployed to an older version serving, deployment <span style="text-decoration: underline">can</span> fail.
+</p><p>
+This is normally not a problem as Vespa Cloud upgrades daily.
+</p><p>
+To make sure <em>forward compatibility</em> is not an issue,
+<code>vespa:compileVersion</code> returns the <span style="text-decoration: underline">lowest</span>
+version running in production for the application.
+This version is then set in <code>vespa.compile.version</code> when building the application package.
 </p>
 
 
