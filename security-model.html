@@ -14,40 +14,54 @@ For use of keys in automation, refer to examples in
 
 <h2 id="keys">Keys</h2>
 <table class="table">
-    <thead>
-        <tr><th>Name</th><th>What</th><th>Description</th></tr>
-    </thead>
+    <thead></thead>
     <tbody>
         <tr>
-            <td>User API Key</td>
-            <td><a href="#control-plane">Control plane</a></td>
-            <td>
-                This key is used to access the Vespa Cloud control APIs. Use this key when you want to
-                deploy applications with Maven (see <a href="/getting-started.html">Getting Started</a>).
-                The key is associated with your user and can be uploaded or generated in the "Keys" tab in the
+            <th>User API Key</th>
+            <td style="white-space: nowrap"><a href="#control-plane">Control plane</a></td>
+            <td><p>
+                This key is used to access the Vespa Cloud control APIs.
+                The key is set on the <em>tenant</em> level -
+                it is hence valid for all applications for the tenant.
+                The key is associated with a user
+                and can be uploaded or generated in the "Keys" view in the
                 <a href="http://console.vespa.ai/">Console</a>.
-            </td>
+                </p><p>
+                Use this key to deploy/submit applications with Maven
+                (see <a href="/getting-started.html">Getting Started</a>).
+                </p><p>
+                This key has full control plane read/write credentials.
+            </p></td>
         </tr>
         <tr>
-            <td>Headless API Key</td>
+            <th>Application API Key</th>
             <td><a href="#control-plane">Control plane</a></td>
-            <td>
-                They key is also used to access the Vespa Cloud control APIs.  Use this key in your CI/CD
-                pipelines where you requires headless access to deploy your applications.  The key is
-                associated with your application, and can be uploaded or generated in the application deploy view
-                in the Console.
-            </td>
+            <td><p>
+                This key is used to access the Vespa Cloud control APIs.
+                The key is associated with an application,
+                and can be uploaded or generated in the "Application deploy" view in the Console.
+                </p><p>
+                Use this key in CI/CD pipelines
+                where headless access is required to deploy applications.
+                </p><p>
+                This key has control plane read credentials, and also deploy/submit rights.
+            </p></td>
         </tr>
         <tr>
-            <td style="white-space: nowrap">Vespa API Certificate</td>
-            <td style="white-space: nowrap"><a href="#data-plane">Data plane</a></td>
-            <td>
-                The key is your private key and X.509 certificate you generated for your client.  Only
-                clients that use your private key and certificate will be allowed to send requests to your
-                application's Vespa API (<a href="https://docs.vespa.ai/documentation/search-api">search</a>, 
-                <a href="https://docs.vespa.ai/documentation/reference/document-v1-api-reference.html">feed</a>, etc.).
-                You generate the certificate and key on your own and include the certificate in your application package.
-            </td>
+            <th style="white-space: nowrap">Vespa API Certificate</th>
+            <td><a href="#data-plane">Data plane</a></td>
+            <td><p>
+                The key is a private key and X.509 certificate generated for the client.
+                Only clients using the private key and certificate
+                will be granted access to the application's data plane.
+                Example data plane APIs are
+                <a href="https://docs.vespa.ai/documentation/search-api">search</a> and
+                <a href="https://docs.vespa.ai/documentation/reference/document-v1-api-reference.html">feed</a>.
+                </p><p>
+                Generate the certificate and key
+                and include the certificate in the application package -
+                example: <a href="/getting-started.html">create a self-signed certificate</a>.
+            </p></td>
         </tr>
     </tbody>
 </table>
