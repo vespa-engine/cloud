@@ -61,11 +61,6 @@ and ships it to the Vespa cloud.
 Trigger this job by a merge to the main branch in the source control system,
 where the Vespa application repository is stored.
 </p><p>
-The deployment job must have access to the <a href="/reference/vespa-cloud-api#common-properties">API key</a>.
-See the <a href="https://github.com/vespa-engine/sample-apps/blob/master/.github/workflows/deploy-vespa-documentation-search.yaml">
-deploy-vespa-documentation-search.yaml</a> GitHub workflow for an example -
-the API key is stored as a secret in the repository.
-</p><p>
 The job should execute something like the following (modify as needed if not using git):
 <pre>
 $ mvn clean vespa:compileVersion \
@@ -85,6 +80,35 @@ Track deployment at
 click "Deployment" in the console / refresh page.
 </p>
 <!-- ToDo: there should be a badge as well, add here when ready -->
+
+
+<h3 id="keys">Keys</h3>
+<p>
+Deployment jobs must have access to the
+<a href="/reference/vespa-cloud-api#common-properties">Application API key</a>.
+See the GitHub workflow
+<a href="https://github.com/vespa-engine/sample-apps/blob/master/.github/workflows/deploy-vespa-documentation-search.yaml">
+deploy-vespa-documentation-search.yaml</a> for an example -
+the API key is stored as a secret in the repository.
+</p><p>
+Some services like <a href="https://travis-ci.org">Travis CI</a> do not accept
+multi-line values for Environment Variables in Settings.
+A workaround is to use the output of
+<pre>
+$ openssl base64 -A -a &lt; mykey.pem &amp;&amp; echo
+</pre>
+in a variable, say VESPA_MYAPP_API_KEY, in Travis Settings.
+VESPA_MYAPP_API_KEY is exported in the Travis environment, example output:
+<pre>
+Setting environment variables from repository settings
+$ export VESPA_MYAPP_API_KEY=[secure]
+</pre>
+Then, before deploying/submitting to Vespa Cloud, regenerate the key value:
+<pre>
+MY_API_KEY=`echo $VESPA_MYAPP_API_KEY | openssl base64 -A -a -d`
+</pre>
+and use "${MY_API_KEY}" in the deploy/submit command.
+</p>
 
 
 <h3 id="vespa-compile-version">vespa:compileVersion</h3>
