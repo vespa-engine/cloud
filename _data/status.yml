@@ -1,0 +1,21 @@
+# Copyright 2020 Oath Inc. All rights reserved.
+zones:
+  # List all zones and status. Valid status is "success", "warning" or "danger". 
+  # Message should be "OK", "Partial outage", "Degraded service", "Down" or similar short string.
+  - name: "Infrastructure"
+    status: success
+    message: "OK"
+  - name: "aws-us-east-1c"
+    status: success
+    message: "OK"
+  - name: "aws-ap-northeast-1a"
+    status: success
+    message: "OK"
+messages:
+  # Detailed operational messages displayed below status overview. The HTML page will only show 
+  # messages < 7 days old while JSON will include everything.
+  # Example:
+  # - date: 2020-02-20
+  #   message: "Issues with query serving in aws.us-east-1c - currently investigating."
+  - date: 2020-03-23
+    message: "The aws-ap-northeast-1a zone in Tokyo, JP region is now online!"

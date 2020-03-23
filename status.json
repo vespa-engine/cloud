@@ -1,0 +1,5 @@
+---
+layout: status
+# Data for this page is found in _data/status.yml
+---
+{{ site.data.status | jsonify }}
