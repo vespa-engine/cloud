@@ -1,5 +1,6 @@
 ---
 layout: status
+# Data for this page is found in _data/status.yml
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -16,23 +17,36 @@ layout: status
                     <thead>
                         <tr><th>Zone</th><th>Status</th></td></tr>
                     </thead>
+                    {% if site.data.status.zones.size > 0 %}
                     <tbody>
+                        {% for zone in site.data.status.zones %}
                         <tr>
-                            <td>Infrastructure</td>
-                            <td class="bg-success">OK</td>
+                            <td>{{ zone.name }}</td>
+                            <td class="bg-{{ zone.status }}">{{ zone.message }}</td>
                         </tr>
-                        <tr>
-                            <td>aws.us-east1c</td>
-                            <td class="bg-success">OK</td>
-                        </tr>
+                        {% endfor %}
                     </tbody>
+                    {% endif %}
                 </table>
             </p>
 
             <h3>Messages</h3>
+            {% if site.data.status.messages[0] %}
+            {% assign datelimit = "now" | date: '%s' | minus:604800 %}
+            {% for message in site.data.status.messages %}
+                {% assign epoch = message.date | date: '%s' | ceil %}
+                {% if epoch >= datelimit %}
+                <p>
+                    <b>{{ message.date }}</b><br />
+                    {{ message.message }}
+                </p>
+                {% endif %}
+            {% endfor %}
+            {% else %}
             <p>
                 No updates.
             </p>
+            {% endif %}
         </div>
     </body>
 </html>
