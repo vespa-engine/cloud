@@ -5,7 +5,10 @@ zones:
   - name: "Infrastructure"
     status: success
     message: "OK"
-  - name: "aws.us-east-1c"
+  - name: "aws-us-east-1c"
+    status: success
+    message: "OK"
+  - name: "aws-ap-northeast-1a"
     status: success
     message: "OK"
 messages:
