@@ -27,23 +27,37 @@ com.yahoo.vespa:vespa-maven-plugin</a></code> has the following goals:
     <th style="width:180px">Property Name</th>
     <th>Values</th>
   </tr><tr>
+    <td>test</td>
+    <td>If run with <code>-Dtest.categories=system</code>
+        or <code>-Dtest.categories=staging</code>,
+        it requires <code>apiKeyFile</code> for control plane access
+        and key/certificate pair for data plane access - example:
+<pre>
+$ mvn test \
+  -Dtest.categories=system \
+  -DdataPlaneKeyFile=data-plane-private-key.pem -DdataPlaneCertificateFile=data-plane-public-cert.pem \
+  -DapiKeyFile=key.pem
+</pre>
+    </td>
+  </tr><tr>
     <td>submit</td>
     <td>Submit an application package and its accompanying set of tests,
         created with <code>mvn package -Pfat-test-application</code>,
-        for automated deployment to production. Requires a headless API key.</td>
+        for automated deployment to production.
+        Requires an API key.</td>
   </tr><tr>
     <td>deploy</td>
     <td>Deploy an application package, created with <code>mvn package</code>, to a development zone.
-        Requires a developer API key.</td>
+        Requires an API key.</td>
   </tr><tr>
     <td>delete</td>
     <td>Delete a development deployment, created with <code>mvn vespa:deploy</code>.
-        Requires a developer API key.</td>
+        Requires an API key.</td>
   </tr><tr>
     <td>compileVersion</td>
     <td>Find the latest Vespa version to compile against,
         which is guaranteed to be compatible with the oldest production version of the application.
-        Requires either kind of API key.</td>
+        Requires an API key.</td>
   </tr><tr>
     <td>effectiveServices</td>
     <td>Compute the effective <code>services.xml</code>, based on
