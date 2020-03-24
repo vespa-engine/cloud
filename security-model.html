@@ -120,12 +120,7 @@ Application API keys are managed on the application level - see <em>deploy</em> 
 <!-- ToDo: this should be a separate view from deploy -->
 An application can have multiple Application API keys.
 </p><p>
-For both kinds of key, the public key is uploaded through the console.
-The private key is kept secret,
-but must be made available to the Maven Vespa plugin which deploys applications,
-and to test code for system tests against dev/perf deployments.
-In both cases, this is done by setting <code>apiKeyFile</code> in <code>pom.xml</code>,
-or by specifying this system property on the command line (<code>-DapiKeyFile=/path/to/key</code>).
+Refer to the <a href="/reference/vespa-cloud-api#common-properties">api key</a> reference for details.
 </p>
 
 
