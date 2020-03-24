@@ -101,24 +101,24 @@ Manage users and roles in the <em>users</em> view: https://console.vespa.ai/tena
 <p>
 There are two kinds of application deployments:
 <ul>
-    <li><a href="reference/zones">manual deployments</a> to dev/perf zones,
-        for application development testing, and</li>
+    <li><a href="reference/zones">manual deployments</a> to dev/perf zones and</li>
     <li><a href="automated-deployments">automated deployments</a> to production zones</li>
 </ul>
 Likewise, there are two kinds of keys that can be used for API authentication:
 <ul>
-    <li>developer keys, which identify a member of the _developer_ role,
+    <li>User API keys, which identify a member of the <em>developer</em> role,
         and allows, e.g., manual deployments and system tests, and</li>
-    <li>headless keys, which identify a build service which submits application packages
-        for automated deployment</li>
+    <li>Application API keys,
+        which identify a build service which submits application packages for automated deployment</li>
 </ul>
-Developer keys are personal, and are managed on the tenant level, in the Vespa Cloud console.
+User API keys are personal, and are managed in the <em>users</em> view.
 Each developer may have a single key at any time,
 and both administrators and developers may revoke the key of another developer,
-if it has been compromised.
+if it has been compromised. <!-- ToDo: that sounds odd - and Admin can manage other users, right? -->
 </p><p>
-Headless keys are managed on the application level, in the Vespa Cloud console.
-Each application may have several headless keys.
+Application API keys are managed on the application level - see <em>deploy</em> view.
+<!-- ToDo: this should be a separate view from deploy -->
+An application can have multiple Application API keys.
 </p><p>
 For both kinds of key, the public key is uploaded through the console.
 The private key is kept secret,
