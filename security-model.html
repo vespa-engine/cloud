@@ -141,20 +141,23 @@ The certificate is signed by DigiCert or Globalsign.
 
 <h3 id="client-certificate">Client certificate</h3>
 <p>
-To enable TLS client side authentication:
-<ol>
-    <li>Add trusted certificates (or issuer certificates) to the file <code>[application-package]/security/clients.pem</code></li>
-</ol>
-With this, only clients presenting a valid certificate will be able to access the application endpoints.
+To enable TLS client side authentication,
+add trusted certificates (or issuer certificates) to <code>[application-package]/security/clients.pem</code>
+With this, only clients with a valid certificate can access the application endpoints.
+</p>
+<!-- ToDo: this is confusing, consider remove from here and insted put it in the testing doc / link there / in appendix -->
+<p>
 In order to test application deployments,
 another trusted client certificate is added by Vespa Cloud for deployment
 to the test and staging zones <em>only</em>.
 This does not affect production deployments.
 </p>
+<!-- end ToDo -->
+<p>
 To run system tests against a development endpoint,
 specify the <code>dataPlaneCertificateFile</code> and <code>dataPlaneKeyFile</code> properties,
 in the same manner as the <code>apiKeyFile</code> used for API access.
-
+</p>
 
 
 <h2 id="application-isolation">Application isolation</h2>
