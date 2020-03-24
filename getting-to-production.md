@@ -77,7 +77,7 @@ track progress of the deployment job in the Vespa Cloud Console.
 The Vespa Cloud application is now running in a production zone.  Congratulations!
 After this you can further enhance the production application:
 
-* Create a CI/CD pipeline (e.g. using GitHub Actions)
+* Create a CI/CD pipeline (e.g. [using GitHub Actions](https://github.com/vespa-engine/sample-apps/blob/master/.github/workflows/deploy-vespa-documentation-search.yaml))
 * For failover, deploy in multiple zones and use a [global endpoint](/reference/deployment#endpoints)
 
 
