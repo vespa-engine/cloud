@@ -159,6 +159,34 @@ in the same manner as the <code>apiKeyFile</code> used for API access.
 </p>
 
 
+<h3 id="using-a-browser">Using a browser</h3>
+<p>
+In Vespa guides, <em>curl</em> is used in examples, like:
+<pre>
+$ curl --cert ./data-plane-public-cert.pem --key ./data-plane-private-key.pem $ENDPOINT
+</pre>
+To use a browser, install key/cert pair -
+this procedure is tested on macOS Catalina / Chrome 80.0.3987.132:
+<ol>
+  <li>
+    Install key/cert pair:
+<pre>
+$ security import data-plane-private-key.pem -k ~/Library/Keychains/login.keychain
+$ security import data-plane-public-cert.pem -k ~/Library/Keychains/login.keychain
+</pre>
+  </li><li>
+    In Keychain Access: With <em>login</em> keychain -> My Certificates category -> example.com,
+    right-click and "New Identity Preference", then add the endpoint url, like
+    <em>https://me.my-app.mytenant1.aws-us-east-1c.dev.public.vespa.oath.cloud</em>
+  </li><li>
+    Open the same URL in Chrome, choose the example.com certificate
+    and allow Chrome to read the private key.
+  </li>
+</ol>
+</p>
+
+
+
 <h2 id="application-isolation">Application isolation</h2>
 <p>
 All application nodes run as separate isolated Docker containers.
