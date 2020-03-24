@@ -74,17 +74,27 @@ The following explains how access to management features in Vespa is controlled.
 </p>
 
 
-<h3 id="vespa-console-access">Vespa console access</h3>
+<h3 id="roles">Roles</h3>
 <p>
 Console access is available to authenticated users only.
-This is bootstrapped by creating a <em>tenant</em> with an <em>owner</em>.
-From this, additional users, as well as <em>applications</em> can be created under the tenant.
-Access is granted based membership in the following roles:
+This is bootstrapped by creating a <em>tenant</em>.
+<!-- ToDo with an <em>owner</em> - there is no concept of an owner ...-->
+Manage users and roles in the <em>users</em> view: https://console.vespa.ai/tenant/tenant_name/users:
 <table class="table">
-    <tr><td>administrator</td><td>Can manage users and tenant information inside the tenant</td></tr>
-    <tr><td>developer</td><td>Can manage applications and their deployments</td></tr>
+<thead></thead>
+<tbody>
+    <tr>
+      <th>Developer</th><td>Can create applications,
+          deploy to dev zones and submit to prod zones.</td>
+    </tr><tr>
+      <th>Admin</th><td>As <em>Developer</em>,
+        and can also manage users and tenant information.
+        Tenant information includes usage information and billing.
+      </td>
+    </tr>
+</tbody>
 </table>
-</p>
+
 
 
 <h3 id="application-deployment">Application deployment</h3>
