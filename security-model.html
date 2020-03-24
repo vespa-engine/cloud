@@ -74,48 +74,52 @@ The following explains how access to management features in Vespa is controlled.
 </p>
 
 
-<h3 id="vespa-console-access">Vespa console access</h3>
+<h3 id="roles">Roles</h3>
 <p>
 Console access is available to authenticated users only.
-This is bootstrapped by creating a <em>tenant</em> with an <em>owner</em>.
-From this, additional users, as well as <em>applications</em> can be created under the tenant.
-Access is granted based membership in the following roles:
+This is bootstrapped by creating a <em>tenant</em>.
+<!-- ToDo with an <em>owner</em> - there is no concept of an owner ...-->
+Manage users and roles in the <em>users</em> view: https://console.vespa.ai/tenant/<span style="background: yellow">tenant_name</span>/users:
 <table class="table">
-    <tr><td>administrator</td><td>Can manage users and tenant information inside the tenant</td></tr>
-    <tr><td>developer</td><td>Can manage applications and their deployments</td></tr>
+<thead></thead>
+<tbody>
+    <tr>
+      <th>Developer</th><td>Can create applications,
+          deploy to dev zones and submit to prod zones.</td>
+    </tr><tr>
+      <th>Admin</th><td>Manage users and tenant information.
+        Tenant information includes usage information and billing.
+      </td>
+    </tr>
+</tbody>
 </table>
-</p>
+
 
 
 <h3 id="application-deployment">Application deployment</h3>
 <p>
 There are two kinds of application deployments:
 <ul>
-    <li><a href="reference/zones">manual deployments</a> to dev/perf zones,
-        for application development testing, and</li>
+    <li><a href="reference/zones">manual deployments</a> to dev/perf zones and</li>
     <li><a href="automated-deployments">automated deployments</a> to production zones</li>
 </ul>
 Likewise, there are two kinds of keys that can be used for API authentication:
 <ul>
-    <li>developer keys, which identify a member of the _developer_ role,
+    <li>User API keys, which identify a member of the <em>developer</em> role,
         and allows, e.g., manual deployments and system tests, and</li>
-    <li>headless keys, which identify a build service which submits application packages
-        for automated deployment</li>
+    <li>Application API keys,
+        which identify a build service which submits application packages for automated deployment</li>
 </ul>
-Developer keys are personal, and are managed on the tenant level, in the Vespa Cloud console.
+User API keys are personal, and are managed in the <em>users</em> view.
 Each developer may have a single key at any time,
 and both administrators and developers may revoke the key of another developer,
-if it has been compromised.
+if it has been compromised. <!-- ToDo: that sounds odd - and Admin can manage other users, right? -->
 </p><p>
-Headless keys are managed on the application level, in the Vespa Cloud console.
-Each application may have several headless keys.
+Application API keys are managed on the application level - see <em>deploy</em> view.
+<!-- ToDo: this should be a separate view from deploy -->
+An application can have multiple Application API keys.
 </p><p>
-For both kinds of key, the public key is uploaded through the console.
-The private key is kept secret,
-but must be made available to the Maven Vespa plugin which deploys applications,
-and to test code for system tests against dev/perf deployments.
-In both cases, this is done by setting <code>apiKeyFile</code> in <code>pom.xml</code>,
-or by specifying this system property on the command line (<code>-DapiKeyFile=/path/to/key</code>).
+Refer to the <a href="/reference/vespa-cloud-api#common-properties">api key</a> reference for details.
 </p>
 
 
@@ -136,20 +140,23 @@ The certificate is signed by DigiCert or Globalsign.
 
 <h3 id="client-certificate">Client certificate</h3>
 <p>
-To enable TLS client side authentication:
-<ol>
-    <li>Add trusted certificates (or issuer certificates) to the file <code>[application-package]/security/clients.pem</code></li>
-</ol>
-With this, only clients presenting a valid certificate will be able to access the application endpoints.
+To enable TLS client side authentication,
+add trusted certificates (or issuer certificates) to <code>[application-package]/security/clients.pem</code>
+With this, only clients with a valid certificate can access the application endpoints.
+</p>
+<!-- ToDo: this is confusing, consider remove from here and insted put it in the testing doc / link there / in appendix -->
+<p>
 In order to test application deployments,
 another trusted client certificate is added by Vespa Cloud for deployment
 to the test and staging zones <em>only</em>.
 This does not affect production deployments.
 </p>
+<!-- end ToDo -->
+<p>
 To run system tests against a development endpoint,
 specify the <code>dataPlaneCertificateFile</code> and <code>dataPlaneKeyFile</code> properties,
 in the same manner as the <code>apiKeyFile</code> used for API access.
-
+</p>
 
 
 <h2 id="application-isolation">Application isolation</h2>
