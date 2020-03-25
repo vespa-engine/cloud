@@ -156,6 +156,31 @@ This does not affect production deployments.
 To run system tests against a development endpoint,
 specify the <code>dataPlaneCertificateFile</code> and <code>dataPlaneKeyFile</code> properties,
 in the same manner as the <code>apiKeyFile</code> used for API access.
+</p><p>
+To add a new certificate/key pair:
+<ol>
+  <li>
+    Generate a new pair - example:
+<pre>
+$ openssl req -x509 -nodes -days 365 -newkey rsa:4096 \
+  -subj "/CN=cloud.vespa.example" \
+  -keyout data-plane-private-key.pem -out data-plane-public-cert.pem
+</pre>
+  </li><li>
+    Add new public certificate to application package
+    (it is OK with blank lines in <code>clients.pem</code> -
+    <a href="https://github.com/vespa-engine/sample-apps/blob/master/vespa-cloud/vespa-documentation-search/src/main/application/security/clients.pem">example</a>):
+<pre>
+$ cat data-plane-public-cert.pem >> src/main/application/security/clients.pem
+</pre>
+  </li><li>
+    Deploy application package
+  </li><li>
+    Use new cert/key pair in Vespa requests
+  </li><li>
+    Remove unused certs from <code>clients.pem</code> and deploy again
+  </li>
+</ol>
 </p>
 
 
