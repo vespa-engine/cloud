@@ -152,9 +152,9 @@ $ mvn test \
     Refer to <a href="https://github.com/vespa-engine/sample-apps/tree/master/album-recommendation-selfhosted">
     album-recommendation-selfhosted</a> for how to create the application package.
   </p></li><li><p>
-    When <em>system</em> and <em>staging</em> tests are ready, deploy to production
-    ($ mvn clean package vespa:compileVersion -DapiKey="$API_KEY" was run above):
+    When <em>system</em> and <em>staging</em> tests are ready, deploy to production:
 <pre data-test="exec" data-test-assert-contains="BUILD SUCCESS">
+$ mvn vespa:compileVersion -DapiKey="$API_KEY"
 $ mvn -P fat-test-application \
   -Dvespa.compile.version="$(cat target/vespa.compile.version)" \
   -DapiKey="$API_KEY" \
