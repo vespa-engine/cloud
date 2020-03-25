@@ -41,7 +41,7 @@ $ git clone https://github.com/vespa-engine/sample-apps.git && \
     Create a self-signed certificate / private key:
 <pre data-test="exec">
 $ openssl req -x509 -nodes -days 14 -newkey rsa:4096 \
-  -subj "/CN=example.com" \
+  -subj "/CN=cloud.vespa.example" \
   -keyout data-plane-private-key.pem -out data-plane-public-cert.pem
 </pre>
   </p></li><li><p>
@@ -75,7 +75,8 @@ $ mvn clean package vespa:deploy -DapiKey="$API_KEY"
     as first time deployments takes a few minutes.
     The endpoint URL is printed in the <em>Install application</em> section when the deployment is successful -
     store this (change <em>root</em> to actual name) for later steps and test it
-    (the massive JSON output is expected):
+    (the massive JSON output is expected).
+    Also see <a href="/security-model#using-a-browser">using a browser</a>:
 <pre data-test="exec">
 $ ENDPOINT=https://root.album-rec-java.vespa-team.aws-us-east-1c.dev.public.vespa.oath.cloud
 $ curl --cert ./data-plane-public-cert.pem --key ./data-plane-private-key.pem $ENDPOINT
