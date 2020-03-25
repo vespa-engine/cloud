@@ -166,7 +166,8 @@ In Vespa guides, <em>curl</em> is used in examples, like:
 $ curl --cert ./data-plane-public-cert.pem --key ./data-plane-private-key.pem $ENDPOINT
 </pre>
 To use a browser, install key/cert pair -
-this procedure is tested on macOS Catalina / Chrome 80.0.3987.132:
+this procedure is tested on macOS Catalina / Chrome 80.0.3987.132,
+assuming Certificate Common Name is "cloud.vespa.example" (as in the guides):
 <ol>
   <li>
     Install key/cert pair:
@@ -175,7 +176,7 @@ $ security import data-plane-private-key.pem -k ~/Library/Keychains/login.keycha
 $ security import data-plane-public-cert.pem -k ~/Library/Keychains/login.keychain
 </pre>
   </li><li>
-    In Keychain Access: With <em>login</em> keychain -> My Certificates category -> example.com,
+    In Keychain Access: With <em>login</em> keychain -> My Certificates category -> cloud.vespa.example,
     right-click and "New Identity Preference", then add the endpoint url, like
     <em>https://me.my-app.mytenant1.aws-us-east-1c.dev.public.vespa.oath.cloud</em>
   </li><li>

@@ -41,7 +41,7 @@ $ git clone https://github.com/vespa-engine/sample-apps.git && \
     Create a self-signed certificate / private key:
 <pre data-test="exec">
 $ openssl req -x509 -nodes -days 14 -newkey rsa:4096 \
-  -subj "/CN=example.com" \
+  -subj "/CN=cloud.vespa.example" \
   -keyout data-plane-private-key.pem -out data-plane-public-cert.pem
 </pre>
   </p></li><li><p>
