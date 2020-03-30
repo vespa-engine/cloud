@@ -118,21 +118,13 @@ $ curl --cert ./data-plane-public-cert.pem --key ./data-plane-private-key.pem \
     To develop such tests, deploy the application to <em>dev</em> (like above) and run tests like
     <a href="https://github.com/vespa-engine/sample-apps/blob/master/vespa-cloud/album-recommendation-java/src/test/java/ai/vespa/example/album/FeedAndSearchSystemTest.java">
     FeedAndSearchSystemTest</a>:
-<pre>
-$ mvn test \
-  -Dtest.categories=system \
-  -DdataPlaneKeyFile=data-plane-private-key.pem -DdataPlaneCertificateFile=data-plane-public-cert.pem \
-  -DapiKeyFile=$HOME/Downloads/USER.TENANTNAME.pem
-</pre>
-<!-- Does not work yet
-<pre data-test="exec">
+<pre data-test="exec" data-test-assert-contains="BUILD SUCCESS">
 $ mvn test \
   -Dtest.categories=system \
   -DdataPlaneKeyFile=data-plane-private-key.pem -DdataPlaneCertificateFile=data-plane-public-cert.pem \
   -DapiKey="$API_KEY"
 </pre>
--->
-    The <code>apiKeyFile</code> is used to fetch the <em>dev</em> instance's endpoints.
+    The <code>apiKey</code> is used to fetch the <em>dev</em> instance's endpoints.
     The data plane key and certificate pair is used by
     <a href="https://github.com/vespa-engine/vespa/blob/master/tenant-cd/src/main/java/ai/vespa/hosted/cd/Endpoint.java">ai.vespa.hosted.cd.Endpoint</a>
     to access the application endpoint.
