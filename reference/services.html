@@ -11,7 +11,7 @@ for the full reference.
 
 
 
-<h2 id="nodes">nodes</h2>
+<h2 id="nodes">&lt;nodes&gt;</h2>
 <p>
 In cloud applications nodes are specified by count and node resources.
 </p><p>
@@ -19,7 +19,7 @@ In cloud applications nodes are specified by count and node resources.
 </p><p>
 <strong>Attributes:</strong>
 <ul>
-  <li><strong>count</strong>: Positive integer. The number of nodes of the cluster.
+  <li><strong>count</strong>: An integer or <a href="#autoscaling-ranges">range</a>. The number of nodes of the cluster.
 </ul>
 In addition there are some attributes for specific cluster types, listed below.
 </p>
@@ -37,7 +37,7 @@ In addition there are some attributes for specific cluster types, listed below.
 
 <h3 id="nodes-for-content">&lt;nodes&gt; for &lt;content&gt;</h3>
 <ul>
-  <li><strong>groups</strong> (optional): Non-negative integer.
+  <li><strong>groups</strong> (optional): Integer or <a href="#autoscaling-ranges">range</a>.
     Sets the number of <em>groups</em> into which content nodes should be divided. 
     Each group will have an equal share of the nodes and <em>redundancy</em> copies of the corpus,
     and each query will be routed to just one group. This allows scaling to a higher query load than is efficient
@@ -63,25 +63,26 @@ or if it should run on existing nodes. Attribute:
 
 
 
-<h2 id="resources">resources</h2>
-<p>
-Contained in the <a href="#nodes">nodes</a> element, specifies each node's resource requirements.
+<h2 id="resources">&lt;resources&gt;</h2>
+
+<p>Contained in the <a href="#nodes">nodes</a> element, specifies each node's resource requirements.
 Resources is a powerful way to optimize cost and performance.
 For new launches, allocate enough to reduce risk -
 then use the <a href="https://docs.vespa.ai/documentation/performance/">performance guides</a>
 to find the sweet spot to balance cost and free capacity, based on real production load.
 Migration to new capacity is automated,
-read more in <a href="https://docs.vespa.ai/documentation/elastic-vespa.html">elastic Vespa</a>.
-</p><p>
+read more in <a href="https://docs.vespa.ai/documentation/elastic-vespa.html">elastic Vespa</a>.</p>
+
+<p>
 <b>Subelements:</b> None
 </p><p>
 <b>Attributes:</b>
 <table class="table">
-  <tr><td><b>vcpu</b></td><td>float</td>
+  <tr><td><b>vcpu</b></td><td>float or <a href="#autoscaling-ranges">range</a></td>
     <td>CPU, virtual threads</td></tr>
-  <tr><td><b>memory</b></td><td>float, followed by a byte unit, such as "Gb"</td>
+  <tr><td><b>memory</b></td><td>float or <a href="#autoscaling-ranges">range</a>, each followed by a byte unit, such as "Gb"</td>
     <td>Memory</td></tr>
-  <tr><td><b>disk</b></td><td>float followed by a byte unit, such as "Gb"</td>
+  <tr><td><b>disk</b></td><td>float or <a href="#autoscaling-ranges">range</a>, each followed by a byte unit, such as "Gb"</td>
     <td>Disk space</td></tr>
   <tr><td><b>storage-type</b> (optional)<td>string (enum)</td>
     <td>The type of storage to use. This is useful to specify local storage when network storage provides insufficient
@@ -101,14 +102,42 @@ read more in <a href="https://docs.vespa.ai/documentation/elastic-vespa.html">el
       </table>
     </td></tr>
 </table>
-Example:
+
+<h2 id="autoscaling-ranges">Autoscaling ranges</h2>
+
+<p>Resources specified as a range will be autoscaled by the system. Ranges
+are expressed by the syntax <code>[lower-limit, upper-limit]</code>. Both limits
+are inclusive.</p>
+
+<p>Autoscaling will attempt to keep utilization of all allocated resources close to ideal,
+and will automatically reconfigure to the cheapest option allowed by the ranges when
+necessary.</p>
+
+<p>The ideal utilization takes into account that a node
+may be down or failing, that another region may be down causing doubling of traffic, and that we need headroom for
+maintenance operations and handling requests with low latency. It acts on what it has observed on your system
+in the recent past. If you need much more capacity in the near future than you do currently, you may want
+to set the <i>lower</i> limit to take this into account. <i>Upper</i> limits should be set to the maximum size
+that makes business sense.</p>
+
+<p>When a new cluster (or application) is deployed it will initially be configured with the minimal
+resources given by the ranges. When autoscaling is turned on for an existing cluster, it will continue
+unchanged until autoscaling determines that a change is beneficial.</p>
+
+<p><b>Examples:</b></p>
 <pre>
 &lt;nodes count="4"&gt;
   &lt;resources vcpu="2.5" memory="32Gb" disk="100Gb" disk-speed="any"/&gt;
 &lt;/nodes&gt;
 </pre>
-</p>
 
+<p>Or with autoscaling on all resources:</p>
+
+<pre>
+&lt;nodes count="[4,8]"&gt;
+  &lt;resources vcpu="[2.5, 8]" memory="[32Gb, 150Gb]" disk="[100Gb, 1Tb]"/&gt;
+&lt;/nodes&gt;
+</pre>
 
 
 <h2 id="admin-version-4-0">&lt;admin version="4.0"&gt;</h2>
