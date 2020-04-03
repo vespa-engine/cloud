@@ -113,14 +113,14 @@ are inclusive.</p>
 and will automatically reconfigure to the cheapest option allowed by the ranges when
 necessary.</p>
 
-<p>The ideal utilization autoscaling is aiming for takes into account that a node
-may be down or failing, that there may be a bcp event doubling traffic and that we need headroom for
+<p>The ideal utilization takes into account that a node
+may be down or failing, that another region may be down causing doubling of traffic, and that we need headroom for
 maintenance operations and handling requests with low latency. It acts on what it has observed on your system
-in the recent past. If you occasionally, or in the near future need much more capacity that currently, you may want
-to set a lower limit to ranges to take this into account. Upper range limits should be set to the max cost of
-the application that makes business sense.</p>
+in the recent past. If you need much more capacity in the near future than you do currently, you may want
+to set the <i>lower</i> limit to take this into account. <i>Upper</i> limits should be set to the maximum size
+that makes business sense.</p>
 
-<p>When a new cluster (or application) is depoyed it will initially be configured with the minimal
+<p>When a new cluster (or application) is deployed it will initially be configured with the minimal
 resources given by the ranges. When autoscaling is turned on for an existing cluster, it will continue
 unchanged until autoscaling determines that a change is beneficial.</p>
 
