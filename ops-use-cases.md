@@ -76,7 +76,7 @@ to build a pipeline that automatically rolls out changes committed to the code r
     * System tests
     * Staging tests
     * Production validation tests
-* [Safe changes](https://docs.vespa.ai/documentation/reference/search-definitions-reference.html#modify-search-definitions) -
+* [Safe changes](https://docs.vespa.ai/documentation/reference/schema-reference#modifying-schemas) -
     potentially destructive changes are blocked
 
 
