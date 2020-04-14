@@ -43,12 +43,12 @@ This keeps cost under control, still serving useful results during high peaks.
 
 
 
-## Multithread search
+## Multi-threaded queries
 Most engines are multi-threaded to fully utilize the computing resources.
 In Vespa, the data layout on disk is fully orthogonal to threads used per query.
 It is hence easy to increase number of threads used per query without having to redistribute data.
 Balance capacity requirements, query latency and throughput by tuning
-[num-threads-per-search](https://docs.vespa.ai/documentation/reference/search-definitions-reference.html#num-threads-per-search).
+[num-threads-per-search](https://docs.vespa.ai/documentation/reference/schema-reference#num-threads-per-search).
 
 **Highlighted features**
 * True multi-thread queries

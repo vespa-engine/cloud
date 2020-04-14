@@ -49,7 +49,7 @@ As some users are better writers than others, comments can be ranked based on an
 Updating an author score is hence updating one document only.
 
 Example 2: Users tag items.
-A document can have a [multivalue field](https://docs.vespa.ai/documentation/search-definitions.html#multivalue-fields)
+A document can have a [multivalue field](https://docs.vespa.ai/documentation/schemas#multivalue-fields)
 like array to struct to save such data as tag value/timestamp/author.
 
 **Highlighted features**
@@ -77,7 +77,7 @@ paid placement
 Vespa supports text search and [grouping](https://docs.vespa.ai/documentation/grouping.html) (aggregation, faceting) - see the 
 [blog search tutorial](https://docs.vespa.ai/documentation/tutorials/blog-search.html).
 Implement multi-phase [ranking](https://docs.vespa.ai/documentation/ranking.html) to spend most resources on the most relevant hits.
-Often enhanced with auto-complete using [n-grams](https://docs.vespa.ai/documentation/reference/search-definitions-reference.html#gram)
+Often enhanced with auto-complete using [n-grams](https://docs.vespa.ai/documentation/reference/schema-reference#gram)
 
 Rank profiles are just mathematical expressions, to enable almost any kind of computation over a large data set.
 
