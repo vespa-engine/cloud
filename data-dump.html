@@ -17,7 +17,7 @@ $ curl --cert data-plane-public-cert.pem --key data-plane-private-key.pem \
   "$ENDPOINT/document/v1/?cluster=$CLUSTER&fieldSet=%5Bid%5D"
 </pre>
 </p><p>
-From an ID, like <em>id:open:doc::open/documentation/search-definitions.html</em>,
+From an ID, like <em>id:open:doc::open/documentation/schemas.html</em>,
 extract
 <ul>
     <li>NAMESPACE: open</li>
@@ -81,7 +81,7 @@ $ gunzip -c open-doc-00001.data.gz | jq '[ .documents[] | {remove: .id} ]' | hea
 
 [
   {
-    "remove": "id:open:doc::open/documentation/search-definitions.html"
+    "remove": "id:open:doc::open/documentation/schemas.html"
   },
   {
     "remove": "id:open:doc::open/documentation/securing-your-vespa-installation.html"

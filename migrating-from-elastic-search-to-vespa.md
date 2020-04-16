@@ -63,11 +63,11 @@ The directory has now a folder `application`:
       ├── documents.json
       ├── hosts.xml
       ├── services.xml
-      └── /searchdefinitions
+      └── /schemas
             ├── sd1.sd
             └── ... 
 ```
-Which contains the converted documents, their search definitions, a hosts.xml and a services.xml -
+Which contains the converted documents, their schemas, a hosts.xml and a services.xml -
 a whole application package.
 
 
