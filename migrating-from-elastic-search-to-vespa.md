@@ -132,7 +132,7 @@ $ curl -s http://localhost:8080/document/v1/application_name/doc_name/docid/elas
 #### 6. The first query
 Use the GUI for building queries at _http://localhost:8080/querybuilder_
 (with Vespa-container running) which can help you building queries with e.g. autocompletion of YQL.
-Also take a look at the [query API](https://docs.vespa.ai/documentation/search-api.html).
+Also take a look at the [query API](https://docs.vespa.ai/documentation/query-api.html).
 
 
 
