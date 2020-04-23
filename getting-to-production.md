@@ -6,6 +6,9 @@ This guide assumes you have gone through the [Getting Started](/getting-started)
 and deployed an application to the `dev` environment.
 To complete this guide you need to have Maven 3.6.1 and Java 11 installed.
 
+Also try the [Getting Started Custom Code](/getting-started-custom-code) guide -
+this is a complete production deployment guide.
+
 
 ### Adding Java and Maven
 To be able to deploy an application to the `prod` environment,
