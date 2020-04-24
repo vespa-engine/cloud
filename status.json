@@ -2,4 +2,7 @@
 layout: status
 # Data for this page is found in _data/status.yml
 ---
-{{ site.data.status | jsonify }}
+{
+	"last-updated": "{{ "now" | date: "%s" }}",
+	"status": {{ site.data.status | jsonify }}
+}
