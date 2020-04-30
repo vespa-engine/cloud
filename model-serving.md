@@ -69,7 +69,7 @@ Applications with use cases like Recommendation, Search and Prediction,
 and strong throughput/latency/data size requirements should evaluate Vespa by reading
 * [Ranking](https://docs.vespa.ai/documentation/ranking.html)
 * [Writing](https://docs.vespa.ai/documentation/writing-to-vespa.html)
-* [Querying](https://docs.vespa.ai/documentation/querying-vespa.html)
+* [Querying](https://docs.vespa.ai/documentation/query-api.html)
 * [Performance](https://docs.vespa.ai/documentation/performance)
 
 Use this site to explore subjects like Security and Automation using Vespa Cloud.
