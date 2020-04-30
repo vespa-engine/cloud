@@ -2,16 +2,12 @@
 docs:
     - page: Vespa Cloud
       url: /
-    - page: Pricing
-      url: /pricing
     - page: Getting Started
       url: /getting-started
     - page: Getting to Production
       url: /getting-to-production
     - page: Getting Started Custom Code
       url: /getting-started-custom-code
-    - page: Quota
-      url: /quota
     - page: Automated Deployments
       url: /automated-deployments
     - page: Use Cases
@@ -36,3 +32,5 @@ docs:
       url: /data-dump
     - page: Testing
       url: /reference/testing
+    - page: Pricing
+      url: /pricing
