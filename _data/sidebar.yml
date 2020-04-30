@@ -8,6 +8,8 @@ docs:
       url: /getting-to-production
     - page: Getting Started Custom Code
       url: /getting-started-custom-code
+    - page: Model Serving
+      url: /model-serving
     - page: Automated Deployments
       url: /automated-deployments
     - page: Use Cases
