@@ -3,8 +3,8 @@ zones:
   # List all zones and status. Valid status is "success", "warning" or "danger". 
   # Message should be "OK", "Partial outage", "Degraded service", "Down" or similar short string.
   - name: "Infrastructure"
-    status: warning
-    message: "Investigating deploy issues"
+    status: success
+    message: "OK"
   - name: "aws-us-east-1c"
     status: success
     message: "OK"
