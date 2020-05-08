@@ -125,16 +125,19 @@ resources given by the ranges. When autoscaling is turned on for an existing clu
 unchanged until autoscaling determines that a change is beneficial.</p>
 
 <p><b>Examples:</b></p>
+
+<p>Autoscaling node count:</p>
+
 <pre>
-&lt;nodes count="4"&gt;
+&lt;nodes count="[4, 8]"&gt;
   &lt;resources vcpu="2.5" memory="32Gb" disk="100Gb" disk-speed="any"/&gt;
 &lt;/nodes&gt;
 </pre>
 
-<p>Or with autoscaling on all resources:</p>
+<p>Autoscaling on all resources:</p>
 
 <pre>
-&lt;nodes count="[4,8]"&gt;
+&lt;nodes count="[4, 8]" groups="[1, 2]"&gt;
   &lt;resources vcpu="[2.5, 8]" memory="[32Gb, 150Gb]" disk="[100Gb, 1Tb]"/&gt;
 &lt;/nodes&gt;
 </pre>
