@@ -11,10 +11,14 @@ and is an introduction into integrating with a CI/CD pipeline.
 It extends the
 <a href="/getting-started">album-recommendations</a> sample application with:
 <ul>
-    <li>A <a href="http://docs.vespa.ai/documentation/searcher-development.html">Searcher</a> component
-        for query and result processing.</li>
-    <li>A <a href="https://docs.vespa.ai/documentation/document-processing.html">Document Processor</a> component
-    for document processing.</li>
+    <li>A <a href="http://docs.vespa.ai/documentation/searcher-development.html">Searcher</a>
+      component for query and result processing.
+      <ul>
+        <li>See <a href="https://github.com/vespa-engine/sample-apps/tree/master/vespa-cloud/album-recommendation-docproc">
+          album-recommendation-docproc</a> for a
+          <a href="https://docs.vespa.ai/documentation/document-processing.html">Document Processing</a> example.</li>
+      </ul>
+    </li>
     <li>Custom config for the searcher, to demonstrate atomic code and config deployment.</li>
     <li>A System and staging test used in <a href="/automated-deployments">automated-deployments</a>.</li>
 </ul>

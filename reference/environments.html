@@ -50,9 +50,23 @@ A minimal, typical <code>prod</code> deployment therefore has 4 nodes.
 
 
 
-<h2 id="other-environments">Other environments</h2>
+<h2 id="dev-and-perf">Dev and Perf</h2>
 <p>
-To keep the specified cluster sizes, for very particular testing, outside <code>prod</code>, specify
-<a href="services#instance-environment-and-region-variants">environment and region variants</a>.
-Example: <pre>&lt;nodes deploy:environment="perf" count="5"/&gt;</pre>
+<code>dev</code> and <code>perf</code> are deployed to directly as part of development or testing.
+</p><p>
+In order to easily deploy application packages from prod applications,
+resources are downscaled - see <em>Cluster sizes</em> above.
+To override this downsizing, specify
+<a href="services#instance-environment-and-region-variants">environment and region variants</a>,
+like: <pre>&lt;nodes deploy:environment="perf" count="5"/&gt;</pre>
+Setting environment explicitly enables exact node count.
+</p>
+
+
+<h3 id="vespa-version">Vespa version</h3>
+<p>
+In <code>dev</code> and <code>perf</code>, the latest active Vespa version is used when deploying.
+An instance is not upgraded, unless deployed to.
+This means that some times, a deploy takes longer than normal,
+as it invokes a Vespa upgrade before deploying the application package.
 </p>
