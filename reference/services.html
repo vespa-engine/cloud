@@ -12,17 +12,21 @@ for the full reference.
 
 
 <h2 id="nodes">&lt;nodes&gt;</h2>
-<p>
-In cloud applications nodes are specified by count and node resources.
-</p><p>
-<strong>Subelements:</strong> <a href="#resources">resources</a>
-</p><p>
-<strong>Attributes:</strong>
+
+<p>In cloud applications nodes are specified by count and node resources.</p>
+
+<p><b>Subelements:</b> <a href="#resources">resources</a></p>
+
+<p><b>Attributes:</b>
 <ul>
-  <li><strong>count</strong>: An integer or <a href="#autoscaling-ranges">range</a>. The number of nodes of the cluster.
+  <li><b>count</b>: An integer or <a href="#autoscaling-ranges">range</a>. The number of nodes of the cluster.
+  <li><b>exclusive</b> (optional): true or false (default false). If true, the nodes of this cluster will be
+      placed on hosts shared only with other nodes of the same application.
+      This is useful for container clusters in applications storing sensitive data or secrets as it adds another layer of
+      protection against leaking sensitive information between applications sharing host.
 </ul>
-In addition there are some attributes for specific cluster types, listed below.
-</p>
+
+<p>In addition there are some attributes for specific cluster types, listed below.</p>
 
 
 <h3 id="nodes-for-container">&lt;nodes&gt; for &lt;container&gt;</h3>
