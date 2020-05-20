@@ -99,8 +99,6 @@ When a Vespa application is built with the <code>fat-test-application</code> pro
 <code>mvn package -Pfat-test-application</code> —
 all Java JUnit5 tests with the <code>@SystemTest</code> annotation, and all their dependencies,
 are stored in a separate test code artifact, which is submitted to the Vespa cloud together with the application package.
-During an automated system test, a fresh test deployment is created,
-and the system tests in the test artifact are run to verify the test deployment behaves as expected.
 </p>
 
 
