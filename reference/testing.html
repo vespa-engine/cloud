@@ -153,7 +153,7 @@ Because the staging tests are there to verify continued service during an upgrad
 it is important to hold off changes in the staging tests until new application changes are completely rolled out, and all clients updated.
 With a significant change, the workflow is to
 <ol>
-  <li>update the application code and the system and production tests,</li>
+  <li>update the application code and the system tests,</li>
   <li>deploy the change,</li>
   <li>update all clients, and, possibly, the documents of the application, and <em>then</em></li>
   <li>update the staging tests to expect the new functionality, and, possibly, its setup phase to use the new documents.</li>
@@ -164,26 +164,4 @@ and <code>-Dtest.categories=staging</code> for the actual tests.
 To deploy to a certain platform version, use, e.g., <code>mvn vespa:deploy -DvespaVersion=1.2.3</code>.
 </p><p>
 The sizes of clusters in staging are by default reduced to 10% of the size specified in services.xml, or at least 2 nodes.
-</p>
-
-
-
-<h2 id="production-tests">Production tests</h2>
-<p>
-Finally, tests may also be annotated with the <code>@ProductionTest</code> annotation.
-These are run against production after deployment,
-and any failure will stop the roll-out.
-Make sure the tests do not modify production data in an unintended fashion.
-</p><p>
-Production tests must be specified with the <code>&lt;test&gt;</code> tag
-under <code>&lt;prod&gt;</code> in <a href="/reference/deployment">deployment.xml</a>,
-and it is also possible to add a <code>&lt;delay&gt;</code> between the deployment and the test tag to, e.g.,
-allow time for gathering higher-level metrics which the production test will verify.
-</p><p>
-To run production tests manually, use an IDE, or run all tests with <code>mvn test -Dtest.categories=production</code>.
-This, again, assumes there is a dev deployment to run the tests against.
-To run a production test against a production deployment,
-specify <code>-Denvironment=prod -Dregion=&lt;region name&gt;</code> to <code>mvn test</code> on the command line,
-or as a VM argument in your IDE.
-<strong>Be careful not to run system or staging tests against production deployments.</strong>
 </p>
