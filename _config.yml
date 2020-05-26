@@ -32,3 +32,6 @@ markdown: kramdown
 
 exclude: # avoid regenerating loop
     - cloud_index.json
+
+plugins:
+    - jekyll-redirect-from
