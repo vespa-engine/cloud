@@ -7,7 +7,7 @@ This is the Vespa Cloud Testing reference.
 Refer to <a href="../automated-deployments">Automated Deployments</a> for context
 </p><p>
 The <em>system test framework</em> in
-<code><a href="https://search.maven.org/artifact/com.yahoo.vespa/tenant-cd">com.yahoo.vespa:tenant-cd</a></code>
+<code><a href="https://search.maven.org/artifact/com.yahoo.vespa/tenant-cd-api">com.yahoo.vespa:tenant-cd-api</a></code>
 contains tools for runtime-dependent authentication against the Vespa deployment to test, and for endpoint discovery.
 </p>
 
@@ -32,7 +32,7 @@ When running Vespa self-hosted like in the
 <a href="https://docs.vespa.ai/documentation/vespa-quick-start.html">sample application</a>,
 one can access endpoints directly from test code.
 When running on Vespa Cloud, endpoints are secure, credentials must be provided.
-Use the <a href="https://github.com/vespa-engine/vespa/blob/master/tenant-cd/src/main/java/ai/vespa/hosted/cd/Endpoint.java">Endpoint</a>
+Use the <a href="https://github.com/vespa-engine/vespa/blob/master/tenant-cd-api/src/main/java/ai/vespa/hosted/cd/Endpoint.java">Endpoint</a>
 class to implement this, reading credentials from the environment.
 </p><p>
 To test using local endpoints, e.g., in a docker container on the development machine, use
@@ -52,7 +52,7 @@ This file defines the endpoints for each of the clusters in <a href="/reference/
 <h3 id="systemtest">@SystemTest</h3>
 </p>
 System tests are identified by the
-<a href="https://github.com/vespa-engine/vespa/blob/master/tenant-cd/src/main/java/ai/vespa/hosted/cd/SystemTest.java">
+<a href="https://github.com/vespa-engine/vespa/blob/master/tenant-cd-api/src/main/java/ai/vespa/hosted/cd/SystemTest.java">
 @SystemTest</a> annotation.
 Run system tests by setting <code>test.categories</code> to "system":
 <pre>
