@@ -24,6 +24,7 @@ h456a.prod.aws-us-east-1c.vespa-external.aws.oath.cloud	doc	127518
 See [vespa.ai monitoring](https://docs.vespa.ai/documentation/monitoring.html) and 
 [vespa.ai metrics](https://docs.vespa.ai/documentation/reference/metrics.html) for details.
 
-
+## AWS Cloudwatch
+Refer to the [metrics-emitter](https://github.com/vespa-engine/metrics-emitter).
 
 <!-- ToDo: Prometheus / Grafana integration doc here -->
