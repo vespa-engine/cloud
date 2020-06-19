@@ -12,6 +12,8 @@ docs:
       url: /model-serving
     - page: Automated Deployments
       url: /automated-deployments
+    - page: Monitoring
+      url: /monitoring
     - page: Use Cases
       url: /use-cases.html
     - page: Operational Use Cases
