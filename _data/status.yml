@@ -20,4 +20,4 @@ messages:
   - date: 2020-03-23
     message: "The aws-ap-northeast-1a zone in Tokyo, JP region is now online!"
   - date: 2020-06-23
-    message: "Application builds are currently failing due to a missing test dependency on junit-jupiter-engine. To workaround the issue add a dependency in your pom.xml:<br>         &lt;dependency&gt;<br>            &lt;groupId&gt;org.junit.jupiter&lt;/groupId&gt;<br>            &lt;artifactId&gt;junit-jupiter-engine&lt;/artifactId&gt;<br>            &lt;scope&gt;test&lt;/scope&gt;<br>        &lt;/dependency&gt;</br>"
+    message: "Application builds are currently failing due to a missing test dependency on junit-jupiter-engine. To workaround the issue add a dependency on org.junit.jupiter:junit-jupiter-engine in your pom.xml."
