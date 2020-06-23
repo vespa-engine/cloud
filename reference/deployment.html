@@ -223,7 +223,7 @@ In <code>&lt;deployment&gt;</code>, <code>&lt;instance&gt;</code>, <code>&lt;pro
 Introduces a delay which must pass after completion of all previous steps, before subsequent steps may proceed.
 This may be useful to allow some grace time to discover errors before deploying a change in additional zones,
 or to gather higher-level metrics for a production deployment for a while, before evaluating these in a production test.
-The maximum total delay for the whole deployment spec is 24 hours.
+The maximum total delay for the whole deployment spec is 48 hours.
 The delay is specified by any combination of the <code>hours</code>, <code>minutes</code> and <code>seconds</code> attributes.
 </p>
 
