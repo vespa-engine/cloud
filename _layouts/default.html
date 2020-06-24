@@ -6,7 +6,7 @@
     {% include header.html %}
 </head>
 
-<body>
+<body class="{% if page.style %}{{ page.style }} {% endif %}">
 
 <!-- Fixed navbar -->
 {% include nav.html %}

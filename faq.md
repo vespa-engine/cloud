@@ -1,68 +1,17 @@
 ---
 title: "FAQ - frequently asked questions"
+style: faq
 ---
 
-<h3 id="rank">Ranking</h3>
-<ul>
-  <li><a href="#ranking-1">Does Vespa support a flexible ranking score?</a></li>
-  <li><a href="#ranking-2">Where would customer specific weightings be stored?</a></li>
-  <li><a href="#ranking-3">How to create a tensor on the fly in the ranking expression?</a></li>
-  <!--li><a href="#ranking-4">How to rank with many OR-terms?</a></li-->
-</ul>
+* TOC
+{:toc}
 
-<h3 id="docs">Documents</h3>
-<ul>
-  <li><a href="#documents-1">What limits apply to json document size?</a></li>
-  <li><a href="#documents-2">Can a document have lists (key value pairs)?</a></li>
-  <li><a href="#documents-3">Does a whole document need to be updated and re-indexed?</a></li>
-  <li><a href="#documents-4">What ACID guarantees if any does Vespa provide for single writes / updates / deletes vs batch operations etc?</a></li>
-</ul>
+---
 
-<h3>Query</h3>
-<ul>
-  <li><a href="#query-1">Is hierarchical facets supported?</a></li>
-  <li><a href="#query-2">Is filters supported?</a></li>
-  <li><a href="#query-3">How to query for similar items?</a></li>
-  <li><a href="#query-4">Stop-word support?</a></li>
-</ul>
+{:.faq-section}
+### Ranking
 
-<h3>Text Search</h3>
-<ul>
-  <li><a href="#text-search-1">Does Vespa support addition of flexible NLP processing for documents and search queries?</a></li>
-  <li><a href="#text-search-2">Does Vespa support customization of the inverted index?</a></li>
-</ul>
-
-<h3>Programming Vespa</h3>
-<ul>
-  <!--li><a href="#programming-vespa-1">How to add custom code to a Vespa application?</a></li-->
-  <li><a href="#programming-vespa-2">Is Python plugins supported / is there a scripting language??</a></li>
-  <!--li><a href="#programming-vespa-3">Is there a way to check if a component is alive or not?</a></li-->
-</ul>
-
-<h3>Performance</h3>
-<ul>
-  <li><a href="#performance-1">What is the latency of documents being ingested vs indexed and available for search?</a></li>
-  <li><a href="#performance-2">Is there a batch ingestion mode, what limits apply?</a></li>
-  <li><a href="#performance-3">Can the index support up to 512GB index size in memory?</a></li>
-  <!-- li><a href="#performance-4">How to optimise feeding from a Grid?</a></li-->
-</ul>
-
-<h3>Administration</h3>
-<ul>
-  <li><a href="#administration-1">How fast can nodes be added and removed from a running cluster?</a></li>
-  <li><a href="#administration-2">Should Vespa API search calls be load balanced or does Vespa do this automatically?</a></li>
-  <li><a href="#administration-3">Supporting index partitions (and then aggregating search results from those partitions)</a></li>
-  <li><a href="#administration-4">Can a running cluster be upgraded with zero downtime?</a></li>
-  <li><a href="#administration-5">Can Vespa be deployed multi-region?</a></li>
-</ul>
-
-<hr />
-
-
-
-<h3 id="ranking">Ranking</h3>
-
-<p id="ranking-1"><strong>Does Vespa support a flexible ranking score?</strong><br/>
+#### Does Vespa support a flexible ranking score?
 <a href="https://docs.vespa.ai/documentation/ranking.html">Ranking</a> is maybe the best Vespa feature -
 we like to think of it as scalable, online computation.
 A rank profile is where the application's logic is implemented,
@@ -70,9 +19,8 @@ supporting simple types like <code>double</code> and complex types like <code>te
 Supply ranking data in queries in query features (e.g. different weights per customer),
 or look up in a <a href="https://docs.vespa.ai/documentation/searcher-development.html">Searcher</a>.
 Typically a document (e.g. product) "feature vector"/"weights" will be compared to a user-specific vector (tensor).
-</p>
 
-<p id="ranking-2"><strong>Where would customer specific weightings be stored?</strong><br/>
+#### Where would customer specific weightings be stored?
 Vespa doesn't have specific support for storing customer data as such.
 You can store this data as a separate document type in Vespa and look it up before passing the query,
 or store this customer meta-data as part of the other meta-data for the customer
@@ -82,85 +30,69 @@ Find an example on how to look up data in
 album-recommendation-docproc</a>.
 </p>
 
-<p id="ranking-3"><strong>How to create a tensor on the fly in the ranking expression?</strong><br/>
+#### How to create a tensor on the fly in the ranking expression?
 Create a tensor in the ranking function from arrays or weighted sets using <code>tensorFrom...</code> functions - see
 <a href="https://docs.vespa.ai/documentation/reference/rank-features.html#document-features">document features</a>.
-</p>
 
-<!--p id="ranking-4"><strong>How to rank with many OR-terms?</strong><br/>
-</p-->
+{:.faq-section}
+### Documents
 
-
-
-<h3 id="documents">Documents</h3>
-
-<p id="documents-1"><strong>What limits apply to json document size?</strong><br/>
+#### What limits apply to json document size?
 There is no hard limit.
 Vespa requires a document to be able to load into memory in serialized form.
 Vespa is not optimized for huge documents.
-</p>
 
-<p id="documents-2"><strong>Can a document have lists (key value pairs)?</strong><br/>
+#### Can a document have lists (key value pairs)?
 E.g. a product is offered in a list of stores with a quantity per store.
 Use <a href="https://docs.vespa.ai/documentation/schemas.html#multivalue-fields">multivalue fields</a> (array of struct)
 or <a href="https://docs.vespa.ai/documentation/parent-child.html">parent child</a>.
 Which one to chose depends on use case, see discussion the the latter link.
-</p>
 
-<p id="documents-3"><strong>Does a whole document need to be updated and re-indexed?</strong><br/>
+#### Does a whole document need to be updated and re-indexed?
 E.g, price and quantity available per store may change often vs the actual product attributes.
 Vespa supports <a href="https://docs.vespa.ai/documentation/writing-to-vespa.html">partial updates</a> of documents.
 Also, the parent/child feature is implemented to support use-cases where child elements are updated frequently,
 while a more limited set of parent elements are updated less frequently.
-</p>
 
-<p id="documents-4"><strong>What ACID guarantees does Vespa provide?</strong><br/>
+#### What ACID guarantees if any does Vespa provide for single writes / updates / deletes vs batch operations etc?
 See <a href="https://docs.vespa.ai/documentation/content/consistency.html">Vespa Consistency Model</a>.
 Vespa is not transactional in the traditional sense, it doesn't have strict ACID guarantees.
 Vespa is designed for high performance use-cases with eventual consistency
 as an acceptable (and to some extent configurable) trade-off.
-</p>
 
 
+{:.faq-section}
+### Query
 
-<h3 id="query">Query</h3>
-
-<p id="query-1"><strong>Is hierarchical facets supported?</strong><br/>
+#### Is hierarchical facets supported?
 Facets is called <a href="https://docs.vespa.ai/documentation/grouping.html">grouping</a> in Vespa.
 Groups can be multi-level.
-</p>
 
-<p id="query-2"><strong>Is filters supported?</strong><br/>
+#### Is filters supported?
 Add filters to the query using <a href="https://docs.vespa.ai/documentation/query-language.html">YQL</a>
 using boolean, numeric and <a href="https://docs.vespa.ai/documentation/text-matching-ranking.html">text matching</a>.
-</p>
 
-<p id="query-3"><strong>How to query for similar items?</strong><br/>
+#### How to query for similar items?
 One way is to describe items using tensors and query for the
 <a href="https://docs.vespa.ai/documentation/reference/query-language-reference.html#nearestneighbor">nearest neighbor</a> -
 using full precision or approximate (ANN) - the latter is used when the set is too large for an exact calculation.
 Apply filters to the query to limit the neighbor candidate set.
 Using <a href="https://docs.vespa.ai/documentation/multivalue-query-operators.html">dot products</a> or
 <a href="https://docs.vespa.ai/documentation/using-wand-with-vespa.html">weak and</a> are alternatives.
-</p>
 
-<p id="query-4"><strong>Stop-word support?</strong><br/>
+#### Stop-word support?
 Vespa does not have a stop-word concept inherently.
 See the <a href="https://github.com/vespa-engine/sample-apps/pull/335/files">sample app</a>
 for how to use <a href="https://docs.vespa.ai/documentation/reference/query-language-reference.html#annotations">filter terms</a>.
-</p>
 
 <!-- Feed but cannot see - doc selection/expiry -->
 
+{:.faq-section}
+### Text Search
 
-
-
-<h3 id="text-search">Text Search</h3>
-
-<p id="text-search-1" style="margin-bottom: 0px;"><strong>Does Vespa support addition of flexible NLP processing for documents and search queries?</strong><br/>
+#### Does Vespa support addition of flexible NLP processing for documents and search queries?
 E.g. integrating NER, word sense disambiguation, specific intent detection.
 Vespa supports these things well:
-</p>
 <ul>
   <li><a href="https://docs.vespa.ai/documentation/searcher-development.html">Query (and result) processing</a></li>
   <li><a href="https://docs.vespa.ai/documentation/document-processing.html">Document processing</a>
@@ -168,7 +100,7 @@ Vespa supports these things well:
     on document processors working on semantic annotations of text</li>
 </ul>
 
-<p id="text-search-2"><strong>Does Vespa support customization of the inverted index?</strong><br/>
+#### Does Vespa support customization of the inverted index?
 <em>E.g. instead of using terms or n-grams as the unit, we might use terms with specific word senses
 (e.g. bark (dog bark) vs. bark (tree bark), or BCG (company) vs. BCG (vaccine name).</em>
 Creating a new index <em>format</em> means changing the core.
@@ -181,16 +113,15 @@ as well as the <a href="https://docs.vespa.ai/documentation/document-processing.
 creating the annotations that are consumed by the indexing operation.
 Since all that is Searchers and Docprocs which you can replace and/or add custom components before and after,
 you can also take full control over these things without modifying the platform itself.
-</p>
 
 
+{:.faq-section}
+### Programming Vespa
 
-<h3 id="programming-vespa">Programming Vespa</h3>
-
-<!--p id="programming-vespa-1"><strong>How to add custom code to a Vespa application?</strong><br/>
+<!--p id="programming-vespa-1"><strong>How to add custom code to a Vespa application?
 </p-->
 
-<p id="programming-vespa-2"><strong>is Python plugins supported / is there a scripting language?</strong><br/>
+#### is Python plugins supported / is there a scripting language?
 Plugins have to run in the JVM - <a href="https://www.jython.org/">jython</a> might be an alternative,
 however Vespa Team has no experience with it.
 Vespa does not have a language like
@@ -198,11 +129,9 @@ Vespa does not have a language like
 it is more flexible to write application logic in a JVM-supported language, using
 <a href="https://docs.vespa.ai/documentation/searcher-development.html">Searchers</a>
 and <a href="https://docs.vespa.ai/documentation/document-processing.html">Document Processors</a>.
-</p>
 
-<!--p id="programming-vespa-3" style="margin-bottom: 0px;"><strong>Is there a way to check if this component is alive or not?</strong><br/>
+<!--p id="programming-vespa-3" style="margin-bottom: 0px;"><strong>Is there a way to check if this component is alive or not?
 <a href="https://docs.vespa.ai/documentation/jdisc/container-components.html">Component</a> lifecycle:
-</p>
 <ol>
   <li>Old components are alive</li>
   <li>Deployment occurs</li>
@@ -214,65 +143,57 @@ and <a href="https://docs.vespa.ai/documentation/document-processing.html">Docum
 <!-- ToDo: move this to the doc itself and link from here - and add something useful ... -->
 
 
+{:.faq-section}
+### Performance
 
-<h3 id="performance">Performance</h3>
-
-<p id="performance-1"><strong>What is the latency of documents being ingested vs indexed and available for search?</strong><br/>
+#### What is the latency of documents being ingested vs indexed and available for search?
 Vespa has a near real-time indexing core with typically sub-second latencies from ingest to indexed.
 This depends on the use-case, available resources and how the system is tuned.
 Some more examples and thoughts can be found in the
 <a href="https://docs.vespa.ai/documentation/performance/sizing-search.html">scaling guide</a>.
-</p>
 
-<p id="performance-2"><strong>Is there a batch ingestion mode, what limits apply?</strong><br/>
+#### Is there a batch ingestion mode, what limits apply?
 Vespa does not have a concept of "batch ingestion"
 as it contradicts many of the core features that are the strengths of Vespa,
 including <a href="https://docs.vespa.ai/documentation/elastic-vespa.html">serving elasticity</a> and sub-second indexing latency.
 That said, we have numerous use-cases in production that do high throughput updates to large parts of the (sometimes entire) document set.
 In cases where feed throughput is more important than indexing latency, you can tune this to meet your requirements.
 Some of this is detailed in the <a href="https://docs.vespa.ai/documentation/performance/sizing-feeding.html">feed sizing guide</a>.
-</p>
 
-<p id="performance-3"><strong>Can the index support up to 512GB index size in memory?</strong><br/>
+#### Can the index support up to 512GB index size in memory?
 Yes. The <a href="https://docs.vespa.ai/documentation/proton.html">content node</a>
 is implemented in C++ and not memory constrained other than what the operating system does.
-</p>
 
-<!--p id="performance-4"><strong>How to optimise feeding from a Grid?</strong><br/>
+<!--p id="performance-4"><strong>How to optimise feeding from a Grid?
 </p-->
 
+{:.faq-section}
+### Administration
 
-<h3 id="administration">Administration</h3>
-
-<p id="administration-1"><strong>How fast can nodes be added and removed from a running cluster?</strong><br/>
+#### How fast can nodes be added and removed from a running cluster?
 <a href="https://docs.vespa.ai/documentation/elastic-vespa.html">Elasticity</a> is a core Vespa strength -
 easily add and remove nodes with minimal (if any) serving impact.
 The exact time needed depends on how much data will need to be migrated in the background for the system to converge to
 <a href="https://docs.vespa.ai/documentation/content/idealstate.html">ideal data distribution</a>.
-</p>
 
-<p id="administration-2"><strong>Should Vespa API search calls be load balanced or does Vespa do this automatically?</strong><br/>
+#### Should Vespa API search calls be load balanced or does Vespa do this automatically?
 You will need to load balance incoming requests between the nodes running the
 <a href="https://docs.vespa.ai/documentation/overview.html">stateless Java container cluster(s)</a>.
 This can typically be done using a simple network load balancer available in most cloud services.
 This is included when using <a href="https://cloud.vespa.ai/">Vespa Cloud</a>,
 with an already load balanced HTTPS endpoint - both locally within the region and globally across regions.
-</p>
 
-<p id="administration-3"><strong>Supporting index partitions</strong><br/>
+#### Supporting index partitions
 <a href="https://docs.vespa.ai/documentation/performance/sizing-search.html">Search sizing</a> is the intro to this.
 Topology matters, and this is much used in the high-volume Vespa applications to optimise latency vs. cost
-</p>
 
-<p id="administration-4"><strong>Can a running cluster be upgraded with zero downtime?</strong><br/>
+#### Can a running cluster be upgraded with zero downtime?
 With <a href="https://cloud.vespa.ai/">Vespa Cloud</a>,
 we do automated background upgrades daily without noticeable serving impact.
 If you host Vespa yourself, you can do this, but need to implement the orchestration logic necessary to handle this.
 The high level procedure is found in <a href="https://docs.vespa.ai/documentation/operations/live-upgrade.html">live-upgrade</a>.
-</p>
 
-<p id="administration-5"><strong>Can Vespa be deployed multi-region?</strong><br/>
+#### Can Vespa be deployed multi-region?
 <a href="https://cloud.vespa.ai/reference/zones">Vespa Cloud</a> has integrated support - query a global endpoint.
 Writes will have to go to each zone.
 There is no auto-sync between zones.
-</p>
