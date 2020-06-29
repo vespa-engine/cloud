@@ -20,5 +20,4 @@ messages:
   - date: 2020-03-23
     message: "The aws-ap-northeast-1a zone in Tokyo, JP region is now online!"
   - date: 2020-06-26
-      message: "Builds are now working correctly."
-
+    message: "Builds are now working correctly."
