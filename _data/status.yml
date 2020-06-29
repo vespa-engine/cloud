@@ -19,3 +19,6 @@ messages:
   #   message: "Issues with query serving in aws.us-east-1c - currently investigating."
   - date: 2020-03-23
     message: "The aws-ap-northeast-1a zone in Tokyo, JP region is now online!"
+  - date: 2020-06-26
+      message: "Builds are now working correctly."
+
