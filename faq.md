@@ -3,6 +3,8 @@ title: "FAQ - frequently asked questions"
 style: faq
 ---
 
+Refer to [Vespa Support](support) for more support options.
+
 * TOC
 {:toc}
 
