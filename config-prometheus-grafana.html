@@ -22,13 +22,11 @@ instance should be sufficient for the task.
 Prometheus is configured using <em>prometheus.yml</em>. Download it from the
 <a href="https://github.com/vespa-engine/sample-apps/tree/master/album-recommendation-monitoring/prometheus"> prometheus
 </a> folder.
-This file is based upon the sample-apps repository, but is easy to adjust.
-To get started, the target has to be changed from the current vespa:19092 to <strong>your Vespa instance endpoint</strong>.
-If theservice is on Cloud Vespa, go to the application an click endpoints and copy the endpoint.
-If the service is hosted elsewhere, retrieve the endpoint appropriate to that hosting solution.
-Then just replace the vespa:19092 with the endpoint.
-Restart the Prometheus instance and the data from Vespa should start appearing.
-If the Prometheus instance is used for multiple services, simply append the target configuration for Vespa at the end of the document.
+We are interested in the prometheus-cloud.yml file, which is designed to be easy to set up with any Cloud Vespa instance.
+Replace \< Endpoint \> and \< SERVICE_NAME \> with the endpoint for your application and the service name respectively.
+Then, simply set your Prometheus instance, whether it be hosted locally or remote, to use this configuration.
+Once this has been done, your Prometheus instance should be able to start retrieving the metrics from Cloud Vespa.
+If the Prometheus instance is used for multiple services, simply append the target configuration for Vespa to scrape_configs.
 </p>
 
 <h2>Configuring Grafana Dashboard:</h2>
@@ -42,8 +40,8 @@ provisioning folder</a> from sample-apps.
 This will serve as a baseline for further configuration.
 </p><p>
 In the provisioning folder there are a few different files that all help for configuring Grafana locally.
-These work as good examples of default configurations, but the most important is the file named Vespa-Metrics-Dashboard.json.
-This is a default dashboard that will be used for setting up Grafana.
+These work as good examples of default configurations, but the most important is the file named Vespa-Engine-Advanced-Metrics-External.json.
+This is a default dashboard, based upon the metrics the Vespa team use to monitor performance.
 </p><p>
 Click the + button on the side and go to import. Upload the file to the Grafana instance.
 This should automatically load in the dashboard for usage.
@@ -63,7 +61,9 @@ Once the configuration details have been entered, click Save &amp; Test at the b
 <h2> Verifying Data Flow:</h2>
 Navigate back to the Vespa Metrics dashboard by clicking the dashboard symbol on the left (4 blocks) and clicking manage and then click Vespa Metrics.
 Data should now be appearing in the Grafana dashboard.
-If there is no data appearing, it either means that the Vespa instance is not being utilized or that some part of the configuration is wrong.
+If no data is appearing, edit one of the data sets and ensure that it has the right data source selected.
+The name of the data source the dashboard is expecting might be different from what your data source is named.
+If there is still no data appearing, it either means that the Vespa instance is not being utilized or that some part of the configuration is wrong.
 <p>
 
 </p>
