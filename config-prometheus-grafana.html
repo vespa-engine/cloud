@@ -1,18 +1,18 @@
 ---
 # Copyright Verizon Media. Licensed under the terms of the Apache 2.0 license. See LICENSE in the project root.
-title: "Setting up monitoring with Prometheus and Grafana for Cloud Vespa"
+title: "Setting up monitoring with Prometheus and Grafana for Vespa Cloud"
 ---
 
 <p>
 This guide describes how to set up monitoring with Prometheus and Grafana for Vespa Cloud.
-This guide assumes access to a Cloud Vespa instance, as well as a Prometheus and Grafana instance.
+This guide assumes access to a Vespa Cloud instance, as well as a Prometheus and Grafana instance.
 It is recommended to use Grafana Cloud, but any Grafana instance that is capable of reaching the Prometheus
 instance should be sufficient for the task.
 </p>
 
 <strong>Prerequisites</strong>:
 <ul>
-  <li>A Cloud Vespa instance
+  <li>A Vespa Cloud instance
   <li>A Grafana instance
   <li>A Prometheus instance
 </ul>
@@ -22,12 +22,12 @@ instance should be sufficient for the task.
 Prometheus is configured using <em>prometheus.yml</em>. Download it from the
 <a href="https://github.com/vespa-engine/sample-apps/tree/master/album-recommendation-monitoring/prometheus"> prometheus
 </a> folder.
-We are interested in the prometheus-cloud.yml file, which is designed to be easy to set up with any Cloud Vespa instance.
+We are interested in the prometheus-cloud.yml file, which is designed to be easy to set up with any Vespa Cloud instance.
 Replace \< Endpoint \> and \< SERVICE_NAME \> with the endpoint for your application and the service name respectively.
 In addition, the path to the private key and public cert that is used for the data plane to your endpoint need to be provided.
 See the <a href=https://cloud.vespa.ai/security-model.html> security model </a> page for more information about accessing the data plane.
 Then, simply configure your Prometheus instance to use this configuration file.
-Once this has been done, your Prometheus instance should be able to start retrieving the metrics from Cloud Vespa.
+Once this has been done, your Prometheus instance should be able to start retrieving the metrics from Vespa Cloud.
 If the Prometheus instance is used for multiple services, simply append the target configuration for Vespa to scrape_configs.
 </p>
 
