@@ -1,12 +1,12 @@
 ---
-title: "Getting Started"
+title: "Vespa Cloud Quick Start"
 ---
 
 <p>
 Vespa Cloud is at the moment <a href="mailto:info@vespa.ai?subject=Sign+me+up!">invite only</a>.
-</p>
-
-<p>
+</p><p>
+See <a href="https://docs.vespa.ai/documentation/getting-started.html">Getting Started</a> for troubleshooting.
+</p><p>
 Prerequisites for the sample apps are git and a X.509 certificate.
 See <a href="security-model">Security Model</a> for keys and certificates.
 A certificate is also generated below.
@@ -143,20 +143,3 @@ Next steps:
   </li>
 </ol>
 </p>
-
-<h2 id="troubleshooting">Troubleshooting</h2>
-<ul>
-  <li>
-  <strong>Slow deployments:</strong>
-  First time deployments takes a few minutes,
-  seeing CERTIFICATE_NOT_READY / PARENT_HOST_NOT_READY / LOAD_BALANCER_NOT_READY is normal.
-  "Installation succeeded!" in the bottom pane indicates success
-  </li><li>
-  <strong>HTTP: 502 — Bad Gateway:</strong> This means the endpoint is not ready, or failing.
-  A Vespa software upgrade will cause this — the application will then be unavailable for 15 minutes or so,
-  as dev instances are not redundant. Look for stopping services in logs to check for this.
-  </li><li>
-  <strong>Retrying — request failed: Java heap space:</strong> If this happens when deploying from the laptop, mvn runs out of memory.
-  Use export MAVEN_OPTS=-Xmx3g to increase the heap size to 3G (or larger as needed).
-  </li>
-</ul>

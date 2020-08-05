@@ -2,12 +2,12 @@
 docs:
     - page: Vespa Cloud
       url: /
-    - page: Getting Started
-      url: /getting-started
+    - page: Quick Start
+      url: /vespa-cloud-quick-start
     - page: Getting to Production
       url: /getting-to-production
-    - page: Getting Started Custom Code
-      url: /getting-started-custom-code
+    - page: album-recommendation-searcher
+      url: /album-recommendation-searcher
     - page: Model Serving
       url: /model-serving
     - page: Automated Deployments
