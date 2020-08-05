@@ -2,11 +2,11 @@
 title: Getting to Production
 ---
 
-This guide assumes you have gone through the [Getting Started](/getting-started) guide
+This guide assumes you have gone through the [Quick Start](/vespa-cloud-quick-start) 
 and deployed an application to the `dev` environment.
 To complete this guide you need to have Maven 3.6.1 and Java 11 installed.
 
-Also try the [Getting Started Custom Code](/getting-started-custom-code) guide -
+Also try the [album-recommendation-searcher](/album-recommendation-searcher) guide -
 this is a complete production deployment guide.
 
 
