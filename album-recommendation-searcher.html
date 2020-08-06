@@ -38,7 +38,7 @@ Security notes:
     Download sample apps:
 <pre data-test="exec">
 $ git clone https://github.com/vespa-engine/sample-apps.git && \
-  cd sample-apps/vespa-cloud/album-recommendation-java
+  cd sample-apps/vespa-cloud/album-recommendation-searcher
 </pre>
   </p></li><li><p>
     Get a X.509 certificate and private key.
@@ -120,7 +120,7 @@ $ curl --cert ./data-plane-public-cert.pem --key ./data-plane-private-key.pem \
     used in <a href="/automated-deployments">automated-deployments</a>.
     These tests are run as JUnit tests.
     To develop such tests, deploy the application to <em>dev</em> (like above) and run tests like
-    <a href="https://github.com/vespa-engine/sample-apps/blob/master/vespa-cloud/album-recommendation-java/src/test/java/ai/vespa/example/album/FeedAndSearchSystemTest.java">
+    <a href="https://github.com/vespa-engine/sample-apps/blob/master/vespa-cloud/album-recommendation-searcher/src/test/java/ai/vespa/example/album/FeedAndSearchSystemTest.java">
     FeedAndSearchSystemTest</a>:
 <pre data-test="exec" data-test-assert-contains="BUILD SUCCESS">
 $ mvn test \
