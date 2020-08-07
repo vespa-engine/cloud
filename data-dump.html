@@ -46,7 +46,7 @@ do
   echo "Fetching data..."
   curl -s --cert data-plane-public-cert.pem --key data-plane-private-key.pem \
     "${ENDPOINT}/document/v1/${NAMESPACE}/${DOCTYPE}/docid?wantedDocumentCount=1000&amp;concurrency=4&amp;cluster=${CLUSTER}&amp;${continuation}" | gzip > ${filename}
-  continuation="continuation=`gunzip -c ${filename} | head -c 300 | grep '"continuation":"' | cut -d'"' -f4`"
+  continuation="continuation=`gunzip -c ${filename} | head -c 1000 | grep '"continuation":"' | cut -d'"' -f4`"
 done
 </pre>
 On <em>concurrency</em>: higher concurrency increases temporal memory use while dumping data, returning more documents per request.
