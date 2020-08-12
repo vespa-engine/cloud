@@ -1,0 +1,376 @@
+---
+# Copyright Verizon Media. All rights reserved.
+layout: page-wide
+---
+
+<style>
+  .bg-light-gray {
+    background-color: #f7f7f7;
+  }
+
+  .bg-darkest-gray {
+    background-color: #222;
+  }
+
+  .bg-white {
+    background-color: #fff;
+  }
+
+  .denali-icons {
+    color: #3F9DD8;
+  }
+
+  .subheading {
+    font-size:   2em;
+    font-weight: 700;
+  }
+</style>
+
+
+<!-- https://denali-design.github.io/denali-icon-font/docs/ for font used as icons below -->
+
+<p class="intro">
+Vespa Cloud: Let the world's expert on Big Data Serving take care of the serving.
+</p>
+
+<section id="machine-learning-automated" class="bg-light-blue">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-2 text-center">
+        <span class="d-icon is-large denali-icons d-cicd"/>
+      </div>
+      <div class="col-lg-10">
+        <p class="subheading">
+          Machine Learning, automated
+        </p><p>
+          The best ML teams do not train models, but build a system with signals to model training,
+          model training automation, and automated model deployment.
+          This keeps the model current, and routine tasks are automated -
+          all work can go into improving the model.
+        </p><p>
+          Vespa Cloud’s role is being a component in this cycle,
+          see <a href="model-serving">model serving</a>.
+          Emit data for next model training cycle using grid logging and feature export.
+          Then accept a new model version using Safe Launches by just deploying a new model URL. Repeat.</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="leading-edge" class="bg-white">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-10 text-right">
+        <p class="subheading">
+          Leading Edge
+        </p><p>
+          The best teams are global leaders in their business, or working to be.
+          They drive Vespa to implement new features, so teams can innovate together.
+          Vespa Cloud lets teams access features as they are built.
+          Lead time from feature request to ready-to-use is at best days - but can be years,
+          for game-changing features like <a href="https://docs.vespa.ai/documentation/tensor-intro.html">tensors</a>
+          and <a href="https://docs.vespa.ai/documentation/reference/query-language-reference.html">approximate nearest-neighbor</a>.
+        </p><p>
+          Organizations use Vespa to get a competitive advantage, and Vespa.ai enables that.
+          They use Vespa Cloud to let teams use their expertise best,
+          and work closely with Vespa Experts to use the right features the right ways.</a>.
+        </p>
+      </div>
+      <div class="col-lg-2 text-center">
+        <span class="d-icon is-large denali-icons d-chart-metric"/>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="cost-optimization-cluster-sizing" class="bg-light-gray">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-2 text-center">
+        <span class="d-icon is-large denali-icons d-scale-minimize"/>
+      </div>
+      <div class="col-lg-10 text-left">
+        <p class="subheading">
+          Cost Optimization: Cluster Sizing
+        </p><p>
+          Using Vespa Cloud enables the Vespa Team to assist you to optimise the application to reduce resource spend.
+          Based on 150 applications running on Vespa Cloud today, savings are typically 50%.
+          Cost optimization is hard to do without domain knowledge -
+          but few teams are experts in both their application and its serving platform.
+          Sizing means finding both the right node size and the right cluster topology:
+        </p><p style="text-align: center;">
+          <img src="img/nodes.svg" width="297" height="137" ><br/>
+        </p><p>
+          Applications use Vespa for their primary business use cases.
+          Availability and performance vs. cost are business decisions.
+          The best sized application can handle all expected load situations,
+          and is configured to degrade quality gracefully for the unexpected.
+          Read more in Performance Lab and Overload handling.
+        </p><p>
+          Even though Vespa is cost efficient out of the box,
+          Vespa Experts can usually spot over/under-allocations in CPU, memory and disk space/IO,
+          and discuss trade offs with the application team.
+        </p><p>
+          Using Safe Launches, applications go live with little risk,
+          then right-size the application based on true load after using Vespa’s elasticity features with automated data migration.
+      </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="cost-optimization-in-place-upgrades" class="bg-light-blue">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-10 text-right">
+        <p class="subheading">
+          Cost Optimization: In-place Upgrades
+        </p><p>
+          Vespa is built to be always-on, also while upgrading.
+          Vespa Cloud upgrades multiple times a week, see below for Security and Leading Edge.
+        </p><p>
+          Upgrading means taking nodes offline for new software install.
+          Vespa Cloud cloud orchestrates the process, taking nodes offline safely one by one,
+          and data is synced before upgrading the next node.
+          This keeps all data available at all time, with no extra cluster setup.
+        </p><p style="text-align: center;">
+        <img src="img/system-test.png" ><br/>
+        </p><p>
+          As all Vespa Cloud applications must be sized to tolerate single node failures,
+          the upgrader stops upgrading during failures,
+          and resumes once new nodes are in place, and data is synced.
+        </p><p>
+          In contrast, manually upgrading cluster takes time, and are often hence put off to later.
+          Often a separate application is spun up, data is migrated, manual tests are run, etc.
+        This has high costs in both HW/cloud resources and people time.
+        </p>
+      </div>
+      <div class="col-lg-2 text-center">
+        <span class="d-icon is-large denali-icons d-swap-horizontal-circle"/>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="cost-optimization-simple-pricing-model" class="bg-white">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-2 text-center">
+        <span class="d-icon is-large denali-icons d-currency-bag-dollar"/>
+      </div>
+      <div class="col-lg-10 text-left">
+        <p class="subheading">
+          Cost Optimization: Simple Pricing Model
+        </p><p>
+          Transparent and easy-to-understand pricing model,
+        based on node <a href="reference/services">resources</a> only.
+          No extra modules needed to unlock Vespa features, as these are native to Vespa and cannot be disabled
+          (this also enables high performance and operational simplicity)
+        </p><p>
+<pre>
+&lt;nodes count="16"&gt;
+    &lt;resources vcpu="8" memory="32Gb" disk="100Gb"/&gt;
+&lt;/nodes&gt;
+</pre>
+        </p><p>
+          Use resource scaling for seasonal peaks -
+          just change resource allocations, and auto data redistribution enables extra capacity.
+          No need to pay for the light-blue resources when not needed:
+        </p><p style="text-align: center;">
+          <img src="img/seasonal-scaling.svg" width="319" height="88"><br/>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="security" class="bg-light-gray">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-10 text-right">
+        <p class="subheading">
+          Security
+        </p><p>
+          Using the Auto in-place Upgrader (above), Vespa code and dependencies are upgraded multiple times a week.
+          As new Operating System versions are available (normally once a month),
+          Vespa base hosts are booted with the new release, using the Auto in-place Upgrader.
+          This keeps the clusters safe - all software on the node is up to date
+        </p><p>
+          External and internal interfaces are encrypted using mTLS. Data at rest is encrypted.
+        </p>
+      </div>
+      <div class="col-lg-2 text-center">
+        <span class="d-icon is-large denali-icons d-security-verified"/>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="performance-lab" class="bg-light-blue">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-2 text-center">
+        <span class="d-icon is-large denali-icons d-dashboard-add"/>
+      </div>
+      <div class="col-lg-10 text-left">
+        <p class="subheading">
+          Performance Lab
+        </p><p>
+          Vespa applications range from applications with 100k documents and 100k query load,
+          to 20B documents and 1k query load - and everything in between.
+          Update rates range from 0 to 10k/sec.
+         </p><p>
+          The applications hence have different latency and throughput requirements,
+          and Vespa has more <a href="https://docs.vespa.ai/documentation/reference/services-content.html">indexing</a> and
+          <a href="https://docs.vespa.ai/documentation/elastic-vespa.html">topology</a> options
+          to optimize for the different use cases.
+          Adding to this, Vespa’s <a href="https://docs.vespa.ai/documentation/reference/schema-reference.html">search threads</a> configuration
+          helps balance latency vs. CPU usage.
+          Use attribute <a href="https://docs.vespa.ai/documentation/attributes.html">memory</a> options
+          to balance read/write latencies vs. memory usage.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="overload-handling" class="bg-white">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-10 text-right">
+        <p class="subheading">
+          Overload Handling
+        </p><p>
+          A correctly sized application handles all planned-for scenarios.
+          Planning can however be wrong (nobody is perfect!), and extraordinary events happen.
+          <strong>That is exactly when the application should not fail.</strong>
+        </p><p>
+          Depending on the event, the right action might be to add or change resources, and takes Vespa domain knowledge to evaluate.
+        </p><p>
+          Vespa Cloud helps configure a tradeoff between recall and resource usage,
+          called <a href="https://docs.vespa.ai/documentation/graceful-degradation.html">Soft Degradation</a>.
+          This lets the application owner decide in advance how to simplify the query matching so results are returned,
+          but not necessarily the best ones.
+          Having almost as good results is better than going black.
+          This is easiest done using Vespa Cloud and detailed performance inspection during regular load.
+        </p>
+      </div>
+      <div class="col-lg-2 text-center">
+        <span class="d-icon is-large denali-icons d-warning"/>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="safe-launches" class="bg-light-gray">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-2 text-center">
+        <span class="d-icon is-large denali-icons d-data-storage-check"/>
+      </div>
+      <div class="col-lg-10 text-left">
+        <p class="subheading">
+          Safe Launches
+        </p><p>
+          The best launches are non-events.
+          As any launch has a set of unknowns, it makes sense to pad node usage,
+          then quickly scale back when in steady state - see Cluster Sizing.
+          This eliminates the need for lengthy and costly pre-launch performance test cycles
+          for both node instance type and number of nodes used.
+        </p><p style="text-align: center;">
+          <img src="img/safe-launch.png" width="203" height="148"><br/>
+        </p><p>
+          Launches are changes to capacity, configuration and/or code.
+          To safeguard any change, Vespa Cloud has <a href="automated-deployments">Automated Deployments</a>.
+          Automated Deployments are System, Staging and Production tests run at any deployment.
+          This lets developers define quality metrics and test for these a-priori.
+          The best teams build a strong test suite and are hence confident in all changes.
+          These teams deploy changes to production more times a day,
+          and are orders or magnitude more productive than without automated deployment.
+        </p><p>
+          Vespa Cloud has built-in support to block potentially destructive configuration changes,
+          see <a href="https://docs.vespa.ai/documentation/reference/schema-reference.html">safe schema modifications</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="quality" class="bg-light-blue">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-10 text-right">
+        <p class="subheading">
+          Quality
+        </p><p>
+          Bugs happen, and quick failure resolution is essential.
+          See Developer Lab for how developers copy the exact production config into a sandbox for debugging and development.
+        </p><p>
+          Using Vespa Cloud enables Vespa Support to quickly assess production serving problems -
+          the application dashboard is already available to them, with the relevant metrics.
+          In many cases, Vespa Support can in advance predict future problems based on trends.
+        </p><p>
+          Nodes and data centers can and will fail.
+          Vespa Cloud detects and replaces and failed nodes automatically, and migrates data for replica re-generation.
+        </p><p>
+          Catastrophic event handling with multiple availability zones and Auto failover is supported for the data center / network events.
+        </p>
+      </div>
+      <div class="col-lg-2 text-center">
+        <span class="d-icon is-large denali-icons d-bug"/>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="data-privacy" class="bg-white">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-2 text-center">
+        <span class="d-icon is-large denali-icons d-user-canonical"/>
+      </div>
+      <div class="col-lg-10 text-left">
+        <p class="subheading">
+          Data Privacy
+        </p><p>
+        The General Data Protection Regulation (GDPR) and California Consumer Privacy Act (CCPA)
+        are relevant for applications with personal data. Highlights:
+        <ol>
+          <li>Prepare - primarily application owner - includes reviewing Vespa’s compliance.
+            Use Vespa’s data auto-expiry in application configuration</li>
+          <li>Protect - see Security. Also relevant is application logging</li>
+          <li>Processes - including notifications from Vespa to application owner
+            and application data auto deletion at disuse</li>
+        </ol>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="developer-lab" class="bg-light-gray">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-10 text-right">
+        <p class="subheading">
+          Developer Lab
+        </p><p>
+          Using the Vespa Cloud Sandbox and <a href="https://github.com/vespa-engine/sample-apps/blob/master/README.md">sample applications</a>
+          enables developers to get started in 15 minutes.
+          The first strawman application with test data is normally built in a day.
+          The fastest teams launch to a production environment the first week.
+          This in order to integrate with production data feeders and query sources early, for rapid iteration.
+        </p><p>
+          Developers can deploy Sandbox applications to a Docker instance on their laptop, too -
+          that makes it easy to be productive in all environments.
+        </p>
+      </div>
+      <div class="col-lg-2 text-center">
+        <span class="d-icon is-large denali-icons d-tools"/>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section/> <!-- ugly workaround for the margin-top for sections - see docs.css #main-content -->
