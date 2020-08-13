@@ -1,10 +1,16 @@
 ---
-# Copyright 2019 Oath Inc. All rights reserved.
+# Copyright Verizon Media. All rights reserved.
 title: "Vespa Use Cases"
 ---
 
+<!-- ToDo: Fix page layout -->
+
 Vespa is a generic platform for Big Data Serving.
-Find sample use cases below for popular uses cases for Vespa
+Find sample use cases below for popular uses cases for Vespa.
+Also see:
+* [operational use cases](ops-use-cases)
+* [performance use cases](performance-use-cases)
+<!-- ToDo: integrate the above use cases better / rewrite -->
 
 
 
