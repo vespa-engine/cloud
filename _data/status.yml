@@ -1,4 +1,4 @@
-# Copyright 2020 Oath Inc. All rights reserved.
+# Copyright Verizon Media. All rights reserved.
 zones:
   # List all zones and status. Valid status is "success", "warning" or "danger". 
   # Message should be "OK", "Partial outage", "Degraded service", "Down" or similar short string.
