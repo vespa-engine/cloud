@@ -1,4 +1,4 @@
-<!-- # Copyright 2019 Oath Inc. All rights reserved. -->
+<!-- # Copyright Verizon Media. All rights reserved. -->
 
 # Vespa Cloud documentation
 

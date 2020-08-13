@@ -1,5 +1,5 @@
 ---
-# Copyright 2020 Oath Inc. All rights reserved.
+# Copyright Verizon Media. All rights reserved.
 title: "Benchmarking"
 ---
 
