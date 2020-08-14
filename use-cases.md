@@ -1,6 +1,7 @@
 ---
 # Copyright Verizon Media. All rights reserved.
 title: "Vespa Use Cases"
+layout: page-wide
 ---
 
 <!-- ToDo: Fix page layout -->
