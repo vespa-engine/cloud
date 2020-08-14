@@ -2,6 +2,27 @@
 # Copyright Verizon Media. All rights reserved.
 layout: page-wide
 ---
+<style>
+  .bg-light-gray {
+    background-color: #f7f7f7;
+  }
+
+  .bg-darkest-gray {
+    background-color: #222;
+  }
+
+  .bg-white {
+    background-color: #fff;
+  }
+
+  .denali-icon-color {
+    color: #3F9DD8;
+  }
+
+  h2 {
+    margin-top: 0px;
+  } <!-- align better with icons  -->
+</style>
 
 <p class="intro">
 Getting Started
@@ -9,18 +30,83 @@ Getting Started
 
 <!-- ToDo: layout -->
 
-<section>
+
+<section id="roadmap" class="bg-light-blue">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12 text-left">
+        <p>
+          Running big data applications is hard: it combines requirements for high availability, consistent low latency,
+          and distributed state and computation. Outsource it to a team that has as their sole priority to do it well, and which
+          has been at it for many years! It is as easy as deploying your application on the Vespa cloud service available in
+          <a href="/reference/zones">AWS regions around the world</a>.
+        </p>
+      </div>
+
+      <div class="col-lg-12 text-center">
+        <p></p>
+      </div>
+
+      <div class="col-lg-12 text-left">
+        <h4>What you get:</h4>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="row">
+              <div class="col-md-5 welcome-border">
+                <ul class="welcome">
+                  <li>
+                    Your Vespa applications are managed by the world’s most experienced big data serving operations team -
+                    the Vespa operations team monitors and analyzes the systems 24/7.
+                  </li><li>
+                  You are automatically and safely kept on the latest production proven version of Vespa and OS —
+                  ensuring security, and availability of the latest Vespa features with no effort required on your part.
+                  A new release of Vespa is usually installed four times a week.
+                </li><li>
+                  <a href="/security-model">Strong security by default</a>:
+                  all external and internal communications is secured with mutual TLS with
+                  application-specific certificates. All applications run on dedicated containers with an isolated network.
+                </li>
+                </ul>
+              </div>
+              <div class="col-md-5">
+                <ul class="welcome">
+                  <li>
+                    Application support with response by the next business day by the team that develops Vespa.
+                  </li><li>
+                  Convenient and fast application development by deploying any number of development copies of your application,
+                  with seconds of turnaround time, to a development environment.
+                </li><li>
+                  Application changes are <a href="/automated-deployments">continuously, quickly and safely deployed to production</a>.
+                </li><li>
+                  All the <a href="https://docs.vespa.ai/documentation/overview.html">Vespa features</a> are available
+                  just as they would be in a self-hosted application, just without the effort of operating and securing it.
+                </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-12 text-center">
+        <p></p>
+      </div>
+
+      <div class="col-lg-10 text-center">
+        <p>
+          <a target="_blank" class="btn btn-primary btn-lg intro-button" href="mailto:info@vespa.ai?subject=Sign+me+up!">Sign Up</a>
+          <a target="_blank" class="btn btn-primary btn-lg intro-button" href="http://console.vespa.ai/">Sign In</a></p>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="bg-light-gray">
   <div class="container">
     <div class="row">
       <div class="col-lg-12">
-        <p>
-          See <a href="https://docs.vespa.ai/documentation/getting-started.html#troubleshooting">troubleshooting</a>
-          for FAQ and help.
-        </p>
-
-
-
-        <h2 id="getting-started">Getting Started</h2>
+        <h2 id="sample-applications">Sample Applications</h2>
         <p>
           To deploy a test application,
           run the <a href="/getting-started">Getting Started</a> guide.
@@ -33,8 +119,19 @@ Getting Started
           To set up a fully functional production application,
           see <a href="/getting-to-production">Getting to Production</a>
         </p>
+        <p>
+          See <a href="https://docs.vespa.ai/documentation/getting-started.html#troubleshooting">troubleshooting</a>
+          for FAQ and help.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
 
-
+<section class="bg-white">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
 
         <h2 id="tutorials-and-use-cases">Tutorials and use cases</h2>
         <p>
@@ -51,8 +148,15 @@ Getting Started
         </ul>
         Try the <a href="https://docs.vespa.ai/documentation/use-case-shopping.html">e-commerce shopping</a> use case.
         </p>
+      </div>
+    </div>
+  </div>
+</section>
 
-
+<section class="bg-light-blue">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
 
         <h2 id="next-steps">Next Steps</h2>
         <ul>
@@ -72,4 +176,4 @@ Getting Started
   </div>
 </section>
 
-
+<section/>
