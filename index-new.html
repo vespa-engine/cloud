@@ -16,14 +16,13 @@ layout: page-wide
     background-color: #fff;
   }
 
-  .denali-icons {
+  .denali-icon-color {
     color: #3F9DD8;
   }
 
-  .subheading {
-    font-size:   2em;
-    font-weight: 700;
-  }
+  h2 {
+    margin-top: 0px;
+  } <!-- align better with icons  -->
 </style>
 
 
@@ -33,16 +32,32 @@ layout: page-wide
 Vespa Cloud: Let the world's expert on Big Data Serving take care of the serving.
 </p>
 
+<section id="sign-in" class="bg-white">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-2 text-right">
+        <p>
+          <a target="_blank" class="btn btn-primary btn-lg intro-button" href="mailto:info@vespa.ai?subject=Sign+me+up!">Sign Up</a>
+          <a target="_blank" class="btn btn-primary btn-lg intro-button" href="http://console.vespa.ai/" style="margin-top: 10px">Sign In</a></p>
+        </p>
+      </div>
+      <div class="col-lg-10">
+        <h2>Vespa Cloud Console</h2>
+        See <a href="/getting-started">Getting Started</a> for details.
+      </div>
+    </div>
+  </div>
+</section>
+
 <section id="machine-learning-automated" class="bg-light-blue">
   <div class="container">
     <div class="row">
       <div class="col-lg-2 text-center">
-        <span class="d-icon is-large denali-icons d-cicd"/>
+        <span class="d-icon is-large denali-icon-color d-cicd"/>
       </div>
       <div class="col-lg-10">
-        <p class="subheading">
-          Machine Learning, automated
-        </p><p>
+        <h2>Machine Learning, automated</h2>
+        <p>
           The best ML teams do not train models, but build a system with signals to model training,
           model training automation, and automated model deployment.
           This keeps the model current, and routine tasks are automated -
@@ -62,9 +77,8 @@ Vespa Cloud: Let the world's expert on Big Data Serving take care of the serving
   <div class="container">
     <div class="row">
       <div class="col-lg-10 text-right">
-        <p class="subheading">
-          Leading Edge
-        </p><p>
+        <h2>Leading Edge</h2>
+        <p>
           The best teams are global leaders in their business, or working to be.
           They drive Vespa to implement new features, so teams can innovate together.
           Vespa Cloud lets teams access features as they are built.
@@ -78,7 +92,7 @@ Vespa Cloud: Let the world's expert on Big Data Serving take care of the serving
         </p>
       </div>
       <div class="col-lg-2 text-center">
-        <span class="d-icon is-large denali-icons d-chart-metric"/>
+        <span class="d-icon is-large denali-icon-color d-chart-metric"/>
       </div>
     </div>
   </div>
@@ -88,12 +102,11 @@ Vespa Cloud: Let the world's expert on Big Data Serving take care of the serving
   <div class="container">
     <div class="row">
       <div class="col-lg-2 text-center">
-        <span class="d-icon is-large denali-icons d-scale-minimize"/>
+        <span class="d-icon is-large denali-icon-color d-scale-minimize"/>
       </div>
       <div class="col-lg-10 text-left">
-        <p class="subheading">
-          Cost Optimization: Cluster Sizing
-        </p><p>
+        <h2>Cost Optimization: Cluster Sizing</h2>
+        <p>
           Using Vespa Cloud enables the Vespa Team to assist you to optimise the application to reduce resource spend.
           Based on 150 applications running on Vespa Cloud today, savings are typically 50%.
           Cost optimization is hard to do without domain knowledge -
@@ -124,9 +137,8 @@ Vespa Cloud: Let the world's expert on Big Data Serving take care of the serving
   <div class="container">
     <div class="row">
       <div class="col-lg-10 text-right">
-        <p class="subheading">
-          Cost Optimization: In-place Upgrades
-        </p><p>
+        <h2>Cost Optimization: In-place Upgrades</h2>
+        <p>
           Vespa is built to be always-on, also while upgrading.
           Vespa Cloud upgrades multiple times a week, see below for Security and Leading Edge.
         </p><p>
@@ -147,7 +159,7 @@ Vespa Cloud: Let the world's expert on Big Data Serving take care of the serving
         </p>
       </div>
       <div class="col-lg-2 text-center">
-        <span class="d-icon is-large denali-icons d-swap-horizontal-circle"/>
+        <span class="d-icon is-large denali-icon-color d-swap-horizontal-circle"/>
       </div>
     </div>
   </div>
@@ -157,12 +169,11 @@ Vespa Cloud: Let the world's expert on Big Data Serving take care of the serving
   <div class="container">
     <div class="row">
       <div class="col-lg-2 text-center">
-        <span class="d-icon is-large denali-icons d-currency-bag-dollar"/>
+        <span class="d-icon is-large denali-icon-color d-currency-bag-dollar"/>
       </div>
       <div class="col-lg-10 text-left">
-        <p class="subheading">
-          Cost Optimization: Simple Pricing Model
-        </p><p>
+        <h2>Cost Optimization: Simple Pricing Model</h2>
+        <p>
           Transparent and easy-to-understand pricing model,
         based on node <a href="reference/services">resources</a> only.
           No extra modules needed to unlock Vespa features, as these are native to Vespa and cannot be disabled
@@ -189,9 +200,8 @@ Vespa Cloud: Let the world's expert on Big Data Serving take care of the serving
   <div class="container">
     <div class="row">
       <div class="col-lg-10 text-right">
-        <p class="subheading">
-          Security
-        </p><p>
+        <h2>Security</h2>
+        <p>
           Using the Auto in-place Upgrader (above), Vespa code and dependencies are upgraded multiple times a week.
           As new Operating System versions are available (normally once a month),
           Vespa base hosts are booted with the new release, using the Auto in-place Upgrader.
@@ -201,7 +211,7 @@ Vespa Cloud: Let the world's expert on Big Data Serving take care of the serving
         </p>
       </div>
       <div class="col-lg-2 text-center">
-        <span class="d-icon is-large denali-icons d-security-verified"/>
+        <span class="d-icon is-large denali-icon-color d-security-verified"/>
       </div>
     </div>
   </div>
@@ -211,12 +221,11 @@ Vespa Cloud: Let the world's expert on Big Data Serving take care of the serving
   <div class="container">
     <div class="row">
       <div class="col-lg-2 text-center">
-        <span class="d-icon is-large denali-icons d-dashboard-add"/>
+        <span class="d-icon is-large denali-icon-color d-dashboard-add"/>
       </div>
       <div class="col-lg-10 text-left">
-        <p class="subheading">
-          Performance Lab
-        </p><p>
+        <h2>Performance Lab</h2>
+        <p>
           Vespa applications range from applications with 100k documents and 100k query load,
           to 20B documents and 1k query load - and everything in between.
           Update rates range from 0 to 10k/sec.
@@ -239,9 +248,8 @@ Vespa Cloud: Let the world's expert on Big Data Serving take care of the serving
   <div class="container">
     <div class="row">
       <div class="col-lg-10 text-right">
-        <p class="subheading">
-          Overload Handling
-        </p><p>
+        <h2>Overload Handling</h2>
+        <p>
           A correctly sized application handles all planned-for scenarios.
           Planning can however be wrong (nobody is perfect!), and extraordinary events happen.
           <strong>That is exactly when the application should not fail.</strong>
@@ -257,7 +265,7 @@ Vespa Cloud: Let the world's expert on Big Data Serving take care of the serving
         </p>
       </div>
       <div class="col-lg-2 text-center">
-        <span class="d-icon is-large denali-icons d-warning"/>
+        <span class="d-icon is-large denali-icon-color d-warning"/>
       </div>
     </div>
   </div>
@@ -267,12 +275,11 @@ Vespa Cloud: Let the world's expert on Big Data Serving take care of the serving
   <div class="container">
     <div class="row">
       <div class="col-lg-2 text-center">
-        <span class="d-icon is-large denali-icons d-data-storage-check"/>
+        <span class="d-icon is-large denali-icon-color d-data-storage-check"/>
       </div>
       <div class="col-lg-10 text-left">
-        <p class="subheading">
-          Safe Launches
-        </p><p>
+        <h2>Safe Launches</h2>
+        <p>
           The best launches are non-events.
           As any launch has a set of unknowns, it makes sense to pad node usage,
           then quickly scale back when in steady state - see Cluster Sizing.
@@ -301,9 +308,8 @@ Vespa Cloud: Let the world's expert on Big Data Serving take care of the serving
   <div class="container">
     <div class="row">
       <div class="col-lg-10 text-right">
-        <p class="subheading">
-          Quality
-        </p><p>
+        <h2>Quality</h2>
+        <p>
           Bugs happen, and quick failure resolution is essential.
           See Developer Lab for how developers copy the exact production config into a sandbox for debugging and development.
         </p><p>
@@ -318,7 +324,7 @@ Vespa Cloud: Let the world's expert on Big Data Serving take care of the serving
         </p>
       </div>
       <div class="col-lg-2 text-center">
-        <span class="d-icon is-large denali-icons d-bug"/>
+        <span class="d-icon is-large denali-icon-color d-bug"/>
       </div>
     </div>
   </div>
@@ -328,12 +334,11 @@ Vespa Cloud: Let the world's expert on Big Data Serving take care of the serving
   <div class="container">
     <div class="row">
       <div class="col-lg-2 text-center">
-        <span class="d-icon is-large denali-icons d-user-canonical"/>
+        <span class="d-icon is-large denali-icon-color d-user-canonical"/>
       </div>
       <div class="col-lg-10 text-left">
-        <p class="subheading">
-          Data Privacy
-        </p><p>
+        <h2>Data Privacy</h2>
+        <p>
         The General Data Protection Regulation (GDPR) and California Consumer Privacy Act (CCPA)
         are relevant for applications with personal data. Highlights:
         <ol>
@@ -353,9 +358,8 @@ Vespa Cloud: Let the world's expert on Big Data Serving take care of the serving
   <div class="container">
     <div class="row">
       <div class="col-lg-10 text-right">
-        <p class="subheading">
-          Developer Lab
-        </p><p>
+        <h2>Developer Lab</h2>
+        <p>
           Using the Vespa Cloud Sandbox and <a href="https://github.com/vespa-engine/sample-apps/blob/master/README.md">sample applications</a>
           enables developers to get started in 15 minutes.
           The first strawman application with test data is normally built in a day.
@@ -367,7 +371,7 @@ Vespa Cloud: Let the world's expert on Big Data Serving take care of the serving
         </p>
       </div>
       <div class="col-lg-2 text-center">
-        <span class="d-icon is-large denali-icons d-tools"/>
+        <span class="d-icon is-large denali-icon-color d-tools"/>
       </div>
     </div>
   </div>
