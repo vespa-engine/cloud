@@ -1,14 +1,33 @@
 # Copyright Verizon Media. All rights reserved.
 docs:
-    - page: services.xml
-      url: /reference/services
-    - page: deployment.xml
-      url: /reference/deployment
-    - page: Zones
-      url: /reference/zones
-    - page: Environments
-      url: /reference/environments
-    - page: Testing
-      url: /reference/testing
-    - page: Vespa Cloud API
-      url: /reference/vespa-cloud-api
+  - title: GUIDES
+    documents:
+      - page: Automated Deployments
+        url: /automated-deployments
+      - page: Monitoring
+        url: /monitoring
+      - page: Security
+        url: /security-model
+      - page: Benchmarking
+        url: /benchmarking
+      - page: Data Dump
+        url: /data-dump
+      - page: Testing
+        url: /reference/testing
+      - page: Model Serving
+        url: /model-serving
+
+  - title: REFERENCE
+    documents:
+      - page: services.xml
+        url: /reference/services
+      - page: deployment.xml
+        url: /reference/deployment
+      - page: Zones
+        url: /reference/zones
+      - page: Environments
+        url: /reference/environments
+      - page: Testing
+        url: /reference/testing
+      - page: Vespa Cloud API
+        url: /reference/vespa-cloud-api
