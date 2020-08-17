@@ -1,38 +1,94 @@
 ---
 # Copyright Verizon Media. All rights reserved.
-layout: page
+title: "Pricing"
+layout: page-wide
 redirect_from: "/quota"
 ---
 
-<div class="col-lg-12 text-left">
+<style>
+  table.price {
+    margin-bottom: 15px;
+    margin-left: 20px;
+  }
 
-        <h1>Pricing</h1>
-        
-        <p>Vespa charges by the machine resources allocated to your applications in three dimensions:</p>
-        
+  table.price td{
+    padding: 6px;
+  }
+
+  ul.offer li {
+    padding: 6px;
+  }
+
+  h2 {
+    margin-top: 0px;
+  }  <!-- align better with icons -->
+</style>
+
+<!-- https://denali-design.github.io/denali-icon-font/docs/ for font used as icons below -->
+
+<p class="intro">
+  Vespa Cloud Pricing
+</p>
+
+<section id="pricing" class="bg-white">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-2 text-center">
+        <span class="d-icon is-large denali-icon-color d-currency-bag-dollar"/>
+      </div>
+      <div class="col-lg-10">
+        <h2>Pricing</h2>
+        <p>
+          Vespa charges by the machine resources allocated to applications in three dimensions:
+        </p>
         <table class="price">
-        <tr><td><b>Per vcpu hour:</b></td>      <td>$0.12</td></tr>
-        <tr><td><b>Per memory Gb hour:</b></td> <td>$0.012</td></tr>
-        <tr><td><b>Per disk Gb hour:</b></td>   <td>$0.0004</td></tr>
+          <tr>
+            <th>Per vcpu hour:</th>
+            <td>$0.12</td>
+          </tr>
+          <tr>
+            <th>Per memory Gb hour:</th>
+            <td>$0.012</td>
+          </tr>
+          <tr>
+            <th>Per disk Gb hour:</th>
+            <td>$0.0004</td>
+          </tr>
         </table>
-        
-        <p>In production zones, the resources you allocate are precisely what you specify in services.xml for the duration
-        the application is deployed.</p>
-        
-        <p>In dev, and test zones, applications will by default be
-        <a href="/reference/environments">downscaled</a> and you will be charged for
-        the capacity actually used. In test zones, applications will only allocate resources while tests are running.</p>
-        
-        <p>In addition to machine resource costs, network costs incurred by your application are passed on to you at
-        <a href="https://aws.amazon.com/ec2/pricing/on-demand/#Data_Transfer">standard AWS prices</a>.
-        These depend only on how you use your applications.</p>
+        <p>
+          In production zones, the resources allocated are precisely what you specify in services.xml
+          for the duration the application is deployed.
+                <!-- ToDo: Link to auto resource scaling -->
+        </p><p>
+          In dev and test zones, applications will by default be <a href="/reference/environments">downscaled</a>.
+          Application owners will be charged for the capacity actually used.
+          In test zones, applications will only allocate resources while tests are running.
+              <!-- ToDo: link to more details / some more text here -->
+        </p><p>
+          In addition to machine resource costs, network costs incurred by applications are passed on to you at
+          <a href="https://aws.amazon.com/ec2/pricing/on-demand/#Data_Transfer">standard AWS prices</a>.
+          These depend only on how applications are used.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
 
-
+<section id="quota" class="bg-light-blue">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-2 text-center">
+        <span class="d-icon is-large denali-icon-color d-value-exclude"/>
+      </div>
+      <div class="col-lg-10">
         <h2>Quota</h2>
         <p>
-        By default all Vespa Cloud applications are limited to 5 nodes in size.
-        To increase the quota, contact <a href="mailto:support@vespa.ai">support@vespa.ai</a>.
+          All Vespa Cloud applications are limited to 5 nodes in size by default.
+          Contact <a href="/support">support</a> to increase the quota.
         </p>
+      </div>
+    </div>
+  </div>
+</section>
 
-</div>
-        
+<section/>
