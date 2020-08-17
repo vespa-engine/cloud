@@ -1,40 +1,14 @@
 # Copyright Verizon Media. All rights reserved.
 docs:
-    - page: Vespa Cloud
-      url: /
-    - page: Quick Start
-      url: /vespa-cloud-quick-start
-    - page: Getting to Production
-      url: /getting-to-production
-    - page: album-recommendation-searcher
-      url: /album-recommendation-searcher
-    - page: Model Serving
-      url: /model-serving
-    - page: Automated Deployments
-      url: /automated-deployments
-    - page: Monitoring
-      url: /monitoring
-    - page: Use Cases
-      url: /use-cases.html
-    - page: Operational Use Cases
-      url: /ops-use-cases
-    - page: Performance Use Cases
-      url: /performance-use-cases
-    - page: Environments
-      url: /reference/environments
-    - page: Zones
-      url: /reference/zones
-    - page: Security Model
-      url: /security-model
     - page: services.xml
       url: /reference/services
     - page: deployment.xml
       url: /reference/deployment
-    - page: Benchmarking
-      url: /benchmarking
-    - page: Data Dump / Purge
-      url: /data-dump
+    - page: Zones
+      url: /reference/zones
+    - page: Environments
+      url: /reference/environments
     - page: Testing
       url: /reference/testing
-    - page: Pricing
-      url: /pricing
+    - page: Vespa Cloud API
+      url: /reference/vespa-cloud-api
