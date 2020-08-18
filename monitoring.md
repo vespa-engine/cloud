@@ -62,7 +62,7 @@ append the target configuration for Vespa to scrape_configs.
 
 ### Configuring Grafana Dashboard
 To start configuring Grafana, download the
-[provisioning folder](href="https://github.com/vespa-engine/sample-apps/tree/master/album-recommendation-monitoring/grafana/provisioning).
+[provisioning folder](https://github.com/vespa-engine/sample-apps/tree/master/album-recommendation-monitoring/grafana/provisioning).
 This serves as a baseline for further configuration.
 
 In the provisioning folder there are a few different files that all help for configuring Grafana locally.
