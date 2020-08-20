@@ -3,28 +3,25 @@
 <html lang="en">
 
 <head>
-    {% include header.html %}
+  {% include header.html %}
 </head>
 
 <body>
-
 <!-- Fixed navbar -->
 {% include nav.html %}
 
 <div class="container-fluid"> <!-- id="main-content" makes sections position in wrong place, see docs.css -->
-    <div class="row">
-
-        <div class="col-lg-12 main">
-
-            {{ content }}
-
-        </div>
-
-        {% include footer-wide.html %}
-
+  <div class="row">
+    <div class="col-lg-12 main">
+      {{ content }}
     </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12 footer-border">
+      {% include footer-wide.html %}
+    </div>
+  </div>
 </div>
-
 
 </body>
 </html>
