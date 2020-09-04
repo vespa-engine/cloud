@@ -11,7 +11,8 @@ must be tested and, if found healthy, deployed.
 Similarly, each change to the Vespa platform, by the Vespa team, must be tested and deployed for all the hosted applications.
 Vespa Cloud automates all these tests and deployments, with features including:
 <ul>
-  <li>chained runs of tests and deployment, with retries of failed jobs;</li>
+  <li>chained runs of tests (see the <a href="/reference/testing.html">test reference</a>) and deployment,
+    with retries of failed jobs;</li>
   <li>multiple concurrent instances of an application in each zone, upgraded as specified by the user,
     for testing application changes in a subset of the service before rolling them out further;</li>
   <li>separation of application and platform changes, making it easier to pinpoint breaking changes
@@ -29,7 +30,8 @@ full-fledged Continuous Deployment (CD) of all its applications, both for applic
 
 <h2 id="setting-up-deployment-to-production">Setting up deployment to production</h2>
 <p>
-Follow steps in <a href="getting-to-production">Getting to Production</a>.
+Follow steps in <a href="/getting-to-production">Getting to Production</a>,
+or try the full example in <a href="/album-recommendation-searcher">album-recommendation-searcher</a> .
 Also see the <a href="/reference/vespa-cloud-api.html">API reference</a>. Summary:
 <ol>
   <li><strong>Create deployment.xml</strong>
