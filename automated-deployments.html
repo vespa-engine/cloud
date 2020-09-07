@@ -68,8 +68,7 @@ The job should execute something like the following (modify as needed if not usi
 $ mvn clean vespa:compileVersion \
   -DapiKey="${MY_API_KEY}"
 
-$ mvn -P fat-test-application \
-  package vespa:submit \
+$ mvn package vespa:submit \
   -Dvespa.compile.version="$(cat target/vespa.compile.version)"  \
   -Drepository=$(git config --get remote.origin.url) \
   -Dbranch=$(git rev-parse --abbrev-ref HEAD) \

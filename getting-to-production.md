@@ -63,7 +63,7 @@ Now you are ready to build and deploy the application:
 
 1. Compile the application package with test artifacts:
    ```sh
-   $ mvn -P fat-test-application package \
+   $ mvn package \
      -Dvespa.compile.version="$(cat target/vespa.compile.version)"
    ```
 

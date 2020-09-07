@@ -149,8 +149,7 @@ $ mvn test \
     When <em>system</em> and <em>staging</em> tests are ready, deploy to production:
 <pre data-test="exec" data-test-assert-contains="BUILD SUCCESS">
 $ mvn vespa:compileVersion -DapiKey="$API_KEY"
-$ mvn -P fat-test-application \
-  -Dvespa.compile.version="$(cat target/vespa.compile.version)" \
+$ mvn -Dvespa.compile.version="$(cat target/vespa.compile.version)" \
   -DapiKey="$API_KEY" \
   package vespa:submit
 </pre>
