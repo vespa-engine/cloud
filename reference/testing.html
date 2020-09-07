@@ -96,8 +96,7 @@ however the size of each test cluster is reduced to 1 node.
 </p><p>
 <img src="/img/vespa-CD-system-test.svg" alt="Vespa CD" width="580" height="220" />
 </p><p>
-When a Vespa application is built with the <code>fat-test-application</code> profile —
-<code>mvn package -Pfat-test-application</code> —
+When a Vespa application is built — <code>mvn package</code> —
 all Java JUnit5 tests with the <code>@SystemTest</code> annotation, and all their dependencies,
 are stored in a separate test code artifact, which is submitted to the Vespa cloud together with the application package.
 </p>
