@@ -21,7 +21,12 @@ redirect_from: "/quota"
 
   h2 {
     margin-top: 0px;
-  }  <!-- align better with icons -->
+  }  /* align better with icons */
+
+  .check-green {
+    color: #5cb85c;
+  }
+
 </style>
 
 <!-- https://denali-design.github.io/denali-icon-font/docs/ for font used as icons below -->
@@ -56,8 +61,46 @@ redirect_from: "/quota"
           </tr>
         </table>
         <p>
-          In production zones, the resources allocated are precisely what you specify in services.xml
+          Included:
+        </p>
+        <table class="table table-striped">
+          <tr>
+            <td><strong>Proactive, automated world-class 24x7 operations of applications</strong></td>
+            <td><span class="d-icon is-medium check-green d-check"/></td>
+          </tr>
+          <tr>
+            <td><strong>Automated, continuous, safe deployments of application changes</strong></td>
+            <td><span class="d-icon is-medium check-green d-check"/></td>
+          </tr>
+          <tr>
+            <td><strong>Autoscaling</strong></td>
+            <td><span class="d-icon is-medium check-green d-check"/></td>
+          </tr>
+          <tr>
+            <td><strong>Development and Performance Cloud</strong></td>
+            <td><span class="d-icon is-medium check-green d-check"/></td>
+          </tr>
+          <tr>
+            <td><strong>Support plan</strong></td>
+            <td><span class="d-icon is-medium check-green d-check"/></td>
+          </tr>
+          <tr>
+            <td><strong>Vespa performance tune-up program</strong></td>
+            <td><span class="d-icon is-medium check-green d-check"/></td>
+          </tr>
+          <tr>
+            <td><strong>Automated continuous upgrades of Vespa platform / OS</strong></td>
+            <td><span class="d-icon is-medium check-green d-check"/></td>
+          </tr>
+          <tr>
+            <td><strong>Strong security out of the box</strong></td>
+            <td><span class="d-icon is-medium check-green d-check"/></td>
+          </tr>
+        </table>
+        <p>
+          In production zones, the resources allocated are precisely what specified in services.xml
           for the duration the application is deployed.
+          If auto-scaling is used, resources will be optimized within specified ranges.
                 <!-- ToDo: Link to auto resource scaling -->
         </p><p>
           In dev and test zones, applications will by default be <a href="/reference/environments">downscaled</a>.
@@ -65,7 +108,7 @@ redirect_from: "/quota"
           In test zones, applications will only allocate resources while tests are running.
               <!-- ToDo: link to more details / some more text here -->
         </p><p>
-          In addition to machine resource costs, network costs incurred by applications are passed on to you at
+          In addition to machine resource costs, network costs incurred by applications are passed on at
           <a href="https://aws.amazon.com/ec2/pricing/on-demand/#Data_Transfer">standard AWS prices</a>.
           These depend only on how applications are used.
         </p>
