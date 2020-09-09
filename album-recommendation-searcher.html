@@ -151,6 +151,7 @@ $ mvn test \
 $ mvn vespa:compileVersion -DapiKey="$API_KEY"
 $ mvn -Dvespa.compile.version="$(cat target/vespa.compile.version)" \
   -DapiKey="$API_KEY" \
+  -DsourceUrl="https://github.com/vespa-engine/sample-apps/tree/master/vespa-cloud/album-recommendation-searcher" \
   package vespa:submit
 </pre>
   </p></li>
