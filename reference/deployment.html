@@ -10,7 +10,16 @@ and defines which environments and regions the application is deployed to during
 </p><p>
 Deployment progresses through the <code>test</code> and <code>staging</code>
 environments to the <code>prod</code> environments listed in <code>deployment.xml</code>.
-Test steps are added if production deployments are set up, even if not explicitly listed.
+</p><p>
+<a href="testing">Staging and system test</a> steps are implicitly added when production regions are configured.
+Production deployments hence always have system and staging tests.
+Add a <code><a href="#test">test</a></code> element after a <code><a href="#region">region</a></code>
+to run a production zone test after deployment -
+use this to stop a multi-zone rollout based on test results in current zone.
+See example application
+<a href="https://github.com/vespa-engine/sample-apps/tree/master/vespa-cloud/album-recommendation-searcher">
+album-recommendation-searcher</a>.
+</p><p>
 <code>deployment.xml</code> is not used for <code>dev</code> and <code>perf</code> environments,
 as these are deployed manually. Example:
 <pre>
@@ -43,6 +52,8 @@ as these are deployed manually. Example:
 Some of the elements can be declared <em>either</em> under the <code>&lt;deployment&gt;</code> root, 
 <strong>or</strong>, if one or more <code>&lt;instance&gt;</code> tags are listed, under these. These
 have a bold <strong>or</strong> when listing where they may be present. 
+</p>
+
 
 
 <h2 id="deployment">deployment</h2>
@@ -157,17 +168,20 @@ in the PT time zone:
 <h2 id="test">test</h2>
 <p>
 Meaning depends on where it is located:
-<p>In <code>&lt;deployment&gt;</code>, or <code>&lt;instance&gt;</code>.
-If present, the application is deployed to the <a href="environments.html#test"><code>test</code></a> environment,
-and system tested there, even if no prod zones are deployed to.
-If present in an <code>&lt;instance&gt;</code> element, system tests are run for that specific instance before any
-production deployments of the instance may proceed — otherwise, previous system tests for any instance are acceptable.
 </p>
-<p>In <code>&lt;prod&gt;</code>, <code>&lt;parallel&gt;</code>, or <code>&lt;steps&gt;</code>.
-If present, production tests are run against the production region with id contained in this element.
-A test must be <em>after</em> a corresponding <a href="#region">region</a> element. 
-</p>
-
+<table class="table">
+<tr>
+  <td><code>&lt;deployment&gt;</code> <code>&lt;instance&gt;</code></td>
+  <td>If present, the application is deployed to the <a href="environments.html#test"><code>test</code></a> environment,
+    and system tested there, even if no prod zones are deployed to.
+    If present in an <code>&lt;instance&gt;</code> element, system tests are run for that specific instance before any
+    production deployments of the instance may proceed — otherwise, previous system tests for any instance are acceptable.</td>
+</tr><tr>
+  <td><code>&lt;prod&gt;</code> <code>&lt;parallel&gt;</code> <code>&lt;steps&gt;</code></td>
+  <td>If present, production tests are run against the production region with id contained in this element.
+    A test must be <em>after</em> a corresponding <a href="#region">region</a> element.</td>
+</tr>
+</table>
 
 
 <h2 id="staging">staging</h2>
