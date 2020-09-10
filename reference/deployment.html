@@ -62,17 +62,17 @@ The root element. Attributes:
 <table class="table">
   <tr>
     <th style="width:150px">Name</th>
+    <th style="width:100px">Mandatory</th>
     <th>Values</th>
-    <th>Mandatory</th>
   </tr><tr>
     <td>version</td>
-    <td>1.0</td>
     <td>Yes</td>
+    <td>1.0</td>
   </tr><tr>
     <td>major-version</td>
+    <td>No</td>
     <td>The major version number this application is valid for.
     Do not specify except to work around problems with a new major version.</td>
-    <td>No</td>
   </tr>
 </table>
 </p>
@@ -88,12 +88,12 @@ an <code>&lt;instance&gt;</code> with <code>id="default"</code>, as in the above
 <table class="table">
   <tr>
     <th style="width:150px">Name</th>
+    <th style="width:100px">Mandatory</th>
     <th>Values</th>
-    <th>Mandatory</th>
   </tr><tr>
     <td>id</td>
-    <td>The unique name of the instance.</td>
     <td>Yes</td>
+    <td>The unique name of the instance.</td>
   </tr>
 </table>
 To delete an application, remove all its instances, i.e., submit a deployment spec like
@@ -124,35 +124,39 @@ By default, both application revision changes and Vespa platform changes (upgrad
 It is possible to block just one kind of change using the "revision" / "version" boolean attributes.
 </p>
 <table class="table">
-  <tr><th style="width:150px">Name</th><th>Values</th><th>Mandatory</th></tr>
+  <tr>
+    <th style="width:150px">Name</th>
+    <th style="width:100px">Mandatory</th>
+    <th>Values</th>
+  </tr>
   <tr>
     <td>revision
+    <td>No, default <code>true</code>
     <td>Set to <code>false</code> to allow application revision changes during the block period set by this.
-    <td>No: Default is <code>true</code>
   </tr><tr>
     <td>version
+    <td>No, default <code>true</code>
     <td>Set to <code>false</code> to allow Vespa version changes during the block period set by this.
-    <td>No: Default is <code>true</code>
   </tr><tr>
     <td>days
+    <td>Yes
     <td>A spec of the days this block is effective - a comma-separated list of single days or day intervals
         where the start and end day are separated by a dash and are inclusive. Each day is identified by its english
         name or three-letter abbreviation.
-    <td>Yes
   </tr><tr>
     <td>hours
+    <td>Yes
     <td>A spec of the hours this block is effective - a comma-separated list of single hours or hour intervals
         where the start and end hour are separated by a dash and are inclusive. Each hour is identified by a number
         in the range 0 to 23.
-    <td>Yes
   </tr><tr>
     <td>time-zone
+    <td>No, default UTC
     <td>The name of the time zone used to interpret the hours attribute.
         Time zones are full names or short forms, when the latter is unambiguous.
         See
         <a href="https://docs.oracle.com/javase/8/docs/api/java/time/ZoneId.html#of-java.lang.String-">ZoneId.of</a>
         for the full spec of acceptable values.
-    <td>No: Default is UTC.
   </tr>
 </table>
 The below example blocks all changes on weekends, and blocks revisions outside working hours,
@@ -184,6 +188,7 @@ Meaning depends on where it is located:
 </table>
 
 
+
 <h2 id="staging">staging</h2>
 <p>
 In <code>&lt;deployment&gt;</code>, or <code>&lt;instance&gt;</code>.
@@ -210,12 +215,16 @@ In <code>&lt;prod&gt;</code>, <code>&lt;parallel&gt;</code>, or <code>&lt;steps&
 The application is deployed to the production <a href="zones.html">region</a> with id contained in this element.
 Attributes:
 <table class="table">
-  <tr><th style="width:150px">Name</th><th>Values</th><th>Mandatory</th></tr>
+  <tr>
+    <th style="width:150px">Name</th>
+    <th style="width:100px">Mandatory</th>
+    <th>Values</th>
+  </tr>
   <tr>
     <td>active</td>
+    <td>Yes</td>
     <td>Whether this region should receive traffic from the global endpoint of this application.
       This is useful when adding a new region to an application which is not ready to receive traffic yet.</td>
-    <td>Yes</td>
   </tr>
 </table>
 To remove a deployment from a region, remove the region from the <code>&lt;prod&gt;</code> element, and
@@ -323,21 +332,25 @@ and a <em>us</em> endpoint pointing only to US regions.
 &lt;/endpoints&gt;
 </pre>
 <table class="table">
-  <tr><th style="width:150px">Name</th><th>Values</th><th>Mandatory</th></tr>
+  <tr>
+    <th style="width:150px">Name</th>
+    <th style="width:100px">Mandatory</th>
+    <th>Values</th>
+  </tr>
   <tr>
     <td>id</td>
+    <td>No</td>
     <td>
       The identifier for the endpoint.  This will be part of the endpoint name that is generated.
       If not specified, the endpoint will be the default global endpoint for the application.
     </td>
-    <td>No</td>
   </tr><tr>
     <td>container-id</td>
+    <td>Yes</td>
     <td>
       The id of the <a href="https://docs.vespa.ai/documentation/reference/services-container.html">container cluster</a>
       to which requests to the global endpoint is forwarded.
     </td>
-    <td>Yes</td>
   </tr>
 </table>
 </p>
