@@ -59,11 +59,16 @@ $ mvn test \
     <td>compileVersion</td>
     <td>Find the latest Vespa version to compile against,
         which is guaranteed to be compatible with the oldest production version of the application.
-        Requires an API key.</td>
+        Writes to <code>target/vespa.compile.version</code>.
+        The property <code>-Dvespa.compile.version</code> is used when building the application package,
+        see <a href="/automated-deployments#continuous-deployment">continuous deployment</a>
+        for an example.
+        Requires an API key.
+        <a href="/automated-deployments#vespa-compile-version">Read more</a></td>
   </tr><tr>
     <td>effectiveServices</td>
     <td>Compute the effective <code>services.xml</code>, based on
-      <a href="services#instance-environment-and-region-variants">region and environment variants</a>.
+      <a href="/reference/services#instance-environment-and-region-variants">region and environment variants</a>.
         Requires no key.</td>
   </tr>
 </table>

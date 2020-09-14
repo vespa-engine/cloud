@@ -85,23 +85,5 @@ After this you can further enhance the production application:
 
 
 ### Removing a production instance
-**WARNING!** Following this guide will remove production instances and all data within them.
-The data is unrecoverable.
-
-To safe-guard against accidentally removing production applications,
-there are multiple steps involved in deprovisioning an application:
-
-1. Remove the deployment from `deployment.xml`:
-   ```xml
-   <deployment version="1.0" />
-   ```
-
-1. Add a [`validation-overrides.xml`](https://docs.vespa.ai/documentation/reference/validation-overrides.html) file.
-   This will allow Vespa Cloud to remove production deployments:
-   ```xml
-   <validation-overrides>
-     <allow until="2020-02-28" comment="Removing aws-us-east-1c">deployment-removal</allow>
-   </validation-overrides>
-   ```
-
-1. Build the application package and submit as normal
+Follow the guide at [Deleting an application](/automated-deployments#deleting-an-application)
+to remove instances or applications.
