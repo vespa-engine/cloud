@@ -165,3 +165,38 @@ To deploy to a certain platform version, use, e.g., <code>mvn vespa:deploy -Dves
 </p><p>
 The sizes of clusters in staging are by default reduced to 10% of the size specified in services.xml, or at least 2 nodes.
 </p>
+
+<h2 id="production-tests">Production tests</h2>
+<p>
+Tests with the <code>@ProductionTest</code> annotation will be executed in a production test step, see <a href="deployment#test">deployment.xml</a> for details.
+Unlike the system and staging test, the production test will for security reasons not have access to the endpoint. The production test should e.g.
+verify the metrics of the production deployment and not the functionality itself. The release pipeline will stop if the
+tests fail, but the completed regions will remain on the version that failed the tests.
+<pre>
+  import ai.vespa.hosted.cd.ProductionTest;
+  import org.junit.jupiter.api.Test;
+
+  @ProductionTest
+  class VerifyProductionTest {
+
+      @Test
+      void verifyProductionMetrics() {
+          // Consult external metrics service etc.
+      }
+  }
+</pre>
+The production test can be configured to run at a time later than the actual deployment, this can be expressed in deployment.xml.
+Example deployment.xml running production tests for a zone 3 hours after deployment has completed:
+<pre>
+  &lt;deployment version=&quot;1.0&quot;&gt;
+    &lt;instance id=&quot;default&quot;&gt;
+      &lt;prod&gt;
+        &lt;steps&gt;
+          &lt;region active=&quot;true&quot;&gt;aws-us-west-2d&lt;/region&gt;
+          &lt;delay hours=&quot;3&quot; /&gt;
+          &lt;test&gt;aws-us-west-2d&lt;/test&gt;
+        &lt;/steps&gt;
+      &lt;/prod&gt;
+    &lt;/instance&gt;
+  &lt;/deployment&gt;
+</pre>
