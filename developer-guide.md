@@ -29,7 +29,9 @@ Notes:
   See the sample applications in [getting started](/getting-started) for how to generate key pairs.
   Endpoint(s) are printed by `vespa:deploy` and also found in the console in the _Devs_ section
 * The [Vespa Cloud Sample Applications](https://github.com/vespa-engine/sample-apps/tree/master/vespa-cloud/)
-  can be deployed as-is to your own Developer Cloud, and is a great starting point for application development. 
+  can be deployed as-is to your own Developer Cloud, and is a great starting point for application development.
+* Applications are downscaled in the Developer Cloud - no need to change node counts in `services.xml` -
+  applications are deployed with one node per cluster
 
 
 
@@ -61,9 +63,6 @@ This means writing [System and Staging Tests](/reference/testing), so getting st
         -DdataPlaneKeyFile=/path-to/data-plane-private-key.pem
 
   
+
 ## Vespa Cloud Console
 <img alt="Dev Console" src="img/console-dev.png" />
-
-
-
-
