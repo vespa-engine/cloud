@@ -3,21 +3,27 @@
 title: Automated Deployments
 ---
 
+
+
 <p>
-Vespa Cloud automates deployment using <a href="/reference/deployment">deployment.xml</a>:
+Vespa Cloud automates deployment using <a href="/reference/deployment">deployment.xml</a> -
+track and manage deployments in the console:
+  <img alt="Vespa Cloud Console" src="img/console.png" />
+</p>
+<p>
 <pre>
 &lt;deployment version="1.0"&gt;
-  &lt;prod&gt;
-    &lt;region active="true"&gt;aws-us-east-1c&lt;/region&gt;
-    &lt;test&gt;aws-us-east-1c&lt;/test&gt;
-    &lt;region active="true"&gt;aws-ap-northeast-1a&lt;/region&gt;
-    &lt;test&gt;aws-ap-northeast-1a&lt;/test&gt;
-  &lt;/prod&gt;
+    &lt;prod&gt;
+        &lt;region active="true"&gt;aws-us-east-1c&lt;/region&gt;
+        &lt;delay minutes="10" /&gt;
+        &lt;test&gt;aws-us-east-1c&lt;/test&gt;
+        &lt;region active="true"&gt;aws-ap-northeast-1a&lt;/region&gt;
+    &lt;/prod&gt;
 &lt;/deployment&gt;
 </pre>
 This example deploys to two production zones - notes:
 <ul>
-  <li>A production test is configured after each prod zone deployment</li>
+  <li>A production test is configured after the first prod zone deployment, with a delay before test run</li>
   <li>System and Staging tests are implied and mandatory, no need to configure</li>
   <li>Potentially destructive change are guarded by
     <a href="https://docs.vespa.ai/documentation/reference/validation-overrides.html">validation-overrides</a> -
