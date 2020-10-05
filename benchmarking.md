@@ -1,6 +1,6 @@
 ---
 # Copyright Verizon Media. All rights reserved.
-title: "Benchmarking"
+title: Benchmarking
 ---
 
 Welcome to the step-by-step guide to get started benchmarking.
@@ -156,19 +156,20 @@ No need to do anything other than default.
 Use the [Vespa Benchmarking Guide](https://docs.vespa.ai/documentation/performance/vespa-benchmarking.html) and
 [Vespa Serving Scaling Guide](https://docs.vespa.ai/documentation/performance/sizing-search.html) to plan and run benchmarks.
 
-Make sure the client running the becnhmark tool has sufficient resources (the example above used am AWS free-tier host).
+Make sure the client running the benchmark tool has sufficient resources (the example above used am AWS free-tier host).
 
-Whenever deploying changes to configuration, track progress in the Deployment dashboard.
-Some changes, like changing _requestthreads_ will restart content nodes, and this is done in sequence and takes time.
-Wait for successful completion in _Wait for services and endpoints to come online_
-
-
-### Metrics
-Use _metrics/v2_ to dump metrics:
+Use [metrics/v2](https://docs.vespa.ai/documentation/reference/metrics.html) to dump metrics:
 
     $ curl --cert data-plane-public-cert.pem --key data-plane-private-key.pem \
         https://myapp.mytenant.aws-us-east-1c.dev.public.vespa.oath.cloud/metrics/v2/values | \
         jq '.nodes[] | select(.role=="content/mysearchcluster/0/0") | .node.metrics[].values'
+
+
+### Making changes
+Whenever deploying changes to configuration, track progress in the Deployment dashboard.
+Some changes, like changing [requestthreads](https://docs.vespa.ai/documentation/reference/services-content.html#requestthreads),
+will restart content nodes, and this is done in sequence and takes time.
+Wait for successful completion in _Wait for services and endpoints to come online_
 
 When changing node type/count, wait for auto data redistribution to complete,
 watching the _vds.idealstate.merge_bucket.pending.average_ metric:

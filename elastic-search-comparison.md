@@ -1,6 +1,6 @@
 ---
 # Copyright Verizon Media. All rights reserved.
-title: "Comparison to Elasticsearch"
+title: Comparison to Elasticsearch
 ---
 
 <div style="text-align:left">

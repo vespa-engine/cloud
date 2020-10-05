@@ -1,6 +1,6 @@
 ---
 # Copyright Verizon Media. All rights reserved.
-title: "Monitoring"
+title: Monitoring
 ---
 
 Metrics are available at _$ENDPOINT/metrics/v2/values_, e.g.:
