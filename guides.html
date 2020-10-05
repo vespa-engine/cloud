@@ -1,6 +1,7 @@
 ---
 # Copyright Verizon Media. All rights reserved.
 layout: page-wide
+title: Guides
 ---
 
 <style>
@@ -17,7 +18,28 @@ Guides
 
 <!-- https://denali-design.github.io/denali-icon-font/docs/ for font used as icons below -->
 
-<section id="model-serving" class="bg-light-blue">
+<section id="developer-guide" class="bg-light-blue">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-2 text-center">
+        <span class="d-icon is-large denali-icon-color d-tools"/>
+      </div>
+      <div class="col-lg-10">
+        <h2>Developer Guide</h2>
+        <p>
+          Benchmarking using the Vespa Developer Cloud is easy -
+          any <a href="https://docs.vespa.ai/documentation/cloudconfig/application-packages.html">Vespa Cloud application package</a>
+          can be deploy as-is to the Developer Cloud.
+          Resources are auto-downscaled to one of each node -
+          this allows a fully functional application with minimal cost.
+          <a href="developer-guide">Read more</a>.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="model-serving" class="bg-light-gray">
   <div class="container">
     <div class="row">
       <div class="col-lg-2 text-center">
@@ -57,6 +79,7 @@ Guides
   </div>
 </section>
 
+<!--
 <section id="monitoring" class="bg-light-gray">
   <div class="container">
     <div class="row">
@@ -90,8 +113,9 @@ Guides
     </div>
   </div>
 </section>
+-->
 
-<section id="benchmarking" class="bg-white">
+<section id="benchmarking" class="bg-light-blue">
   <div class="container">
     <div class="row">
       <div class="col-lg-2 text-center">
@@ -100,7 +124,10 @@ Guides
       <div class="col-lg-10">
         <h2>Benchmarking</h2>
         <p>
-          Learn how to benchmark Vespa Cloud applications.
+          Performance and scalability are key Vespa features.
+          Using automated deployments makes it easy to iterate over different configurations to improve performance.
+          This lets you easily go from a baseline to an optimized configuration,
+          as data is auto-rebalanced between iterations.
           <a href="/benchmarking">Read more</a>.
         </p>
       </div>

@@ -1,5 +1,5 @@
 ---
-title: "FAQ - frequently asked questions"
+title: FAQ - frequently asked questions
 style: faq
 ---
 

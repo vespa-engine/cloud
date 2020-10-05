@@ -1,26 +1,26 @@
 ---
 # Copyright Verizon Media. All rights reserved.
-title: "Developer Guide"
+title: Developer Guide
 ---
 
 Using the Developer Cloud is easy - deploy to it and use the endpoints:
 
 <img alt="Deploy and test using Developer Cloud" src="img/dev-guide-overview.svg" width="420" height="230" />
 
-Build and deploy (example using the [vespa-documentation-search](https://github.com/vespa-engine/sample-apps/tree/master/vespa-cloud/vespa-documentation-search)
+1. Build and deploy (e.g. using the [vespa-documentation-search](https://github.com/vespa-engine/sample-apps/tree/master/vespa-cloud/vespa-documentation-search)
 sample application):
 
-    $ mvn clean install package vespa:deploy -DapiKeyFile=/path-to/uname.tname.pem
-    ...
-    [INFO]     [11:18:30]  Found endpoints:
-    [INFO]     [11:18:30]  - dev.aws-us-east-1c
-    [INFO]     [11:18:30]  |-- https://uname.vespacloud-docsearch.tname.aws-us-east-1c.dev.public.vespa.oath.cloud/ (cluster 'default')
-    [INFO]     [11:18:31]  Installation succeeded!
+        $ mvn clean install package vespa:deploy -DapiKeyFile=/path-to/uname.tname.pem
+        ...
+        [INFO]     [11:18:30]  Found endpoints:
+        [INFO]     [11:18:30]  - dev.aws-us-east-1c
+        [INFO]     [11:18:30]  |-- https://uname.vespacloud-docsearch.tname.aws-us-east-1c.dev.public.vespa.oath.cloud/ (cluster 'default')
+        [INFO]     [11:18:31]  Installation succeeded!
 
-Query the endpoint(s):
+2. Query the endpoint(s):
 
-    $ ENDPOINT=https://uname.vespacloud-docsearch.tname.aws-us-east-1c.dev.public.vespa.oath.cloud/
-    $ curl --cert ./data-plane-public-cert.pem --key ./data-plane-private-key.pem ${ENDPOINT}document/v1/open/doc/docid/
+        $ ENDPOINT=https://uname.vespacloud-docsearch.tname.aws-us-east-1c.dev.public.vespa.oath.cloud/
+        $ curl --cert ./data-plane-public-cert.pem --key ./data-plane-private-key.pem ${ENDPOINT}document/v1/open/doc/docid/
     
 Notes:
 * The _User API key_ used to deploy the application to the Developer Cloud can be downloaded from the Console
@@ -30,7 +30,7 @@ Notes:
   Endpoint(s) are printed by `vespa:deploy` and also found in the console in the _Devs_ section
 * The [Vespa Cloud Sample Applications](https://github.com/vespa-engine/sample-apps/tree/master/vespa-cloud/)
   can be deployed as-is to your own Developer Cloud, and is a great starting point for application development.
-* Applications are downscaled in the Developer Cloud - no need to change node counts in `services.xml` -
+* Applications are downscaled in the Developer Cloud - no need to change node counts in [services.xml](/reference/services) -
   applications are deployed with one node per cluster
 
 

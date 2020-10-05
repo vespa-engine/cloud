@@ -1,6 +1,6 @@
 ---
 # Copyright Verizon Media. All rights reserved.
-title: "Model Serving"
+title: Model Serving
 ---
 
 [The Big Data Maturity Levels](https://blog.vespa.ai/the-big-data-maturity-levels/)

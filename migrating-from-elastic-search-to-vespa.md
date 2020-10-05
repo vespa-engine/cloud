@@ -1,6 +1,6 @@
 ---
 # Copyright Verizon Media. All rights reserved.
-title: "Migrating from Elasticsearch to Vespa"
+title: Migrating from Elasticsearch to Vespa
 ---
 
 This is a guide for how to move data from Elasticsearch to Vespa.
