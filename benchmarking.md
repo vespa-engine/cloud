@@ -16,6 +16,7 @@ or same zone as Vespa Cloud.
 Documents are normally stored in same location as query files, but not necessarily.
 Both need [data plane public and private key](security-model#data-plane) to access data in Vespa Cloud,
 as well as getting metrics.
+* [Monitoring](/monitoring) is useful to track metrics when benchmarking.
 
 
 
