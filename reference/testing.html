@@ -42,10 +42,23 @@ This file defines the endpoints for each of the clusters in <a href="/reference/
 <pre>
 {
   "localEndpoints": {
-    "default": "https://localhost:8080/",
-    "container": "https://localhost:8081/"
+    "default": "http://localhost:8080/",
+    "container": "http://localhost:8081/"
   }
 }
+</pre>
+Make sure the TestRuntime is able to start.
+As it will init an SSL context, make sure to remove config when running locally, in order to use a default context.
+Remove properties from <em>pom.xml</em> and IDE debug configuration:
+<pre>
+&lt;!--
+    &lt;dataPlaneKeyFile&gt;data-plane-private-key.pem&lt;/dataPlaneKeyFile&gt;
+    &lt;dataPlaneCertificateFile&gt;data-plane-public-cert.pem&lt;/dataPlaneCertificateFile&gt;
+--&gt;
+</pre>
+Test is works:
+<pre>
+$ mvn test -Dtest.categories=system -Dvespa.test.config=/path/to/test-config.json
 </pre>
 </p>
 
