@@ -16,6 +16,8 @@ docs:
         url: /reference/testing
       - page: Model Serving
         url: /model-serving
+      - page: Overload Handling
+        url: /overload-handling
 
   - title: REFERENCE
     documents:
