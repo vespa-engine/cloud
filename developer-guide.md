@@ -3,7 +3,7 @@
 title: Developer Guide
 ---
 
-Using the Developer Cloud is easy - deploy to it and use the endpoints:
+Using the Developer Cloud is easy - deploy to it, and use the endpoints:
 
 <img alt="Deploy and test using Developer Cloud" src="img/dev-guide-overview.svg" width="420" height="230" />
 

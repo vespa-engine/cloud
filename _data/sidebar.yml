@@ -2,6 +2,8 @@
 docs:
   - title: GUIDES
     documents:
+      - page: Developer Guide
+        url: /developer-guide
       - page: Automated Deployments
         url: /automated-deployments
       - page: Monitoring
