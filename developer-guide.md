@@ -46,6 +46,28 @@ To submit applications to Production environments, use [automated deployments](/
 This means writing [System and Staging Tests](/reference/testing), so getting started with a System Test saves works.
 
 
+### Deploying Production Applications to the Dev Cloud
+Debugging production applications is easy - example (tenant name in this case is _mytenant_):
+
+    $ cd github/vespa-engine/sample-apps/vespa-cloud/vespa-documentation-search/
+    $ openssl req -x509 -nodes -days 14 -newkey rsa:4096 -subj "/CN=cloud.vespa.example" \
+      -keyout data-plane-private-key.pem -out data-plane-public-cert.pem
+    $ mkdir -p src/main/application/security && cp data-plane-public-cert.pem src/main/application/security/clients.pem
+    $ mvn clean package vespa:deploy -DapiKeyFile=/tmp/myuser.mytenant.pem 
+
+
+
+#### Downsizing
+
+![dev](/img/resources-dev.png)
+
+...
+
+![prod](/img/resources-prod.png)
+
+
+#### where to find: https://console.vespa.oath.cloud/tenant/mytenant/application/vespa-documentation-search/devs
+
 ### Pro tips / troubleshooting
 * As Vespa Cloud upgrades daily, a deploy will some times pull the latest Vespa Version.
   This takes minutes as opposed to the seconds it normally takes.
