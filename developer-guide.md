@@ -3,7 +3,7 @@
 title: Developer Guide
 ---
 
-Using the Developer Cloud is easy - deploy to it and use the endpoints:
+Using the Developer Cloud is easy - deploy to it, and use the endpoints:
 
 <img alt="Deploy and test using Developer Cloud" src="img/dev-guide-overview.svg" width="420" height="230" />
 
@@ -30,12 +30,7 @@ Notes:
   Endpoint(s) are printed by `vespa:deploy` and also found in the console in the _Devs_ section
 * The [Vespa Cloud Sample Applications](https://github.com/vespa-engine/sample-apps/tree/master/vespa-cloud/)
   can be deployed as-is to your own Developer Cloud, and is a great starting point for application development.
-* Applications are downscaled in the Developer Cloud - no need to change node counts in [services.xml](/reference/services) -
-  applications are deployed with one node per cluster
 
-
-
-## Application Development
 Vespa Team recommends using a System Test to write code to access and test the endpoint,
 in order to develop the application, like
 [VespaDocSystemTest](https://github.com/vespa-engine/sample-apps/blob/master/vespa-cloud/vespa-documentation-search/src/test/java/ai/vespa/cloud/docsearch/VespaDocSystemTest.java).
@@ -46,7 +41,41 @@ To submit applications to Production environments, use [automated deployments](/
 This means writing [System and Staging Tests](/reference/testing), so getting started with a System Test saves works.
 
 
-### Pro tips / troubleshooting
+## Deploying Applications to the Dev Cloud
+Debugging production applications is easy - example (tenant name in this case is _mytenant_):
+
+    $ cd github/vespa-engine/sample-apps/vespa-cloud/vespa-documentation-search/
+    $ openssl req -x509 -nodes -days 14 -newkey rsa:4096 -subj "/CN=cloud.vespa.example" \
+      -keyout data-plane-private-key.pem -out data-plane-public-cert.pem
+    $ mkdir -p src/main/application/security && cp data-plane-public-cert.pem src/main/application/security/clients.pem
+    $ mvn clean package vespa:deploy -DapiKeyFile=/tmp/myuser.mytenant.pem 
+
+An instance can now be found at
+_https://console.vespa.oath.cloud/tenant/mytenant/application/vespa-documentation-search/devs_.
+Here, no change is required to deploy an application to the private Dev Cloud -
+only temporary credentials are added enabling access to the endpoints.
+Deployment is using the [User API key](/security-model).
+
+
+### Downsizing
+Deploying to the Dev Cloud is optimized for cost and simplicity -
+the environment is for functional testing and development, and should be small.
+Example - a production instance is using 5 nodes:
+
+![prod](/img/resources-prod.png)
+
+Deploying the application to the Dev Cloud (above) with no other changes gives:
+
+![dev](/img/resources-dev.png)
+
+Observe that there is only one of each node - the application is downsized -
+no need to change node counts in [services.xml](/reference/services).
+
+<!-- ToDo: something on downsizing resources, too -
+  and what to do if one needs more resources -->
+
+
+## Pro tips / troubleshooting
 * As Vespa Cloud upgrades daily, a deploy will some times pull the latest Vespa Version.
   This takes minutes as opposed to the seconds it normally takes.
   Start the day by deploying to avoid the wait!
@@ -65,4 +94,4 @@ This means writing [System and Staging Tests](/reference/testing), so getting st
   
 
 ## Vespa Cloud Console
-<img alt="Dev Console" src="img/console-dev.png" />
+![Dev Console](/img/console-dev.png)
