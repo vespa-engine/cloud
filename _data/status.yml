@@ -28,4 +28,4 @@ messages:
     message: |
       A DNS issue in one AWS zone is causing intermittent failures in provisioning new nodes in test zones and aws-us-east-1c.
       Work around test zone problems by deploying without tests in the Vespa Console.
-      Vespa Team is working on a fix, but ETA is not ready yet.
+      The Vespa Team has implemented a fix, expected to roll out Monday 26. October.
