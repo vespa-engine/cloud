@@ -3,14 +3,14 @@ zones:
   # List all zones and status. Valid status is "success", "warning" or "danger". 
   # Message should be "OK", "Partial outage", "Degraded service", "Down" or similar short string.
   - name: "test"
-    status: warning
-    message: "Node provisioning failing intermittently - this can block system tests"
+    status: success
+    message: "OK"
   - name: "staging"
-    status: warning
-    message: "Node provisioning failing intermittently - this can block staging tests"
+    status: success
+    message: "OK"
   - name: "aws-us-east-1c"
-    status: warning
-    message: "Node provisioning failing intermittently - this can block deployments that require more resources"
+    status: success
+    message: "OK"
   - name: "aws-ap-northeast-1a"
     status: success
     message: "OK"
@@ -29,3 +29,5 @@ messages:
       A DNS issue in one AWS zone is causing intermittent failures in provisioning new nodes in test zones and aws-us-east-1c.
       Work around test zone problems by deploying without tests in the Vespa Console.
       The Vespa Team has implemented a fix, expected to roll out Monday 26. October.
+  - date: 2020-10-26
+    message: Underlying issue has been fixed and all services are back to normal.
