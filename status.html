@@ -35,15 +35,17 @@ title: Status
             <h3>Messages</h3>
             {% if site.data.status.messages[0] %}
             {% assign datelimit = "now" | date: '%s' | minus:604800 %}
+            <table class="table" style="width: 90%; margin-left: auto; margin-right: auto;">
             {% for message in site.data.status.messages %}
                 {% assign epoch = message.date | date: '%s' | ceil %}
                 {% if epoch >= datelimit %}
-                <p>
-                    <b>{{ message.date }}</b><br />
-                    {{ message.message }}
-                </p>
+                <tr>
+                    <td style="white-space: nowrap">{{ message.date }}</td>
+                    <td>{{ message.message }}</td>
+                </tr>
                 {% endif %}
             {% endfor %}
+            </table>
             {% else %}
             <p>
                 No updates.
