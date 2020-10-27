@@ -15,11 +15,6 @@ A <a href="zones">list of all zones</a> is also available.
     <td>Used for manual development testing.</td>
     <td>14 days</td>
     <td><code>1</code></td>
-  </tr><tr id="perf">
-    <td><code>perf</code></td>
-    <td>Used for manual performance testing.</td>
-    <td>7 days</td>
-    <td><code>min(3, spec)</code></td>
   </tr><tr id="test">
     <td><code>test</code></td>
     <td>Used for <a href="/reference/testing#system-tests">automated system tests</a>.</td>
@@ -50,22 +45,22 @@ A minimal, typical <code>prod</code> deployment therefore has 4 nodes.
 
 
 
-<h2 id="dev-and-perf">Dev and Perf</h2>
+<h2 id="dev">Dev</h2>
 <p>
-<code>dev</code> and <code>perf</code> are deployed to directly as part of development or testing.
+<code>dev</code>is deployed to directly as part of development or testing.
 </p><p>
 In order to easily deploy application packages from prod applications,
 resources are downscaled - see <em>Cluster sizes</em> above.
 To override this downsizing, specify
 <a href="services#instance-environment-and-region-variants">environment and region variants</a>,
-like: <pre>&lt;nodes deploy:environment="perf" count="5"/&gt;</pre>
+like: <pre>&lt;nodes deploy:environment="dev" count="5"/&gt;</pre>
 Setting environment explicitly enables exact node count.
 </p>
 
 
 <h3 id="vespa-version">Vespa version</h3>
 <p>
-In <code>dev</code> and <code>perf</code>, the latest active Vespa version is used when deploying.
+In <code>dev</code>, the latest active Vespa version is used when deploying.
 An instance is not upgraded, unless deployed to.
 This means that some times, a deploy takes longer than normal,
 as it invokes a Vespa upgrade before deploying the application package.
