@@ -42,7 +42,7 @@ This means writing [System and Staging Tests](/reference/testing), so getting st
 
 
 ## Deploying Applications to the Dev Cloud
-Debugging production applications is easy - example (tenant name in this case is _mytenant_):
+Example (tenant name in this case is _mytenant_):
 
     $ cd github/vespa-engine/sample-apps/vespa-cloud/vespa-documentation-search/
     $ openssl req -x509 -nodes -days 14 -newkey rsa:4096 -subj "/CN=cloud.vespa.example" \
@@ -51,15 +51,35 @@ Debugging production applications is easy - example (tenant name in this case is
     $ mvn clean package vespa:deploy -DapiKeyFile=/tmp/myuser.mytenant.pem 
 
 An instance can now be found at
-_https://console.vespa.oath.cloud/tenant/mytenant/application/vespa-documentation-search/devs_.
+_https://console.vespa.oath.cloud/tenant/mytenant/application/vespacloud-docsearch/devs_.
 Here, no change is required to deploy an application to the private Dev Cloud -
 only temporary credentials are added enabling access to the endpoints.
 Deployment is using the [User API key](/security-model).
 
 
-### Downsizing
+### Instances
+To fully understand the flexibility in the Dev cloud, consider the deploy command:
+
+    $ mvn clean package vespa:deploy -DapiKeyFile=/path-to/uname.tname.pem \
+      -Denvironment=dev \
+      -Dregion=aws-us-east-1c \
+      -Dtenant=mytenant \
+      -Dapplication=vespacloud-docsearch \
+      -Dinstance=myuser
+
+This is equivalent to the `vespa:deploy` at the start of the article:
+* _environment_ and _region_ defaults to the Vespa Cloud [Dev zone](/reference/zones)
+* _tenant_ and _application_ is normally set in `pom.xml`
+* _instance_ defaults to local username
+
+Hence, to deploy to more than once instance, either create a new application or deploy to a new instance.
+Using multiple _instances_ is normally the easiest options as these are found in the same console views.
+
+
+### Auto Downsizing
 Deploying to the Dev Cloud is optimized for cost and simplicity -
-the environment is for functional testing and development, and should be small.
+it is for testing and development, and should normally be small.
+Deploys are hence minimized by default, and deploying from a production config is safe.
 Example - a production instance is using 5 nodes:
 
 ![prod](/img/resources-prod.png)
@@ -71,15 +91,50 @@ Deploying the application to the Dev Cloud (above) with no other changes gives:
 Observe that there is only one of each node - the application is downsized -
 no need to change node counts in [services.xml](/reference/services).
 
-<!-- ToDo: something on downsizing resources, too -
-  and what to do if one needs more resources -->
+
+### Downsize override
+It is possible to override the auto-downsize.
+Set the [resources](reference/services#resources) and `require` them:
+
+    <nodes count="10">
+        <resources vcpu="10" memory="32Gb" disk="500Gb"/>
+    </nodes>
+    <nodes count="2" required="true" deploy:environment="dev" deploy:region="aws-us-east-1c" deploy:instance="myuser-test">
+        <resources vcpu="0.5" memory="16Gb" disk="100Gb"/>
+    </nodes>
+
+This examples also illustrates use of
+[zone-specific configuration](/reference/services#instance-environment-and-region-variants).
+Instead of modifying the nodes element, add a new one specifically for the Dev Cloud instance.
+One can hence keep both Production and Dev Cloud settings in the same file with no risk of deploying too much.
+
+
+### Availability
+The Dev Cloud is not built for production serving, as it has no uptime guarantees.
+It is in fact optimized for rapid upgrades to latest Vespa version -
+this to fast-track new features in Vespa - and will restart during upgrades.
+
+An automated Vespa software upgrade can occur during `vespa:deploy` -
+this pulls the latest - to override, deploy using:
+
+    -Dvespa.runtime.version=<current deployed version>
+
+Use with care, it is best practise to track the releases.
+
+
+
+## Performance testing
+When performance testing, one tests specific combinations of data, app configuration, node resources and load.
+Use the `required`-attribute and zone-specific configuration to control the deployment and set up a test instance.
+
+Read more in [benchmarking](/benchmarking).
 
 
 ## Pro tips / troubleshooting
 * As Vespa Cloud upgrades daily, a deploy will some times pull the latest Vespa Version.
   This takes minutes as opposed to the seconds it normally takes.
   Start the day by deploying to avoid the wait!
-* A common mistake is `pom.xml` mismatch. `tenant` and `application` is pulled from the pom -
+* A common mistake is `pom.xml` mismatch. `tenant` and `application` is normally pulled from the pom -
   [details](/reference/vespa-cloud-api).
   Errors here cause a 401 when deploying
 * Likewise for data plane -
