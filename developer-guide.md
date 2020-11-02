@@ -72,7 +72,7 @@ This is equivalent to the `vespa:deploy` at the start of the article:
 * _tenant_ and _application_ is normally set in `pom.xml`
 * _instance_ defaults to local username
 
-Hence, to deploy to more than once instance, either create a new application or deploy to a new instance.
+Hence, to deploy to more than one instance, either create a new application or deploy to a new instance.
 Using multiple _instances_ is normally the easiest options as these are found in the same console views.
 
 
