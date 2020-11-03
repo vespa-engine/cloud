@@ -55,7 +55,7 @@ $ openssl req -x509 -nodes -days 14 -newkey rsa:4096 \
         <strong>Create the application package</strong>
 <pre>
 $ mkdir -p src/main/application/security &amp;&amp; cp data-plane-public-cert.pem src/main/application/security/clients.pem
-$ cd src/main/application &amp;&amp; zip -r ../../../application.zip . &amp;&amp; cd ../../..
+$ (cd src/main/application &amp;&amp; zip -r ../../../application.zip .)
 </pre>
         </p>
     </li>
