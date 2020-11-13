@@ -51,6 +51,7 @@ A minimal, typical <code>prod</code> deployment therefore has 4 nodes.
 
 
 <h2 id="dev-and-perf">Dev and Perf</h2>
+
 <p>
 <code>dev</code> and <code>perf</code> are deployed to directly as part of development or testing.
 </p><p>
@@ -62,6 +63,11 @@ like: <pre>&lt;nodes deploy:environment="perf" count="5"/&gt;</pre>
 Setting environment explicitly enables exact node count.
 </p>
 
+<p>To deploy to the perf environment, use
+<pre><code>
+  mvn package vespa:deploy -Denvironment=perf
+</code></pre>
+</p>
 
 <h3 id="vespa-version">Vespa version</h3>
 <p>
