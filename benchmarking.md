@@ -154,8 +154,8 @@ No need to do anything other than default.
 
 
 ## Run benchmark
-Use the [Vespa Benchmarking Guide](https://docs.vespa.ai/documentation/performance/vespa-benchmarking.html) and
-[Vespa Serving Scaling Guide](https://docs.vespa.ai/documentation/performance/sizing-search.html) to plan and run benchmarks.
+Use the [Vespa Benchmarking Guide](https://docs.vespa.ai/documentation/performance/vespa-benchmarking.html)
+to plan and run benchmarks. Also see [Sizing](#sizing) below.
 
 Make sure the client running the benchmark tool has sufficient resources (the example above used am AWS free-tier host).
 
@@ -185,3 +185,48 @@ Notes:
 * _.role=="content/search/0/1"_ - the host index will vary, depending on number of changes to such nodes
 * E.g. after adding mode nodes, this metric will jump, then decrease (not necessarily linearly) - speed depending on data volume
 * This is checking just one node, check all _vespa.distributor_ for progress
+
+
+
+## Sizing
+Using Vespa Cloud enables the Vespa Team to assist you to optimise the application to reduce resource spend.
+Based on 150 applications running on Vespa Cloud today, savings are typically 50%.
+Cost optimization is hard to do without domain knowledge -
+but few teams are experts in both their application and its serving platform.
+Sizing means finding both the right node size and the right cluster topology:
+
+<p style="text-align: center;">
+<img src="img/nodes.svg" alt="Resize to fewer and smaller nodes" width="297" height="137"><br/>
+</p>
+
+Applications use Vespa for their primary business use cases.
+Availability and performance vs. cost are business decisions.
+The best sized application can handle all expected load situations,
+and is configured to degrade quality gracefully for the unexpected.
+
+Even though Vespa is cost-efficient out of the box,
+Vespa experts can usually spot over/under-allocations in CPU, memory and disk space/IO,
+and discuss trade-offs with the application team.
+
+Using [Automated Deployments](automated-deployments), applications go live with little risk.
+After launch, right-size the application based on true load after using Vespa’s elasticity features
+with automated data migration.
+
+Use the [Vespa Serving Scaling Guide](https://docs.vespa.ai/documentation/performance/sizing-search.html)
+to size the application and find metrics used there. Pro tips:
+* 60% is a good max memory allocation
+* 50% is a good max CPU allocation, although application dependent
+* 70% is a good max disk allocation
+
+Note that these recommendations do not apply for very small systems -
+with less than 5 nodes per cluster, more headroom is better. 
+
+Rules of thumb:
+* Memory and disk scales approximately linearly for indexed fields' data -
+  attributes have a fixed cost for empty fields
+* Data variance will impact memory usage
+* Undersized instances will [block writes](https://docs.vespa.ai/documentation/writing-to-vespa.html#feed-block).
+* If is often a good idea to use the Dev Cloud to test memory impact of adding large fields,
+  e.g. adding an embedding
+
+<!-- ToDo: autoscale -->
