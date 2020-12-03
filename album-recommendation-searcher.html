@@ -3,6 +3,8 @@
 title: album-recommendation-searcher
 ---
 
+<!-- ToDo: Add more details and text, assuming this is the first thing you do in the Trial period -->
+
 <p>
 This sample app adds custom java plugin code, system and staging tests,
 and is an introduction into integrating with a CI/CD pipeline.
@@ -20,6 +22,9 @@ It extends the
     <li>Custom config for the searcher, to demonstrate atomic code and config deployment.</li>
     <li>A System and staging test used in <a href="/automated-deployments">automated-deployments</a>.</li>
 </ul>
+This sample application is great to deploy to both the Dev and Prod Environments in the <a href="/getting-started">Free Trial</a> -
+experience how easy it is to develop and application using Vespa Cloud, and deploy for production serving.
+</p><p>
 Prerequisites: git, Java 11, mvn 3.6.1 and openssl.
 See <a href="https://docs.vespa.ai/documentation/getting-started.html">Getting Started</a> for troubleshooting.
 Security notes:
@@ -31,6 +36,7 @@ Security notes:
 </ul>
 </p>
 <hr />
+<h2 id="dev-environment">Dev Environment</h2>
 <ol>
   <li><p>
     Download sample apps:
@@ -113,7 +119,12 @@ $ curl --cert ./data-plane-public-cert.pem --key ./data-plane-private-key.pem \
 $ curl --cert ./data-plane-public-cert.pem --key ./data-plane-private-key.pem \
   "$ENDPOINT/search/?ranking=rank_albums&yql=select%20%2A%20from%20sources%20%2A%20where%20album%20contains%20%22to%22%3B&ranking.features.query(user_profile)=%7B%7Bcat%3Apop%7D%3A0.8%2C%7Bcat%3Arock%7D%3A0.2%2C%7Bcat%3Ajazz%7D%3A0.1%7D"
 </pre>
-  </p></li><li><p>
+  </p></li>
+</ol>
+
+<h2 id="prod-environment">Prod Environment</h2>
+<ol>
+  <li><p>
     Vespa Cloud has support for running <em>system</em> and <em>staging</em> tests,
     used in <a href="/automated-deployments">automated-deployments</a>.
     These tests are run as JUnit tests.
