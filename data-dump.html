@@ -29,6 +29,7 @@ Example script:
 
 set -x
 
+# The ENDPOINT must be a regional endpoint, do not use '*.global.public.vespa.oath.cloud/'
 ENDPOINT="https://vespacloud-docsearch.vespa-team.aws-us-east-1c.public.vespa.oath.cloud"
 NAMESPACE=open
 DOCTYPE=doc
@@ -45,8 +46,14 @@ do
   filename=${NAMESPACE}-${DOCTYPE}-${out}.data.gz
   echo "Fetching data..."
   curl -s --cert data-plane-public-cert.pem --key data-plane-private-key.pem \
-    "${ENDPOINT}/document/v1/${NAMESPACE}/${DOCTYPE}/docid?wantedDocumentCount=1000&amp;concurrency=4&amp;cluster=${CLUSTER}&amp;${continuation}" | gzip > ${filename}
-  continuation="continuation=`gunzip -c ${filename} | head -c 1000 | grep '"continuation":"' | cut -d'"' -f4`"
+    "${ENDPOINT}/document/v1/${NAMESPACE}/${DOCTYPE}/docid?wantedDocumentCount=1000&amp;concurrency=4&amp;cluster=${CLUSTER}&amp;${continuation}" | gzip &gt; ${filename}
+  token=`jq -r .continuation &lt;(gunzip -c ${filename})`
+  if [ "${token}" != "null" ]
+  then
+    continuation="continuation=${token}"
+  else
+    continuation="continuation="
+  fi
 done
 </pre>
 On <em>concurrency</em>: higher concurrency increases temporal memory use while dumping data, returning more documents per request.
