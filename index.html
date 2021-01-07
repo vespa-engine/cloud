@@ -102,13 +102,126 @@ layout: page-wide
     <div class="col-lg-6 col-xl-6">
       <p>
         You'll need a Google or GitHub identity. Once registered you can add more users from your org.
-        If already registered, clicking will <a href="http://console.vespa.ai">sign you back in</a>.
+        If already registered, this will let you <a href="http://console.vespa.ai">sign back in</a>.
       </p>
     </div>
   </div>
 </div>
 
 <section id="whitespace">
+</section>
+
+<section id="operations" class="bg-light-blue">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-2 col-xl-2 text-center">
+        <span class="d-icon is-large denali-icon-color d-handshake"></span>
+      </div>
+      <div class="col-lg-10 col-xl-10">
+        <h2>24/7 operations</h2>
+        <p>
+          Why not let the team that's building Vespa and has years of experience operating it
+          operate your applications as well?
+          Setting up a Vespa instance for production is not hard, but
+          operating securely and with high availability over time is challenging:
+          Keeping the Vespa version and OS up to date, handling failing nodes, making
+          continuous deployments safe and so on.
+        </p>
+        <p>
+          The Vespa cloud is already running business critical applications on behalf of many
+          organizations, handling about half a million user requests per second.
+          It performs all routine operations tasks automatically, which ensures
+          they are performed in a timely fashion, following best practices, every time.
+          This includes tasks such as
+        </p>
+        <ul>
+          <li>Detecting and replacing nodes with hardware issues.</li>
+          <li>Deploying application changes.</li>
+          <li>Upgrading Vespa and operating system.</li>
+          <li>Optimizing hardware allocation to fit the load.</li>
+        </ul>
+        <p>
+          This leaves room for the Vespa Cloud engineers to analyze and work to mitigate problems before they
+          have observable consequences. And for the rare time-critical issues that do happen,
+          our on-call staff is ready to assist 24/7.
+        </p>
+        <p>
+          Building out these capabilities is time-consuming and difficult, and manually operations
+          is expensive and error-prone. Leaving this to the Vespa Cloud to get the best results
+          at the lowest possible cost.
+        </p>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="support" class="bg-light-blue">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-2 col-xl-2 text-center">
+        <span class="d-icon is-large denali-icon-color d-chart-line-time"></span>
+      </div>
+      <div class="col-lg-10 col-xl-10">
+        <h2>World-class support</h2>
+        <p>
+          Using the Vespa Cloud gives you access to the world's best Vespa support, period, and there's no
+          other way to buy it. This is because this support is provided by the team that develops Vespa,
+          and we prefer to provide support in an environment which we know is operated according to best practices.
+          Just by using the Vespa Cloud, at no extra cost, you get access to next-business day support from the
+          Vespa team.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="continuous-deployment" class="bg-light-blue">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-2 col-xl-2 text-center">
+        <span class="d-icon is-large denali-icon-color d-data-storage-check"></span>
+      </div>
+      <div class="col-lg-10 col-xl-10">
+        <h2>Automatic, safe continuous deployment</h2>
+        <p>
+          Continuous deployment - automatically deploying changes as they are made to the application source -
+          has emerged as a best practice across the industry because deploying small increments quickly lowers risk
+          and increases efficiency. However, following this practice on stateful, distributed, always-available systems
+          like Vespa is challenging, as deployments cannot cause service quality impact or risk of downtime.
+        </p>
+        <p>
+          The Vespa Cloud provides all the necessary mechanisms to implement safe continuous deployment.
+          Applications just create a job in their preferred CI tool which builds their application and submits
+          it to the cloud and Vespa handles the rest. Applications remain in control of how and when changes roll
+          out: The application package can specify allowed deployment time windows, the sequence and of deployment
+          across zones, the delay between them and criteria for progressing with a rollout.
+        </p>
+        <p>
+          Any deployment is validated in test zones before progressing to production zones:  The <i>test</i>
+          zone runs application defined functional tests, and the <i>staging</i> zone validates that
+          the application can smoothly change from the current to the new application revision.
+          The Vespa Cloud console provides a visualization of the status of the whole process and surfaces
+          the information needed to diagnose any issues.
+        </p>
+        <p>
+          Deployments in each zone happens without service disruption by applying changes without causing restarts.
+          If restarts are necessary to apply changes, the Vespa Cloud will perform them automatically by taking
+          down a single node (or group) of each cluster at a time. When deployments specify a change to the
+          hardware running the application, the cloud will add the new hardware to it while leaving the old in place,
+          and then remove the old later once data is safely migrated. Potentially unsafe changes are detected,
+          and require a validation override as part of the deployment to ensure destructive changes are not
+          made inadvertently.
+        </p>
+        <p>
+          Continuous deployment is a transformative process that greatly increases productivity and reduces incidents,
+          however implementing it for services on Vespa's complexity level is too hard for teams to do on their own.
+          By deploying to the Vespa Cloud you get this capability out of the box, with safety features already
+          proven to work for large business critical systems where any service disruption is intolerable.
+        </p>
+      </div>
+    </div>
+  </div>
 </section>
 
 <section id="cost-optimization-in-place-upgrades" class="bg-light-blue">
@@ -275,37 +388,6 @@ layout: page-wide
   </div>
 </section>
 
-
-<section id="quality" class="bg-light-gray">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-2 col-xl-2 text-center">
-        <span class="d-icon is-large denali-icon-color d-bug"></span>
-      </div>
-      <div class="col-lg-10 col-xl-10">
-        <h2>Quality</h2>
-        <p>
-          Bugs happen, and quick failure resolution is essential.
-          See Developer Cloud for how developers copy the exact production config
-          into a sandbox for debugging and development.
-        </p>
-        <p>
-          Using Vespa Cloud enables Vespa Support to quickly assess production serving problems -
-          the application dashboard is already available to them, with the relevant metrics.
-          In many cases, Vespa Support can in advance predict future problems based on trends.
-        </p>
-        <p>
-          Nodes and data centers can and will fail.
-          Vespa Cloud detects and replaces and failed nodes automatically, and migrates data for replica re-generation.
-        </p>
-        <p>
-          Catastrophic event handling with multiple availability zones and Auto failover is supported for the data
-          center / network events.
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
 
 <section id="data-privacy" class="bg-light-blue">
   <div class="container">
