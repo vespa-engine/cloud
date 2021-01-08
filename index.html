@@ -346,6 +346,36 @@ layout: page-wide
   </div>
 </section>
 
+
+<section id="performance" class="bg-light-blue">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-2 col-xl-2 text-center">
+        <span class="d-icon is-large denali-icon-color d-currency-bag-dollar"></span>
+      </div>
+      <div class="col-lg-10 col-xl-10 text-left">
+        <h2>Performance tuning by the Vespa experts</h2>
+        <p>
+          Tuning performance on systems that mixes computation and data is a unique challenge with
+          many interesting subtleties. At the same time, gains from tuning may be substantial -
+          it's often possible to cut cost in half.
+          Since Vespa Cloud applications are extensively instrumented automatically, it is feasible
+          for the performance specialists in the core Vespa team to analyze applications for performance
+          otpimizations with relatively little effort - applying their expert knowledge to realize these gains.
+        </p>
+        <p>
+          Included when you deploy to the Vespa Cloud is participation in the Vespa tune-up program where
+          our experts analyze your application for potential gains regularly at least yearly.
+          As applications evolve  and Vespa gains new performance optimizations, new opportunities
+          for cost savings and performance improvements keep materializing, and the tune-up program ensures
+          your application is always performing at its best.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
 <section id="developer-cloud" class="bg-light-gray">
   <div class="container">
     <div class="row">
@@ -355,86 +385,17 @@ layout: page-wide
       <div class="col-lg-10 col-xl-10">
         <h2>Developer Cloud</h2>
         <p>
-          Using the Vespa Cloud Sandbox and <a href="https://github.com/vespa-engine/sample-apps/blob/master/README.md">sample
-          applications</a>
-          enables developers to get started in 15 minutes.
-          The first strawman application with test data is normally built in a day.
-          The fastest teams launch to a production environment the first week.
-          This in order to integrate with production data feeders and query sources early, for rapid iteration.
+          The Vespa Cloud lets developers deploy new applications by a single command - whether they
+          are setting up a new application or a copy of one already running.
+          Applications deployed for development are automatically downscaled to avoid unnecessary cost,
+          and disused ones are automatically removed.
         </p>
         <p>
-          Developers can deploy Sandbox applications to a Docker instance on their laptop, too -
-          that makes it easy to be productive in all environments.
-          <a href="/developer-guide">Read more</a>.
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="performance-cloud" class="bg-light-blue">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-2 col-xl-2 text-center">
-        <span class="d-icon is-large denali-icon-color d-dashboard-add"></span>
-      </div>
-      <div class="col-lg-10 col-xl-10 text-left">
-        <h2>Performance Cloud</h2>
-        <p>
-          Vespa applications range from applications with 100k documents and 100k query load,
-          to 20B documents and 1k query load - and everything in between.
-          Update rates range from 0 to 10k/sec.
-        </p>
-        <p>
-          The applications hence have different latency and throughput requirements,
-          and Vespa has more <a href="https://docs.vespa.ai/documentation/reference/services-content.html">indexing</a>
-          and
-          <a href="https://docs.vespa.ai/documentation/elastic-vespa.html">topology</a> options
-          to optimize for the different use cases.
-          Adding to this, Vespa’s <a href="https://docs.vespa.ai/documentation/reference/schema-reference.html">search
-          threads</a> configuration
-          helps balance latency vs. CPU usage.
-          Use attribute <a href="https://docs.vespa.ai/documentation/attributes.html">memory</a> options
-          to balance read/write latencies vs. memory usage.
-          Read more in <a href="/benchmarking">Benchmarking</a>.
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="safe-launches" class="bg-white">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-2 col-xl-2 text-center">
-        <span class="d-icon is-large denali-icon-color d-data-storage-check"></span>
-      </div>
-      <div class="col-lg-10 col-xl-10 text-left">
-        <h2>Safe Launches</h2>
-        <p>
-          The best launches are non-events.
-          As any launch has a set of unknowns, it makes sense to pad node usage,
-          then quickly scale back when in steady state - see Cluster Sizing.
-          This eliminates the need for lengthy and costly pre-launch performance test cycles
-          for both node instance type and number of nodes used.
-        </p>
-        <p style="text-align: center;">
-          <img src="img/safe-launch.png" alt="Safe launches through system and staging tests" width="203"
-               height="148"><br/>
-        </p>
-        <p>
-          Launches are changes to capacity, configuration and/or code.
-          To safeguard any change, Vespa Cloud has <a href="automated-deployments">Automated Deployments</a>.
-          Automated Deployments are System, Staging and Production tests run at any deployment.
-          This lets developers define quality metrics and test for these a-priori.
-          The best teams build a strong test suite and are hence confident in all changes.
-          These teams deploy changes to production more times a day,
-          and are orders or magnitude more productive than without automated deployment.
-        </p>
-        <p>
-          Vespa Cloud has built-in support to block potentially destructive configuration changes,
-          see <a href="https://docs.vespa.ai/documentation/reference/schema-reference.html">safe schema
-          modifications</a>.
+          This makes it easy and fast for developers to experiment -
+          groups that have switched their Vespa development to our cloud service tell us that they see a
+          large increase in development velocity and innovation.
+          Whether or not you use the Vespa Cloud for production, you can take advantage of it to unleash
+          the full potential of your developers.
         </p>
       </div>
     </div>
@@ -442,30 +403,4 @@ layout: page-wide
 </section>
 
 
-<section id="data-privacy" class="bg-light-blue">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-2 col-xl-2 text-center">
-        <span class="d-icon is-large denali-icon-color d-user-canonical"></span>
-      </div>
-      <div class="col-lg-10 col-xl-10 text-left">
-        <h2>Data Privacy</h2>
-        <p>
-          The General Data Protection Regulation (GDPR) and California Consumer Privacy Act (CCPA)
-          are relevant for applications with personal data. Highlights:
-        <ol>
-          <li>Prepare - primarily application owner - includes reviewing Vespa’s compliance.
-            Use Vespa’s data auto-expiry in application configuration
-          </li>
-          <li>Protect - see Security. Also relevant is application logging</li>
-          <li>Processes - including notifications from Vespa to application owner
-            and application data auto deletion at disuse
-          </li>
-        </ol>
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section/> <!-- ugly workaround for the margin-top for sections - see docs.css #main-content -->
+<section></section> <!-- ugly workaround for the margin-top for sections - see docs.css #main-content -->
