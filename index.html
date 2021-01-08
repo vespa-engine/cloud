@@ -224,40 +224,93 @@ layout: page-wide
   </div>
 </section>
 
-<section id="cost-optimization-in-place-upgrades" class="bg-light-blue">
+<section id="upgrades" class="bg-light-blue">
   <div class="container">
     <div class="row">
       <div class="col-lg-2 col-xl-2 text-center">
         <span class="d-icon is-large denali-icon-color d-swap-horizontal-circle"></span>
       </div>
       <div class="col-lg-10 col-xl-10">
-        <h2>Cost Optimization: In-place Upgrades</h2>
+        <h2>Automatically keep your Vespa version and OS up to date</h2>
         <p>
-          Vespa is built to be always-on, also while upgrading.
-          Vespa Cloud tracks Vespa.ai releases and
-          upgrades <a href="https://vespa.ai/releases">multiple times a week</a>.
-          Upgrading means taking nodes offline for new software install.
-          Vespa Cloud cloud orchestrates the process, taking nodes offline safely one by one,
-          and data is synced before upgrading the next node.
-          This keeps all data available at all time, with no extra cluster setup.
-        </p>
-        <p style="text-align: center;">
-          <img src="img/system-test.png" alt="In-place software and application updates"><br/>
+          You want to keep your applications running on the latest certified version of Vespa
+          to get bug fixes, performance improvements and new features.
+          And to make your service secure you <i>must</i> keep your Vespa and OS patch version up to date.
+          Implementing a process for this is similar to automating deployment orchestration,
+          with some additional complexity added on top. This is why most teams who host their own Vespa instances
+          fail to do this and instead resort to spending manual effort and redundant hardware doubling the cost
+          to solve this.
         </p>
         <p>
-          As all Vespa Cloud applications must be sized to tolerate single node failures,
-          the upgrader stops upgrading during failures,
-          and resumes once new nodes are in place, and data is synced.
-        </p>
-        <p>
-          In contrast, manually upgrading cluster takes time, and are often hence put off to later.
-          Often a separate application is spun up, data is migrated, manual tests are run, etc.
-          This has high costs in both HW/cloud resources and people time.
+          With Vespa Cloud, upgrading and OS patching is a solved problem you never worry about.
+          We reuse the same mechanisms and tests used for continuous deployment to upgrade Vespa safely
+          every day by default. Applications remain in control by having the option to specify when
+          Vespa is allowed to upgrade. Similarly new OS versions are rolled out node by node in the background
+          by an automated process. This keeps Vespa applications current and secure with no additional effort required
+          on the application side.
         </p>
       </div>
     </div>
   </div>
 </section>
+
+
+<section id="security" class="bg-white">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-2 col-xl-2 text-center">
+        <span class="d-icon is-large denali-icon-color d-security-verified"></span>
+      </div>
+      <div class="col-lg-10 col-xl-10">
+        <h2>Strong security. Always.</h2>
+        <p>
+          Keeping online services secure is a never ending task. New attack vectors and vulnerabilities
+          keep appearing and  requiring new defences. With the Vespa Cloud you get strong security by default
+          at no additional cost. All communication between nodes is protected by mutual
+          authentication and encryption, ensuring that only the intended nodes can communicate internally,
+          and  that only authorized clients can access an application. Data can additional be secured by encryption.
+          The Vespa security experts keeps Vespa and the underlying OS secure against the latest threats and
+          the cloud keep  you updated with those defences.
+        </p>
+        <p>
+          Application security is an area which must be taken seriously, especially in systems storing and
+          exposing data, and require dedicated experts to do well. With the Vespa Cloud your application
+          is secured with no additional effort required.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="autoscaling" class="bg-white">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-2 col-xl-2 text-center">
+        <span class="d-icon is-large denali-icon-color d-scale-expand"></span>
+      </div>
+      <div class="col-lg-10 col-xl-10">
+        <h2>Automatically scale to meet your demand</h2>
+        <p>
+          You want your application to use as few resources as possible to minimize cost,
+          but at the same time you don't want to run out of resources when traffic is high
+          or you feed more data. If you host yourself, you need to choose between
+          always allocating enough hardware to handle the most load you may theoretically see,
+          or risk running out of resources just when you need them the most.
+        </p>
+        <p>
+          With the Vespa Cloud you don't have to choose but can let clusters maintain the optimal allocation
+          required to handle the current load at any time. Stateless clusters can typically react to traffic
+          changes on the scale of a few minutes, while content clusters require more time as data need to be
+          redistributed on resource changes. Applications can typically save about half of their hardware cost by
+          enabling this feature, while removing the risk of failing queries during peak or blocking writes due
+          to feeding too much data. As always with the Vespa Cloud, applications remain in control and can set
+          max and min limits on resources to fit their business objectives.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
 
 <section id="cost-optimization-simple-pricing-model" class="bg-white">
   <div class="container">
@@ -409,28 +462,6 @@ layout: page-wide
             and application data auto deletion at disuse
           </li>
         </ol>
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="security" class="bg-white">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-2 col-xl-2 text-center">
-        <span class="d-icon is-large denali-icon-color d-security-verified"></span>
-      </div>
-      <div class="col-lg-10 col-xl-10">
-        <h2>Security</h2>
-        <p>
-          Using the Auto in-place Upgrader (above), Vespa code and dependencies are upgraded multiple times a week.
-          As new Operating System versions are available (normally once a month),
-          Vespa base hosts are booted with the new release, using the Auto in-place Upgrader.
-          This keeps the clusters safe - all software on the node is up to date
-        </p>
-        <p>
-          External and internal interfaces are encrypted using mTLS. Data at rest is encrypted.
         </p>
       </div>
     </div>
