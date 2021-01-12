@@ -57,6 +57,13 @@ $ mvn test \
     <td>Delete a development deployment, created with <code>mvn vespa:deploy</code>.
         Requires a user API key.</td>
   </tr><tr>
+    <td>suspend</td>
+    <td>Suspends or resumes orchestration of a development deployment.
+        This allows all nodes of the deployment to be down simultaneously, and
+        can speed up upgrades of an existing deployment with node redundancy, at the
+        cost of temporarily making the cluster inoperable. 
+        Requires a user API key.</td>
+  </tr><tr>
     <td>compileVersion</td>
     <td>Find the latest Vespa version to compile against,
         which is guaranteed to be compatible with the oldest production version of the application.
@@ -285,6 +292,13 @@ Properties used in various other plugin goals.
     <th style="width:180px">Property Name</th>
     <th style="width:150px">Mandatory</th>
     <th>Values</th>
+  </tr><tr>
+    <td>suspend</td>
+    <td>Yes</td>
+    <td>Used by the <code>suspend</code> goal.
+        Whether to suspend (<code>true</code>) or resume (<code>false</code>)
+        orhcestration of the relevant developement deployment.</td>
+  </tr>
   </tr><tr>
     <td>outputFile</td>
     <td>No</td>
