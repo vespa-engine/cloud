@@ -35,8 +35,9 @@ title: Status
             <h3>Messages</h3>
             {% if site.data.status.messages[0] %}
             {% assign datelimit = "now" | date: '%s' | minus:604800 %}
+            {% assign sorted_messages = site.data.status.messages | sort: 'date' | reverse %}
             <table class="table" style="width: 90%; margin-left: auto; margin-right: auto;">
-            {% for message in site.data.status.messages %}
+            {% for message in sorted_messages %}
                 {% assign epoch = message.date | date: '%s' | ceil %}
                 {% if epoch >= datelimit %}
                 <tr>
