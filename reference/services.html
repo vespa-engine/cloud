@@ -190,9 +190,9 @@ Deploy directives are used to specify in which instance, environment and/or regi
     &lt;document type="music.sd" mode="index" /&gt;
   &lt;/documents&gt;
   &lt;nodes <strong style="background-color: yellow;">deploy:environment="dev"</strong> count="1" /&gt;
-  &lt;nodes <strong style="background-color: yellow;">deploy:environment="prod"</strong> <strong style="background-color: yellow;">deploy:region="us-west-1"</strong> count="20" /&gt;
-  &lt;nodes <strong style="background-color: yellow;">deploy:environment="prod"</strong> <strong style="background-color: yellow;">deploy:region="us-east-3"</strong> count="40" /&gt;
-  &lt;nodes <strong style="background-color: yellow;">deploy:environment="prod"</strong> <strong style="background-color: yellow;">deploy:region="us-east-3"</strong> <strong style="background-color: yellow;">deploy:instance="alpha"</strong> count="4" /&gt;
+  &lt;nodes <strong style="background-color: yellow;">deploy:environment="prod"</strong> <strong style="background-color: yellow;">deploy:region="aws-us-east-1c"</strong> count="20" /&gt;
+  &lt;nodes <strong style="background-color: yellow;">deploy:environment="prod"</strong> <strong style="background-color: yellow;">deploy:region="aws-ap-northeast-1a"</strong> count="40" /&gt;
+  &lt;nodes <strong style="background-color: yellow;">deploy:environment="prod"</strong> <strong style="background-color: yellow;">deploy:region="aws-ap-northeast-1a"</strong> <strong style="background-color: yellow;">deploy:instance="alpha"</strong> count="4" /&gt;
 &lt;/content&gt;
 </pre>
 This example configures a different node count depending on the deployment target.
@@ -248,14 +248,14 @@ The namespace can be applied to any element. Example:
       &lt;searcher bundle="basic-application" id="com.yahoo.example.ExampleSearcher"&gt;
         &lt;config name="example.message"&gt;
           &lt;message&gt;Hello from application config&lt;/message&gt;
-          &lt;message <span style="background: yellow">deploy:region="us-east-3"</span>&gt;Hello from east colo!&lt;/message&gt;
+          &lt;message <span style="background: yellow">deploy:region="aws-us-east-1c"</span>&gt;Hello from east colo!&lt;/message&gt;
         &lt;/config&gt;
       &lt;/searcher&gt;
     &lt;/chain&gt;
   &lt;/search&gt;
 </pre>
 Above, the <em>container</em> element is configured for the 4 environments only (it will not apply to <em>dev</em>) -
-and in region <em>us-east-3</em>, the config is different.
+and in region <em>aws-us-east-1c</em>, the config is different.
 </p>
 
 
