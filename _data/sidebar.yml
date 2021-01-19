@@ -20,6 +20,8 @@ docs:
         url: /model-serving
       - page: Overload Handling
         url: /overload-handling
+      - page: Autoscaling
+        url: /autoscale
 
   - title: REFERENCE
     documents:
