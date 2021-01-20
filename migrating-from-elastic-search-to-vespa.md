@@ -141,9 +141,9 @@ Vespa can be fed with either [Vespa Http Feeding Client](https://docs.vespa.ai/d
 or using [Hadoop, Pig, Oozie](https://docs.vespa.ai/documentation/feed-using-hadoop-pig-oozie.html).
 
 The Vespa Http Feeding Client is a Java API and command line tool to feed document operations to Vespa.
-The Vespa feedig client allows you to combine high throughput with feedig over HTTP.
+The Vespa feedig client allows you to combine high throughput with feeding over HTTP.
 
-Add the `<document-api>` to a container cluster to enable it to receive documents:
+Add the `<document-api>` to a container cluster to set up a feed endpoint:
 
 ```
 <?xml version="1.0" encoding="utf-8" ?>
