@@ -225,7 +225,7 @@ Rules of thumb:
 * Memory and disk scales approximately linearly for indexed fields' data -
   attributes have a fixed cost for empty fields
 * Data variance will impact memory usage
-* Undersized instances will [block writes](https://docs.vespa.ai/documentation/writing-to-vespa.html#feed-block).
+* Undersized instances will [block writes](https://docs.vespa.ai/documentation/reads-and-writes.html#feed-block).
 * If is often a good idea to use the Dev Cloud to test memory impact of adding large fields,
   e.g. adding an embedding
 
