@@ -186,8 +186,8 @@ with <code>mvn vespa:submit</code>.
 <h2 id="deployment-properties">Deployment properties</h2>
 <p>
 Used to manipulate or test deployments in the <code>dev</code> or <code>perf</code> environments,
-with <code>mvn vespa:deploy</code>,
-<code>mvn vespa:delete</code>, <code>mvn test</code> or by running unit tests in an IDE. 
+with <code>mvn vespa:deploy</code>, <code>mvn vespa:delete</code>, <code>mvn vespa:suspend</code>; and
+when running system or staging tests with <code>mvn test</code> or in an IDE. 
 <table class="table">
   <tr>
     <th style="width:180px">Property Name</th>
@@ -195,10 +195,9 @@ with <code>mvn vespa:deploy</code>,
     <th>Values</th>
   </tr><tr>
     <td>instance</td>
-    <td>No; defaults to <code>$USER</code>.</td>
-    <td>Instance of the application to create, delete or test.
-        This defaults to the user name of the current user,
-        which lets each developer have their own development deployment by default,
+    <td>Yes</td>
+    <td>Instance of the application to create, delete, suspend or test.
+        This lets each developer have their own development deployment by default,
         and is intentionally not set in the sample application's <code>pom.xml</code>.</td>
   </tr><tr>
     <td>environment</td>
