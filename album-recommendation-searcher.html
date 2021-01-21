@@ -67,16 +67,17 @@ $ mkdir -p src/main/application/security && \
     Update <code>tenant</code> and <code>application</code> in <code>pom.xml</code> —
     use the values entered in the console in 4.
   </p></li><li><p>
-    Build the app, deploy it to the <code>dev</code> environment and wait for it to start -
+    Build the app, deploy your own instance (<code>my-instance</code> here) to the
+    <code>dev</code> environment and wait for it to start —
     update <code>apiKeyFile</code> to be the file downloaded above:
 <pre>
-$ mvn clean package vespa:deploy -DapiKeyFile=$HOME/Downloads/USER.TENANTNAME.pem
+$ mvn clean package vespa:deploy -DapiKeyFile=$HOME/Downloads/USER.TENANTNAME.pem -Dinstance=my-instance
 </pre>
   </p></li><li><p>
     Alternatively, put the key in an <a href="/automated-deployments#keys">environment variable</a>:
 <pre data-test="exec">
 $ API_KEY=`echo $VESPA_TEAM_API_KEY | openssl base64 -A -a -d`
-$ mvn clean package vespa:deploy -DapiKey="$API_KEY"
+$ mvn clean package vespa:deploy -DapiKey="$API_KEY" -Dinstance=my-instance
 </pre>
   </p></li><li><p>
     Now is a good time to read <a href="/automated-deployments">automated-deployments</a>,
