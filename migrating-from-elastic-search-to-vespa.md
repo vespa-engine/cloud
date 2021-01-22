@@ -1,59 +1,67 @@
 ---
 # Copyright Verizon Media. All rights reserved.
-title: Migrating from Elasticsearch to Vespa
+title: Migrating from Elasticsearch
 ---
 
-This is a guide for how to move data from Elasticsearch to Vespa.
-By the end of this guide you will have generated a deployable Vespa application package
-from an Elasticsearch cluster.
+This is a guide for how to move data from Elasticsearch (ES) to Vespa.
+By the end of this guide you will have generated a deployable Vespa application package.
 To consider whether Vespa is a better choice for your use case,
 take a look at the [comparison](elastic-search-comparison.html)
 
+Vespa provides a helper conversion script for basic conversion of ES data and mappings
+to Vespa data and configuration.
+<!-- ToDo: more details on what is in an app package and a link ...  -->
 
 
-#### 1. Get all documents from Elasticsearch with ElasticDump
-It is possible to use [ElasticDump](https://github.com/taskrabbit/elasticsearch-dump)
-to get all documents from Elasticsearch in a JSON-file. Assuming starting in a empty folder.
+### Feed a sample ES index
+Set up an index with 1,000 sample documents using
+[getting-started-index](https://www.elastic.co/guide/en/elasticsearch/reference/7.9/getting-started-index.html)
+or skip this part if you have an index:
 
 ```
-$ git clone --depth 1 https://github.com/taskrabbit/elasticsearch-dump.git
+$ docker network create --driver bridge esnet
+
+$ docker run --rm --name esnode --network esnet -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" \
+  docker.elastic.co/elasticsearch/elasticsearch:7.10.2
+
+$ curl 'https://raw.githubusercontent.com/elastic/elasticsearch/master/docs/src/test/resources/accounts.json' \
+  > accounts.json
+
+$ curl -H "Content-Type:application/json" --data-binary @accounts.json 'localhost:9200/bank/_bulk?pretty&refresh'
+
+$ curl 'localhost:9200/_cat/indices?v'
 ```
- 
-Then get all documents and mapping from your cluster(s) with:
-
-```bash
-$ `pwd`/elasticsearch-dump/bin/elasticdump \
-  --input=http://localhost:9200/my_index \
-  --output=/path/to/empty/folder/my_index.json \
-  --type=data
-
-$ `pwd`/elasticsearch-dump/bin/elasticdump \
-  --input=http://localhost:9200/my_index \
-  --output=/path/to/empty/folder/my_index_mapping.json \
-  --type=mapping
-``` 
-
- * `--input` should be the url to your Elasticsearch index
- * `--output` should be the path to your intially empty folder
+The last command should indicate 1,000 documents in the index.
 
 
+### Dump documents from ES
+Refer to [ElasticDump](https://github.com/elasticsearch-dump/elasticsearch-dump) for details.
 
-#### 2. Parse the ES-documents to Vespa-documents and generate an Application Package
+```
+$ cat > dumpit.sh << EOF
+npm install elasticdump
+/dump/node_modules/.bin/elasticdump --input=http://esnode:9200/bank --output=bank_data.json    --type=data
+/dump/node_modules/.bin/elasticdump --input=http://esnode:9200/bank --output=bank_mapping.json --type=mapping
+EOF
+
+$ docker run --rm --name esdump --network esnet -v "$PWD":/dump -w /dump node:alpine sh dumpit.sh
+
+$ docker network remove esnet
+```
+
+
+### Parse the ES-documents to Vespa-documents and generate an Application Package
 Download [ES_Vespa_parser.py](https://github.com/vespa-engine/vespa/tree/master/config-model/src/main/python),
 and place it in your intitially empty directory. Usage:
 
  ```
-$ ES_Vespa_parser.py [-h] [--application_name APPLICATION_NAME] documents_path mappings_path
+$ curl 'https://raw.githubusercontent.com/vespa-engine/vespa/master/config-model/src/main/python/ES_Vespa_parser.py' \
+  > ES_Vespa_parser.py
+
+$ python3 ./ES_Vespa_parser.py --application_name application bank_data.json bank_mapping.json
  ```
 
-Run this command in your folder to parse the documents, so that it can be fed to Vespa:
-
-```
-$ python ES_Vespa_parser.py my_index.json my_index_mapping.json
-```
-
-* `--application_name` defaults to "application_name" - just change if you want
-  * The document ids will become *id:`application_name`:`doc_name`::`elasticsearch_id`*
+The document ids will become *id:`application_name`:`doc_name`::`elasticsearch_id`*
 
 The directory has now a folder `application`:
 
