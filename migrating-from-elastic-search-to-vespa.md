@@ -50,9 +50,9 @@ $ docker network remove esnet
 ```
 
 
-### Parse the ES-documents to Vespa-documents and generate an Application Package
-Download [ES_Vespa_parser.py](https://github.com/vespa-engine/vespa/tree/master/config-model/src/main/python),
-and place it in your intitially empty directory. Usage:
+### Generate Vespa documents and Application Package
+Use [ES_Vespa_parser.py](https://github.com/vespa-engine/vespa/tree/master/config-model/src/main/python)
+to generate documents and configuration:
 
  ```
 $ curl 'https://raw.githubusercontent.com/vespa-engine/vespa/master/config-model/src/main/python/ES_Vespa_parser.py' \
@@ -61,9 +61,8 @@ $ curl 'https://raw.githubusercontent.com/vespa-engine/vespa/master/config-model
 $ python3 ./ES_Vespa_parser.py --application_name application bank_data.json bank_mapping.json
  ```
 
-The document ids will become *id:`application_name`:`doc_name`::`elasticsearch_id`*
-
-The directory has now a folder `application`:
+The document ids in `documents.json` will be like `id:application:_doc::1`,
+the directory has now an `application` folder:
 
 ```
 /application
@@ -72,103 +71,75 @@ The directory has now a folder `application`:
       ├── hosts.xml
       ├── services.xml
       └── /schemas
-            ├── sd1.sd
+            ├── _doc.sd
             └── ... 
 ```
-Which contains the converted documents, their schemas, a hosts.xml and a services.xml -
-a whole application package.
 
 
 
-#### 3. Deploying Vespa
-Go into the initially empty folder. This tutorial have been tested with a Docker container with 10GB RAM.
-We will map the this directory into the /app directory inside the Docker container.
+#### Deploy to Vespa
+This tutorial have been tested with a Docker container with 6GB RAM.
+`application` is mapped to /app in the Docker container.
 Start the Vespa container:
  
 ```bash
-$ docker run -m 10G --detach --name vespa --hostname vespa-es-tutorial \
-    --privileged --volume `pwd`:/app \
-    --publish 8080:8080 --publish 19112:19112 vespaengine/vespa
+$ docker run -m 6G --detach --name vespa --hostname vespa-es-tutorial \
+  --privileged --volume `pwd`:/app \
+  --publish 8080:8080 --publish 19112:19112 vespaengine/vespa
 ```
 
-Make sure that the configuration server is running:
+Wait for the configuration server to start - wait for a 200 OK response:
 
 ```bash
 $ docker exec vespa bash -c 'curl -s --head http://localhost:19071/ApplicationStatus'
 ```
 
-Deploy the `application` package:
+[Deploy](https://docs.vespa.ai/documentation/cloudconfig/application-packages.html#deploy)
+the `application` package:
 
 ```bash
 $ docker exec vespa bash -c '/opt/vespa/bin/vespa-deploy prepare /app/application && \
-    /opt/vespa/bin/vespa-deploy activate'
+  /opt/vespa/bin/vespa-deploy activate'
 ``` 
 
-(or alternatively, run the equivalent commands inside the docker container).
-After a short while, pointing a browser to _http://localhost:8080/ApplicationStatus_
-returns JSON-formatted information about the active application.
+
+Ensure the application is active - wait for a 200 OK response:
+
+```
+$ curl -s --head http://localhost:8080/ApplicationStatus
+```
+
 The Vespa node is now configured and ready for use.
 
-More details for
-[deploying application packages](https://docs.vespa.ai/documentation/cloudconfig/application-packages.html#deploy).
 
 
-
-#### 4. Feeding the parsed documents to Vespa
-Send this to Vespa using one of the tools Vespa provides for feeding.
-In this part of the tutorial, the [Java feeding API](https://docs.vespa.ai/documentation/vespa-http-client.html) is used:
+#### Feed documents
+Use the [vespa-http-client](https://docs.vespa.ai/documentation/vespa-http-client.html):
 
 ```bash
 $ docker exec vespa bash -c 'java -jar /opt/vespa/lib/jars/vespa-http-client-jar-with-dependencies.jar \
     --verbose --file /app/application/documents.json --host localhost --port 8080'
 ```
 
-Inspect the search node state using:
-`$ docker exec vespa bash -c '/opt/vespa/bin/vespa-proton-cmd --local getState'`
 
-
-
-#### 5. Fetching documents
-Fetch documents by document id using the [Document API](https://docs.vespa.ai/documentation/document-api-guide.html):
+#### Get a document
+Get documents using the [Document API](https://docs.vespa.ai/documentation/document-v1-api-guide.html):
 
 ```bash
-$ curl -s http://localhost:8080/document/v1/application_name/doc_name/docid/elasticsearch_id
+$ curl -s http://localhost:8080/document/v1/application/_doc/docid/1
 ```
 
 
-
-#### 6. The first query
-Use the GUI for building queries at _http://localhost:8080/querybuilder_
-(with Vespa-container running) which can help you building queries with e.g. autocompletion of YQL.
-Also take a look at the [query API](https://docs.vespa.ai/documentation/query-api.html).
-
-
-
-## Feeding
-Vespa can be fed with either [Vespa Http Feeding Client](https://docs.vespa.ai/documentation/vespa-http-client.html)
-or using [Hadoop, Pig, Oozie](https://docs.vespa.ai/documentation/feed-using-hadoop-pig-oozie.html).
-
-The Vespa Http Feeding Client is a Java API and command line tool to feed document operations to Vespa.
-The Vespa feedig client allows you to combine high throughput with feeding over HTTP.
-
-Add the `<document-api>` to a container cluster to set up a feed endpoint:
+#### Query documents
+Use the [Query API](https://docs.vespa.ai/documentation/query-api.html) to count documents,
+find `"totalCount": 1000` in the output, and run a text query:
 
 ```
-<?xml version="1.0" encoding="utf-8" ?>
-<services version="1.0">
+$ curl -H "Content-Type: application/json" \
+  --data '{"yql" : "select * from sources * where sddocname contains \"_doc\";"}' \
+  http://localhost:8080/search/
 
-  <container version="1.0" id="default">
-     <document-api/>
-  </container>
-
-</services>
-```
-
-Use the [Vespa HTTP Client](https://docs.vespa.ai/documentation/vespa-http-client.html) API / binary.
-It supports feeding document operations and is installed with Vespa -
-found at `$VESPA_HOME/lib/jars/vespa-http-client-jar-with-dependencies.jar`. Example: 
-
-```
-$ java -jar $VESPA_HOME/lib/jars/vespa-http-client-jar-with-dependencies.jar \
-  --file file.json --endpoint http://document-api-host:8080
+$ curl -H "Content-Type: application/json" \
+  --data '{"yql" : "select * from sources * where firstname contains \"amber\";"}' \
+  http://localhost:8080/search/
 ```
