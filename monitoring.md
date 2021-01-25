@@ -4,9 +4,9 @@ title: Monitoring
 ---
 
 Metrics can be pulled in a
-[native Vespa format](https://docs.vespa.ai/documentation/reference/metrics.html)
+[native Vespa format](https://docs.vespa.ai/en/reference/metrics.html)
 or Prometheus.
-Also see [vespa.ai monitoring](https://docs.vespa.ai/documentation/monitoring.html)
+Also see [vespa.ai monitoring](https://docs.vespa.ai/en/monitoring.html)
 
 
 

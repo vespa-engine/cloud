@@ -86,7 +86,7 @@ followed by a slow decay.
 
 The best solution for this case is to slow down the batch job, as it is of short duration.
 It is not always doable to slow down jobs - in these cases, setting up
-[multiple container clusters](https://docs.vespa.ai/documentation/indexing.html#multiple-container-clusters)
+[multiple container clusters](https://docs.vespa.ai/en/indexing.html#multiple-container-clusters)
 can be a smart thing - optimize each cluster for its load characteristics.
 This could be a combination of clusters using autoscale and clusters with a fixed size. 
 Autoscaling often works best for the user-generated load,
@@ -97,7 +97,7 @@ or routed to a different cluster in the same Vespa application.
 
 ## Container and content nodes
 Vespa has two primary node types: stateless container nodes and stateful content nodes.
-See the [overview](https://docs.vespa.ai/documentation/overview.html).
+See the [overview](https://docs.vespa.ai/en/overview.html).
 
 _Container nodes_ are easier to size and autoscale, as they normally only use disk for logging
 and the JVM size dictates the container's memory requirements - leaving CPU to be autoscaled.
@@ -114,8 +114,8 @@ but will still make sense for many cases.
 
 
 ## Related reads
-* [Feed sizing](https://docs.vespa.ai/documentation/performance/sizing-feeding.html)
-* [Query sizing](https://docs.vespa.ai/documentation/performance/sizing-search.html)
+* [Feed sizing](https://docs.vespa.ai/en/performance/sizing-feeding.html)
+* [Query sizing](https://docs.vespa.ai/en/performance/sizing-search.html)
 
 
 <!-- ToDo: Access logs are lost when nodes are configured out -->

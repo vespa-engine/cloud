@@ -110,13 +110,13 @@ returns JSON-formatted information about the active application.
 The Vespa node is now configured and ready for use.
 
 More details for
-[deploying application packages](https://docs.vespa.ai/documentation/cloudconfig/application-packages.html#deploy).
+[deploying application packages](https://docs.vespa.ai/en/cloudconfig/application-packages.html#deploy).
 
 
 
 #### 4. Feeding the parsed documents to Vespa
 Send this to Vespa using one of the tools Vespa provides for feeding.
-In this part of the tutorial, the [Java feeding API](https://docs.vespa.ai/documentation/vespa-http-client.html) is used:
+In this part of the tutorial, the [Java feeding API](https://docs.vespa.ai/en/vespa-http-client.html) is used:
 
 ```bash
 $ docker exec vespa bash -c 'java -jar /opt/vespa/lib/jars/vespa-http-client-jar-with-dependencies.jar \
@@ -129,7 +129,7 @@ Inspect the search node state using:
 
 
 #### 5. Fetching documents
-Fetch documents by document id using the [Document API](https://docs.vespa.ai/documentation/document-api-guide.html):
+Fetch documents by document id using the [Document API](https://docs.vespa.ai/en/document-api-guide.html):
 
 ```bash
 $ curl -s http://localhost:8080/document/v1/application_name/doc_name/docid/elasticsearch_id
@@ -140,13 +140,13 @@ $ curl -s http://localhost:8080/document/v1/application_name/doc_name/docid/elas
 #### 6. The first query
 Use the GUI for building queries at _http://localhost:8080/querybuilder_
 (with Vespa-container running) which can help you building queries with e.g. autocompletion of YQL.
-Also take a look at the [query API](https://docs.vespa.ai/documentation/query-api.html).
+Also take a look at the [query API](https://docs.vespa.ai/en/query-api.html).
 
 
 
 ## Feeding
-Vespa can be fed with either [Vespa Http Feeding Client](https://docs.vespa.ai/documentation/vespa-http-client.html)
-or using [Hadoop, Pig, Oozie](https://docs.vespa.ai/documentation/feed-using-hadoop-pig-oozie.html).
+Vespa can be fed with either [Vespa Http Feeding Client](https://docs.vespa.ai/en/vespa-http-client.html)
+or using [Hadoop, Pig, Oozie](https://docs.vespa.ai/en/feed-using-hadoop-pig-oozie.html).
 
 The Vespa Http Feeding Client is a Java API and command line tool to feed document operations to Vespa.
 The Vespa feedig client allows you to combine high throughput with feeding over HTTP.
@@ -164,7 +164,7 @@ Add the `<document-api>` to a container cluster to set up a feed endpoint:
 </services>
 ```
 
-Use the [Vespa HTTP Client](https://docs.vespa.ai/documentation/vespa-http-client.html) API / binary.
+Use the [Vespa HTTP Client](https://docs.vespa.ai/en/vespa-http-client.html) API / binary.
 It supports feeding document operations and is installed with Vespa -
 found at `$VESPA_HOME/lib/jars/vespa-http-client-jar-with-dependencies.jar`. Example: 
 

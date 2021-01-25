@@ -5,7 +5,7 @@ title: deployment.xml
 
 <p>
 <code>deployment.xml</code> is in the root of the
-<a href="https://docs.vespa.ai/documentation/cloudconfig/application-packages.html">application package</a>
+<a href="https://docs.vespa.ai/en/cloudconfig/application-packages.html">application package</a>
 and defines which environments and regions the application is deployed to during
 <a href="../automated-deployments.html">automated application deployment</a>.
 </p><p>
@@ -103,7 +103,7 @@ To delete an application, remove all its instances, i.e., submit a deployment sp
 </pre>
 To remove an instance with production deployments (see <a href="#region">region</a>), 
 add a <em>deployment-removal</em>
-<a href="http://docs.vespa.ai/documentation/reference/validation-overrides.html">
+<a href="http://docs.vespa.ai/en/reference/validation-overrides.html">
 validation override</a>. Example:
 <pre>
 &lt;validation-overrides&gt;
@@ -230,7 +230,7 @@ Attributes:
 </table>
 To remove a deployment from a region, remove the region from the <code>&lt;prod&gt;</code> element, and
 add a <em>deployment-removal</em>
-<a href="http://docs.vespa.ai/documentation/reference/validation-overrides.html">
+<a href="http://docs.vespa.ai/en/reference/validation-overrides.html">
 validation override</a>. Example:
 <pre>
 &lt;validation-overrides&gt;
@@ -349,7 +349,7 @@ and a <em>us</em> endpoint pointing only to US regions.
     <td>container-id</td>
     <td>Yes</td>
     <td>
-      The id of the <a href="https://docs.vespa.ai/documentation/reference/services-container.html">container cluster</a>
+      The id of the <a href="https://docs.vespa.ai/en/reference/services-container.html">container cluster</a>
       to which requests to the global endpoint is forwarded.
     </td>
   </tr>
