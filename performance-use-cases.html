@@ -28,24 +28,24 @@ layout: page-wide
         <h2>High-performance Content Engine</h2>
         <p>
           Vespa is built for really large realtime serving, and supports "unlimited" content node (proton) size.
-          <a href="https://docs.vespa.ai/documentation/proton.html">Proton</a>
+          <a href="https://docs.vespa.ai/en/proton.html">Proton</a>
           is a C++ component and does not have memory limitations other than restrictions on
-          <a href="https://docs.vespa.ai/documentation/attributes.html">attributes</a> -
+          <a href="https://docs.vespa.ai/en/attributes.html">attributes</a> -
           a common use case is running in 256G containers.
           It has its own memory allocator called
           <a href="https://github.com/vespa-engine/vespa/tree/master/vespamalloc">vespa-malloc</a>.
         </p><p>
           Usages vary from applications with tens of billions of documents and a moderate query rate (example: image search)
           to millions of documents with query rates in 100.000/second (example: ad serving).
-          Vespa supports <a href="https://docs.vespa.ai/documentation/elastic-vespa.html#grouped-distribution">performance groups</a>
+          Vespa supports <a href="https://docs.vespa.ai/en/elastic-vespa.html#grouped-distribution">performance groups</a>
           for flexible replica placement to enable a wide range of use cases.
           All cases support a sustained, high throughput for updating documents.
       </p><p>
           Vespa supports a wide range of ML models by transforming them to
-        <a href="https://docs.vespa.ai/documentation/tensor-user-guide.html">tensors</a> -
+        <a href="https://docs.vespa.ai/en/tensor-user-guide.html">tensors</a> -
           and uses LLVM for high-performance ranking.
       </p><p>
-          Read more in <a href="https://docs.vespa.ai/documentation/performance/">Vespa Performance</a>.
+          Read more in <a href="https://docs.vespa.ai/en/performance/">Vespa Performance</a>.
         </p>
         <h3>Highlighted features</h3>
         <ul>
@@ -79,7 +79,7 @@ layout: page-wide
         </p>
         <h3>Highlighted features</h3>
         <ul>
-          <li><a href="https://docs.vespa.ai/documentation/graceful-degradation.html">
+          <li><a href="https://docs.vespa.ai/en/graceful-degradation.html">
             Coverage / Ranking degradation</a></li>
           <li>Soft timeout returns results at timeout - <em>some</em> results are better than none</li>
         </ul>
@@ -101,7 +101,7 @@ layout: page-wide
           In Vespa, the data layout on disk is fully orthogonal to threads used per query.
           It is hence easy to increase number of threads used per query without having to redistribute data.
           Balance capacity requirements, query latency and throughput by tuning
-          <a href="https://docs.vespa.ai/documentation/reference/schema-reference#num-threads-per-search">num-threads-per-search</a>.
+          <a href="https://docs.vespa.ai/en/reference/schema-reference#num-threads-per-search">num-threads-per-search</a>.
         </p>
         <h3>Highlighted features</h3>
         <ul>

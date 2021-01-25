@@ -27,28 +27,28 @@ Pre-configuring Vespa for overload handling makes handling load surge events eas
 <tr><th style="white-space: nowrap">Rate limiting</th>
 <td><p>This guide does not cover how to handle DOS-attacks,
     however such an attack can also be addressed by using
-    <a href="https://docs.vespa.ai/documentation/performance/rate-limiting-searcher.html">Rate limiting</a>.
+    <a href="https://docs.vespa.ai/en/performance/rate-limiting-searcher.html">Rate limiting</a>.
     Rate limiting assumes clients are separated by ID in requests.
     If the application does not use this, one can modify the 
     <a href="https://github.com/vespa-engine/vespa/blob/master/container-search/src/main/java/com/yahoo/search/searchers/RateLimitingSearcher.java">
     RateLimitingSearcher</a> for the use case.</p></td></tr>
 <tr><th style="white-space: nowrap">Quality degradation</th>
 <td><p>Many Vespa applications are resource-intensive,
-    using <a href="https://docs.vespa.ai/documentation/ranking.html">two-phased ranking</a>
+    using <a href="https://docs.vespa.ai/en/ranking.html">two-phased ranking</a>
     to assign most resources to the best result candidates.
     A load surge can make queries time out -
     in such cases, returning results with less coverage can be a good tradeoff.
     </p><p>
     Some times, some results are better than no results.
-    <a href="https://docs.vespa.ai/documentation/reference/query-api-reference.html#ranking.softtimeout">Softtimeout</a>
+    <a href="https://docs.vespa.ai/en/reference/query-api-reference.html#ranking.softtimeout">Softtimeout</a>
     returns the current result set at timeout, and the balance between first and second phase ranking is both 
     adaptive and configurable.
     </p><p>    
-    Refer to <a href="https://docs.vespa.ai/documentation/graceful-degradation.html">Graceful degradation</a>
+    Refer to <a href="https://docs.vespa.ai/en/graceful-degradation.html">Graceful degradation</a>
     for a description of how to use these features.
     </p><p>
     It is also a good idea to have an inexpensive rank profile pre-defined,
-    and use <a href="https://docs.vespa.ai/documentation/query-profiles.html">query profiles</a>
+    and use <a href="https://docs.vespa.ai/en/query-profiles.html">query profiles</a>
     to define the default rank profile.
     By doing this, there is no need to change queries,
     just deploy a new application package with the light-weight rank profile as default.</p></td>
@@ -60,7 +60,7 @@ Pre-configuring Vespa for overload handling makes handling load surge events eas
 ## Addressing overload
 Overload manifests in increased query latency and/or timeouts.
 There are some hints in the
-[open documentation](https://docs.vespa.ai/documentation/operations/admin-procedures.html#overload).
+[open documentation](https://docs.vespa.ai/en/operations/admin-procedures.html#overload).
 The key is to find which cluster is the bottleneck - a container or content cluster.
 For this, use [CPU metrics](/monitoring).
 
@@ -76,7 +76,7 @@ For this, use [CPU metrics](/monitoring).
 <td><p>Content nodes have state (i.e document data and index),
     changes to resource allocations are hence more complex.
     Data is migrated using Vespa's
-    <a href="https://docs.vespa.ai/documentation/elastic-vespa.html">elasticity</a> features.
+    <a href="https://docs.vespa.ai/en/elastic-vespa.html">elasticity</a> features.
     </p><p>
     A key observation is that during elastic operations,
     load <span style="text-decoration: underline;">increases</span> temporarily,
@@ -84,7 +84,7 @@ For this, use [CPU metrics](/monitoring).
     </p><p>
     To get a feel for timing, it is advised to add a content node during normal operations,
     to see how long it takes for data to complete migration (use metrics as described in 
-    <a href="https://docs.vespa.ai/documentation/elastic-vespa.html">elastic Vespa</a>).     
+    <a href="https://docs.vespa.ai/en/elastic-vespa.html">elastic Vespa</a>).     
     </p></td></tr>
 </table>
 

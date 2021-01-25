@@ -11,10 +11,10 @@ Consider an application where the model training and serving is fully automated:
 
 Signals from the serving system (e.g. usage data) is fed back to model training,
 and new model generations are deployed to serving:
-* [Deploy](https://docs.vespa.ai/documentation/cloudconfig/application-packages.html#deploy)
+* [Deploy](https://docs.vespa.ai/en/cloudconfig/application-packages.html#deploy)
   deploys a new model generation for serving
-* [Grid logging](https://docs.vespa.ai/documentation/feed-using-hadoop-pig-oozie.html)
-  and [custom plugins](https://docs.vespa.ai/documentation/searcher-development.html)
+* [Grid logging](https://docs.vespa.ai/en/feed-using-hadoop-pig-oozie.html)
+  and [custom plugins](https://docs.vespa.ai/en/searcher-development.html)
   export data for use in subsequent training iterations
 
 This is _automated_ data-driven decisions, but it is not _online_.
@@ -51,11 +51,11 @@ and is often cheaper as only the used decisions are calculated.
 
 
 ## Ranking
-Model serving in Vespa is [ranking](https://docs.vespa.ai/documentation/ranking.html).
+Model serving in Vespa is [ranking](https://docs.vespa.ai/en/ranking.html).
 Ranking is a function that computes a score per document and ranks documents by score.
 In short, just mathematics and hence fully flexible for most applications needs.
 
-In Vespa, models can be represented using [tensors](https://docs.vespa.ai/documentation/tensor-user-guide.html).
+In Vespa, models can be represented using [tensors](https://docs.vespa.ai/en/tensor-user-guide.html).
 A tensor is a multi-dimensional data structure with numbers.
 Ranking is hence running the rank function using the model, data and query tensors.
 
@@ -67,9 +67,9 @@ and latencies in milliseconds.
 ## Next reads
 Applications with use cases like Recommendation, Search and Prediction,
 and strong throughput/latency/data size requirements should evaluate Vespa by reading
-* [Ranking](https://docs.vespa.ai/documentation/ranking.html)
-* [Writing](https://docs.vespa.ai/documentation/reads-and-writes.html)
-* [Querying](https://docs.vespa.ai/documentation/query-api.html)
-* [Performance](https://docs.vespa.ai/documentation/performance)
+* [Ranking](https://docs.vespa.ai/en/ranking.html)
+* [Writing](https://docs.vespa.ai/en/reads-and-writes.html)
+* [Querying](https://docs.vespa.ai/en/query-api.html)
+* [Performance](https://docs.vespa.ai/en/performance)
 
 Use this site to explore subjects like Security and Automation using Vespa Cloud.

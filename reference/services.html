@@ -6,7 +6,7 @@ title: "services.xml: Vespa Cloud"
 <p>
 <em>services.xml</em> is the primary Vespa configuration file.
 This documents services.xml for Vespa Cloud - see
-<a href="http://docs.vespa.ai/documentation/reference/services.html">services.xml</a>
+<a href="http://docs.vespa.ai/en/reference/services.html">services.xml</a>
 for the full reference.
 </p>
 
@@ -46,14 +46,14 @@ for the full reference.
     Sets the number of <em>groups</em> into which content nodes should be divided. 
     Each group will have an equal share of the nodes and <em>redundancy</em> copies of the corpus,
     and each query will be routed to just one group.
-    This allows <a href="https://docs.vespa.ai/documentation/performance/sizing-examples.html">scaling</a>
+    This allows <a href="https://docs.vespa.ai/en/performance/sizing-examples.html">scaling</a>
     to a higher query load than within a single group.
     </p><p>
     Note that in Vespa Cloud,
-    <a href="https://docs.vespa.ai/documentation/reference/services-content.html#redundancy">redundancy</a>
+    <a href="https://docs.vespa.ai/en/reference/services-content.html#redundancy">redundancy</a>
     means <em>replicas per group</em>.
     In Open Source Vespa, <em>redundancy</em> is <em>total number of replicas across groups</em> -
-    <a href="https://docs.vespa.ai/documentation/performance/sizing-examples.html">details</a>.</p>
+    <a href="https://docs.vespa.ai/en/performance/sizing-examples.html">details</a>.</p>
   </li>
 </ul>
 
@@ -75,10 +75,10 @@ or if it should run on existing nodes. Attribute:
 <p>Contained in the <a href="#nodes">nodes</a> element, specifies each node's resource requirements.
 Resources is a powerful way to optimize cost and performance.
 For new launches, allocate enough to reduce risk -
-then use the <a href="https://docs.vespa.ai/documentation/performance/">performance guides</a>
+then use the <a href="https://docs.vespa.ai/en/performance/">performance guides</a>
 to find the sweet spot to balance cost and free capacity, based on real production load.
 Migration to new capacity is automated,
-read more in <a href="https://docs.vespa.ai/documentation/elastic-vespa.html">elastic Vespa</a>.</p>
+read more in <a href="https://docs.vespa.ai/en/elastic-vespa.html">elastic Vespa</a>.</p>
 
 <p>
 <b>Subelements:</b> None
