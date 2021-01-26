@@ -11,12 +11,12 @@ and is an introduction into integrating with a CI/CD pipeline.
 It extends the
 <a href="/vespa-cloud-quick-start">Quick Start</a> with:
 <ul>
-    <li>A <a href="http://docs.vespa.ai/documentation/searcher-development.html">Searcher</a>
+    <li>A <a href="http://docs.vespa.ai/en/searcher-development.html">Searcher</a>
       component for query and result processing.
       <ul>
         <li>See <a href="https://github.com/vespa-engine/sample-apps/tree/master/vespa-cloud/album-recommendation-docproc">
           album-recommendation-docproc</a> for a
-          <a href="https://docs.vespa.ai/documentation/document-processing.html">Document Processing</a> example.</li>
+          <a href="https://docs.vespa.ai/en/document-processing.html">Document Processing</a> example.</li>
       </ul>
     </li>
     <li>Custom config for the searcher, to demonstrate atomic code and config deployment.</li>
@@ -26,7 +26,7 @@ This sample application is great to deploy to both the Dev and Prod Environments
 experience how easy it is to develop and application using Vespa Cloud, and deploy for production serving.
 </p><p>
 Prerequisites: git, Java 11, mvn 3.6.1 and openssl.
-See <a href="https://docs.vespa.ai/documentation/getting-started.html">Getting Started</a> for troubleshooting.
+See <a href="https://docs.vespa.ai/en/getting-started.html">Getting Started</a> for troubleshooting.
 Security notes:
 <ul>
   <li>To deploy, a <a href="/security-model#keys">user API key</a> is required, see step 4.</li>
@@ -104,7 +104,7 @@ $ curl --cert ./data-plane-public-cert.pem --key ./data-plane-private-key.pem \
   $ENDPOINT/document/v1/mynamespace/music/docid/3
 </pre>
   </p></li><li><p>
-    Dump all document using <a href="https://docs.vespa.ai/documentation/content/visiting.html">visit</a>:
+    Dump all document using <a href="https://docs.vespa.ai/en/content/visiting.html">visit</a>:
 <pre data-test="exec" data-test-assert-contains="id:mynamespace:music::">
 $ curl --cert ./data-plane-public-cert.pem --key ./data-plane-private-key.pem \
   "$ENDPOINT/document/v1/mynamespace/music/docid?wantedDocumentCount=100"

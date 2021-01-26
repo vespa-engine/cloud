@@ -10,7 +10,7 @@ title: Comparison to Elasticsearch
 With focus on big data serving, Vespa is optimized for **low millisecond response**,
 **high write and query load**, **Machine Learning integration** and **automated high availability operations**.
 Vespa support true realtime writes, and true partial updates, and is also easy to operate at large scale.
-Read more on Vespa's [features](https://docs.vespa.ai/documentation/features.html).
+Read more on Vespa's [features](https://docs.vespa.ai/en/features.html).
 
 Vespa is the only open source platform optimized for such big data serving.
 
@@ -49,10 +49,10 @@ No restarts or other operations are needed,
 just change the hardware listed in the configuration and redeploy the application.
 
 For a detailed guide on how to set up a multinode Vespa system see
-[Multi-Node Quick Start](https://docs.vespa.ai/documentation/vespa-quick-start-multinode-aws.html).
+[Multi-Node Quick Start](https://docs.vespa.ai/en/vespa-quick-start-multinode-aws.html).
 
 Other relevant sources:
 
-* [Vespa Elasticity](https://docs.vespa.ai/documentation/elastic-vespa.html)
-* [Vespa sizing guide](https://docs.vespa.ai/documentation/performance/sizing-search.html)
+* [Vespa Elasticity](https://docs.vespa.ai/en/elastic-vespa.html)
+* [Vespa sizing guide](https://docs.vespa.ai/en/performance/sizing-search.html)
 * [Migrating from Elasticsearch to Vespa](migrating-from-elastic-search-to-vespa.html)

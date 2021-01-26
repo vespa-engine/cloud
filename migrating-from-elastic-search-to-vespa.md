@@ -94,7 +94,7 @@ Wait for the configuration server to start - wait for a 200 OK response:
 $ docker exec vespa bash -c 'curl -s --head http://localhost:19071/ApplicationStatus'
 ```
 
-[Deploy](https://docs.vespa.ai/documentation/cloudconfig/application-packages.html#deploy)
+[Deploy](https://docs.vespa.ai/en/cloudconfig/application-packages.html#deploy)
 the `application` package:
 
 ```bash
@@ -114,7 +114,7 @@ The Vespa node is now configured and ready for use.
 
 
 #### Feed documents
-Use the [vespa-http-client](https://docs.vespa.ai/documentation/vespa-http-client.html):
+Use the [vespa-http-client](https://docs.vespa.ai/en/vespa-http-client.html):
 
 ```bash
 $ docker exec vespa bash -c 'java -jar /opt/vespa/lib/jars/vespa-http-client-jar-with-dependencies.jar \
@@ -123,7 +123,7 @@ $ docker exec vespa bash -c 'java -jar /opt/vespa/lib/jars/vespa-http-client-jar
 
 
 #### Get a document
-Get documents using the [Document API](https://docs.vespa.ai/documentation/document-v1-api-guide.html):
+Get documents using the [Document API](https://docs.vespa.ai/en/document-v1-api-guide.html):
 
 ```bash
 $ curl -s http://localhost:8080/document/v1/application/_doc/docid/1
@@ -131,7 +131,7 @@ $ curl -s http://localhost:8080/document/v1/application/_doc/docid/1
 
 
 #### Query documents
-Use the [Query API](https://docs.vespa.ai/documentation/query-api.html) to count documents,
+Use the [Query API](https://docs.vespa.ai/en/query-api.html) to count documents,
 find `"totalCount": 1000` in the output, and run a text query:
 
 ```

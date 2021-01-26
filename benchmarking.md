@@ -4,7 +4,7 @@ title: Benchmarking
 ---
 
 Welcome to the step-by-step guide to get started benchmarking.
-It is based on [Vespa Benchmarking](https://docs.vespa.ai/documentation/performance/vespa-benchmarking.html),
+It is based on [Vespa Benchmarking](https://docs.vespa.ai/en/performance/vespa-benchmarking.html),
 adding what is needed to benchmark using Vespa Cloud. Overview:
 
 <img src="img/cloud-benchmarks.svg" alt="Vespa Cloud Benchmarks" width="640" height="400" />
@@ -61,7 +61,7 @@ Expected reponse:
 
 
 ## Test using vespa-fbench
-Test a single query, using [vespa-fbench](https://docs.vespa.ai/documentation/reference/vespa-cmdline-tools.html#vespa-fbench) running in a docker container:
+Test a single query, using [vespa-fbench](https://docs.vespa.ai/en/reference/vespa-cmdline-tools.html#vespa-fbench) running in a docker container:
 
     $ ls -1 *.pem
       data-plane-private-key.pem
@@ -154,12 +154,12 @@ No need to do anything other than default.
 
 
 ## Run benchmark
-Use the [Vespa Benchmarking Guide](https://docs.vespa.ai/documentation/performance/vespa-benchmarking.html)
+Use the [Vespa Benchmarking Guide](https://docs.vespa.ai/en/performance/vespa-benchmarking.html)
 to plan and run benchmarks. Also see [Sizing](#sizing) below.
 
 Make sure the client running the benchmark tool has sufficient resources (the example above used am AWS free-tier host).
 
-Use [metrics/v2](https://docs.vespa.ai/documentation/reference/metrics.html) to dump metrics:
+Use [metrics/v2](https://docs.vespa.ai/en/reference/metrics.html) to dump metrics:
 
     $ curl --cert data-plane-public-cert.pem --key data-plane-private-key.pem \
         https://myapp.mytenant.aws-us-east-1c.dev.public.vespa.oath.cloud/metrics/v2/values | \
@@ -168,7 +168,7 @@ Use [metrics/v2](https://docs.vespa.ai/documentation/reference/metrics.html) to 
 
 ### Making changes
 Whenever deploying changes to configuration, track progress in the Deployment dashboard.
-Some changes, like changing [requestthreads](https://docs.vespa.ai/documentation/reference/services-content.html#requestthreads),
+Some changes, like changing [requestthreads](https://docs.vespa.ai/en/reference/services-content.html#requestthreads),
 will restart content nodes, and this is done in sequence and takes time.
 Wait for successful completion in _Wait for services and endpoints to come online_
 
@@ -212,7 +212,7 @@ Using [Automated Deployments](automated-deployments), applications go live with 
 After launch, right-size the application based on true load after using Vespa’s elasticity features
 with automated data migration.
 
-Use the [Vespa Serving Scaling Guide](https://docs.vespa.ai/documentation/performance/sizing-search.html)
+Use the [Vespa Serving Scaling Guide](https://docs.vespa.ai/en/performance/sizing-search.html)
 to size the application and find metrics used there. Pro tips:
 * 60% is a good max memory allocation
 * 50% is a good max CPU allocation, although application dependent
@@ -225,7 +225,7 @@ Rules of thumb:
 * Memory and disk scales approximately linearly for indexed fields' data -
   attributes have a fixed cost for empty fields
 * Data variance will impact memory usage
-* Undersized instances will [block writes](https://docs.vespa.ai/documentation/reads-and-writes.html#feed-block).
+* Undersized instances will [block writes](https://docs.vespa.ai/en/reads-and-writes.html#feed-block).
 * If is often a good idea to use the Dev Cloud to test memory impact of adding large fields,
   e.g. adding an embedding
 

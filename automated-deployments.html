@@ -26,7 +26,7 @@ This example deploys to two production zones - notes:
   <li>A production test is configured after the first prod zone deployment, with a delay before test run</li>
   <li>System and Staging tests are implied and mandatory, no need to configure</li>
   <li>Potentially destructive change are guarded by
-    <a href="https://docs.vespa.ai/documentation/reference/validation-overrides.html">validation-overrides</a> -
+    <a href="https://docs.vespa.ai/en/reference/validation-overrides.html">validation-overrides</a> -
     this makes automated deployments safe and simple</li>
 </ul>
 </p>
@@ -203,7 +203,7 @@ The data is unrecoverable.
 &lt;deployment version="1.0" /&gt;
 </pre>
   </li>
-  <li>Add/modify <a href="https://docs.vespa.ai/documentation/reference/validation-overrides.html">validation-overrides.xml</a>,
+  <li>Add/modify <a href="https://docs.vespa.ai/en/reference/validation-overrides.html">validation-overrides.xml</a>,
     allowing Vespa Cloud to remove production deployments:
 <pre>
 &lt;validation-overrides&gt;
@@ -233,16 +233,16 @@ This is common practice when releasing new science models,
 as they are difficult to verify in test, but can also be used for other features.
 </p><p>
 To test new behavior in Vespa, use a combination of
-<a href="https://docs.vespa.ai/documentation/chained-components">search chains</a>
+<a href="https://docs.vespa.ai/en/chained-components">search chains</a>
 and
-<a href="https://docs.vespa.ai/documentation/reference/schema-reference#rank-profile">rank profiles</a>,
+<a href="https://docs.vespa.ai/en/reference/schema-reference#rank-profile">rank profiles</a>,
 controlled by
-<a href="https://docs.vespa.ai/documentation/query-profiles">query profiles</a>,
+<a href="https://docs.vespa.ai/en/query-profiles">query profiles</a>,
 where one query profiles correspond to one bucket.
 These features support inheritance to make it easy to express variation without repetition.
 </p><p>
 Some times a new feature require
-<a href="http://docs.vespa.ai/documentation/reference/schema-reference#modifying-schemas">
+<a href="http://docs.vespa.ai/en/reference/schema-reference#modifying-schemas">
 incompatible changes to a data field</a>.
 To be able to CD such changes, it is necessary to create a new field containing the new version of the data.
 This costs extra resources but less than the alternative: standing up a new system copy with the new data.
