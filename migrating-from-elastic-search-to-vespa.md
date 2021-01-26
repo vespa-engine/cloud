@@ -61,8 +61,7 @@ $ curl 'https://raw.githubusercontent.com/vespa-engine/vespa/master/config-model
 $ python3 ./ES_Vespa_parser.py --application_name application bank_data.json bank_mapping.json
  ```
 
-The document ids in `documents.json` will be like `id:application:_doc::1`,
-the directory has now an `application` folder:
+This will generate documents in a `documents.json` file where each document has IDs like this `id:application:_doc::1`. It also generated an `application` folder that contains the Vespa application configuration.
 
 ```
 /application
