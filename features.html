@@ -1,0 +1,13 @@
+---
+# Copyright Verizon Media. All rights reserved.
+title: Vespa Cloud Features
+layout: page
+---
+
+<p>The Vespa Cloud provides the features you need to develop and run Vespa applications in production
+with confidence at the lowest possible cost. This page explains the features and services that are included.</p>
+
+{% for feature in site.data.features %}
+    <h2 id="{{feature.id}}"><i class="d-icon {{feature.icon}} is-brand-500"></i> {{feature.heading}}</h2>
+    {{feature.long}}
+{% endfor %}

@@ -1,32 +1,28 @@
 <!DOCTYPE html>
-<!-- # Copyright Verizon Media. All rights reserved. -->
-<html lang="en">
+<html>
 
-<head>
-    {% include header.html %}
-</head>
+{% include htmlhead.html theme="light" %}
 
-<body>
+<body class="denali-theme-vespa-light subpage">
 
-<!-- Fixed navbar -->
-{% include nav.html %}
+{% include navbar.html logo="vespa-logo-color.png" class="vespa-light" %}
 
-<div id="main-content" class="container-fluid">
-    <div class="row">
+<div class="container">
 
-        {% include sidebar.html %}
+<div class="row">
 
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+<div class="xs-col-1-1 sm-col-1-1 md-col-1-1 lg-col-10-12 lg-col-off-2-12 xl-col-10-12 xl-col-off-2-12 p-y-50">
 
-            {{ content }}
+<h1 class="intro p-b-30">{{ page.title }}</h1>
 
-        </div>
+{{ content }}
 
-        {% include footer.html %}
-
-    </div>
+</div>
+</div>
 </div>
 
+{% include footer.html footerlinks=site.data.footerlinks %}
+{% include js.html %}
 
 </body>
 </html>

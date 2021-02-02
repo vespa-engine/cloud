@@ -1,8 +1,7 @@
 ---
 # Copyright Verizon Media. All rights reserved.
-title: Pricing
-layout: page-wide
-redirect_from: "/quota"
+title: Vespa Cloud Pricing
+layout: page
 ---
 
 <style>
@@ -27,107 +26,87 @@ redirect_from: "/quota"
 
 <!-- https://denali-design.github.io/denali-icon-font/docs/ for font used as icons below -->
 
-<div class="container">
-  <div class="row">
-    <div class="col-lg-2 col-xl-2"></div>
+<p>
+Our pricing is simple and transparent.
+All customers receive all our features and services, and we charge a fee proportional to
+the size of the application, summed over three dimensions:
+</p>
+<table class="price">
+<tr>
+<td>Per vcpu hour:</td>
+<td><b>$0.09</b></td>
+</tr>
+<tr>
+<td>Per memory Gb hour:</td>
+<td><b>$0.009</b></td>
+</tr>
+<tr>
+<td>Per disk Gb hour:</td>
+<td><b>$0.0003</b></td>
+</tr>
+</table>
+<p>
+Included is everything you need to run a production service with confidence:
+</p>
+<table class="table table-striped">
+<tr>
+<td><strong>24/7 operations</strong></td>
+<td><span class="d-icon is-medium check-green d-check"></span></td>
+</tr>
+<tr>
+<td><strong>Support</strong></td>
+<td><span class="d-icon is-medium check-green d-check"></span></td>
+</tr>
+<tr>
+<td><strong>Continuous deployment</strong></td>
+<td><span class="d-icon is-medium check-green d-check"></span></td>
+</tr>
+<tr>
+<td><strong>Automatic Vespa/OS upgrades</strong></td>
+<td><span class="d-icon is-medium check-green d-check"></span></td>
+</tr>
+<tr>
+<td><strong>Strong security</strong></td>
+<td><span class="d-icon is-medium check-green d-check"></span></td>
+</tr>
+<tr>
+<td><strong>Autoscaling</strong></td>
+<td><span class="d-icon is-medium check-green d-check"></span></td>
+</tr>
+<tr>
+<td><strong>Performance tune-up program eligibility</strong></td>
+<td><span class="d-icon is-medium check-green d-check"></span></td>
+</tr>
+<tr>
+<td><strong>Development cloud</strong></td>
+<td><span class="d-icon is-medium check-green d-check"></span></td>
+</tr>
+</table>
 
-    <div class="col-lg-10 col-xl-10">
-      <h1 class="intro">Vespa Cloud Pricing</h1>
-    </div>
-  </div>
-</div>
+<p>
+<a href="mailto:info@vespa.ai">Contact us</a> if you want priority support,
+committed resources at lower cost, or have other pricing requests.
+</p>
 
+<h3>The fine print</h3>
+<p>
+Resources allocated in production zones are precisely what specified in <a href="reference/services">services.xml</a>
+for the duration the application is deployed. If resources are specified in ranges (autoscaling)
+the resources allocated at any time is the optimal allocation inside the range.
+In dev and test zones, applications will by default be <a href="/reference/environments">downscaled</a>,
+and charges are by the actual usage summed over time.
+</p>
+<p>
+In addition, we reserve the right to pass on network ingress/egress costs incurred by application usage at
+<a href="https://aws.amazon.com/ec2/pricing/on-demand/#Data_Transfer">standard AWS prices</a>.
+</p>
 
-<div class="container">
-  <div class="row">
-
-    <div class="col-lg-2 col-xl-2"></div>
-
-    <div class="col-lg-8 col-xl-8">
-      <p>
-        Our pricing is simple and transparent.
-        All customers receive all our features and services, and we charge a fee proportional to
-        the size of the application, summed over three dimensions:
-      </p>
-      <table class="price">
-        <tr>
-          <td>Per vcpu hour:</td>
-          <td><b>$0.09</b></td>
-        </tr>
-        <tr>
-          <td>Per memory Gb hour:</td>
-          <td><b>$0.009</b></td>
-        </tr>
-        <tr>
-          <td>Per disk Gb hour:</td>
-          <td><b>$0.0003</b></td>
-        </tr>
-      </table>
-      <p>
-        Included is everything you need to run a production service with confidence:
-      </p>
-      <table class="table table-striped">
-        <tr>
-          <td><strong>24/7 operations</strong></td>
-          <td><span class="d-icon is-medium check-green d-check"></span></td>
-        </tr>
-        <tr>
-          <td><strong>Support</strong></td>
-          <td><span class="d-icon is-medium check-green d-check"></span></td>
-        </tr>
-        <tr>
-          <td><strong>Continuous deployment</strong></td>
-          <td><span class="d-icon is-medium check-green d-check"></span></td>
-        </tr>
-        <tr>
-          <td><strong>Automatic Vespa/OS upgrades</strong></td>
-          <td><span class="d-icon is-medium check-green d-check"></span></td>
-        </tr>
-        <tr>
-          <td><strong>Strong security</strong></td>
-          <td><span class="d-icon is-medium check-green d-check"></span></td>
-        </tr>
-        <tr>
-          <td><strong>Autoscaling</strong></td>
-          <td><span class="d-icon is-medium check-green d-check"></span></td>
-        </tr>
-        <tr>
-          <td><strong>Performance tune-up program eligibility</strong></td>
-          <td><span class="d-icon is-medium check-green d-check"></span></td>
-        </tr>
-        <tr>
-          <td><strong>Development cloud</strong></td>
-          <td><span class="d-icon is-medium check-green d-check"></span></td>
-        </tr>
-      </table>
-
-      <p>
-        <a href="mailto:info@vespa.ai">Contact us</a> if you want priority support,
-        committed resources at lower cost, or have other pricing requests.
-      </p>
-
-      <h3>The fine print</h3>
-      <p>
-        Resources allocated in production zones are precisely what specified in <a href="reference/services">services.xml</a>
-        for the duration the application is deployed. If resources are specified in ranges (autoscaling)
-        the resources allocated at any time is the optimal allocation inside the range.
-        In dev and test zones, applications will by default be <a href="/reference/environments">downscaled</a>,
-        and charges are by the actual usage summed over time.
-      </p>
-      <p>
-        In addition, we may pass on network costs incurred by applications at
-        <a href="https://aws.amazon.com/ec2/pricing/on-demand/#Data_Transfer">standard AWS prices</a>.
-      </p>
-
-      <h2 id="free-trial">Free Trial</h2>
-      <p>
-        You can <a href="http://console.vespa.ai">start a free trial</a> for 14 days at any time.
-        No credit card required.
-        The free trial allows you to add as many users and applications as you like under your tenant, but
-        the total spend is capped. <a href="mailto:info@vespa.ai">Contact us</a> if you need additional
-        capacity for trying the service.
-      </p>
-    </div>
-  </div>
-</div>
+<h2 id="free-trial">Free Trial</h2>
+<p>
+You can <a href="http://console.vespa.ai">start a free trial</a> for 14 days at any time.
+No credit card required.
+This allows you to add as many users and applications as you like under your tenant for free,
+up to some max total spend per hour.
+<a href="mailto:info@vespa.ai">Contact us</a> if you need additional capacity for trying your use case.
+</p>
 

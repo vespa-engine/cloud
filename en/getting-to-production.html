@@ -1,0 +1,183 @@
+---
+# Copyright Verizon Media. All rights reserved.
+title: Getting to Production
+layout: page
+---
+
+<p>
+  This guide assumes you have deployed an application to the <code>dev</code>
+  zone as detailed in <a href="getting-started">getting started</a>.
+</p>
+
+<p>Prerequisites: git, openssl, JDK 11 or higher, mvn 3.6 or higher.</p>
+
+
+<h2 id="understand-prod-deployments">1. Understand prod deployments</h2>
+
+<p>
+  While applications in the <code>dev</code> zone are deployed manually by a developer,
+  deployments to <code>prod</code> zones should happen automatically on source changes
+  by creating a build job in your preferred continuous build tool that
+  builds the application and submits it to Vespa for production roll-out.
+</p>
+
+<p>
+  To make this safe the application needs tests that validate it.
+  These tests are executed automatically on each deployment.
+  See <a href="automated-deployments">automated deployments</a> for more details.
+</p>
+
+
+<h2 id="add-tests-to-your-application">2. Add tests to your application</h2>
+
+<p>
+  Here we are using the files that fit with
+  <a href="https://github.com/vespa-engine/sample-apps/tree/master/vespa-cloud/album-recommendation">album recommendation</a>
+  the application used in <a href="getting-started">getting started</a>.
+</p>
+
+<ol class="howto">
+
+<li>
+  <p>
+    If you don't have it, add a <code>pom.xml</code> file to the application root.
+    This is the Maven project configuration, and is needed to build with the Vespa Cloud test framework.
+    See this <a href="https://github.com/vespa-engine/sample-apps/tree/master/vespa-cloud/album-recommendation-prod">this example</a>.
+  </p>
+</li>
+
+<li>
+  <p>
+    If you haven't, update the <code>tenant</code> and <code>application</code> properties in <code>pom.xml</code>
+    to match the names of your tenant and application.
+  </p>
+<pre>
+&lt;properties&gt;
+    ...
+    &lt;tenant&gt;MYTENANT&lt;/tenant&gt;
+    &lt;application&gt;MYAPP&lt;/tenant&gt;
+&lt;/properties&gt;
+</pre>
+
+
+<li>
+  <p>
+    Add the tests that build the test framework.
+    These tests reside in the <code>src/test/java</code> directory of the application.
+    You can copy the sample tests in
+    <a href="https://github.com/vespa-engine/sample-apps/tree/master/vespa-cloud/album-recommendation-prod/src/test/java/ai/vespa/example">album-recommendation-prod/src/test/java/ai/vespa/example</a>
+    in sample-apps.
+  </p>
+</li>
+
+</ol>
+
+<p>
+  Refer to <a href="automated-deployments.html#developing-tests">developing tests</a> to create your own tests.
+</p>
+
+
+<h2 id="add-a-deployment-descriptor-to-your-application">3. Add a deployment descriptor to your application</h2>
+
+<p>
+  Create a <a href="reference/deployment">deployment.xml</a>
+  file in <code>src/main/application</code> containing
+</p>
+
+<pre>
+&lt;deployment version="1.0"&gt;
+    &lt;prod&gt;
+        &lt;region active="true"&gt;aws-us-east-1c&lt;/region&gt;
+    &lt;/prod&gt;
+&lt;/deployment&gt;
+</pre>
+
+
+<h2 id="build-and-submit-the-application-revision">4. Build and submit the application revision</h2>
+
+<p>Now you are ready to build and submit the application revision:</p>
+
+<ol class="howto">
+
+<li>
+  <p>Add the Vespa Cloud compile version to the application package:</p>
+<pre>
+$ mvn vespa:compileVersion -DapiKeyFile=$HOME/Downloads/TENANTNAME.pem
+</pre>
+</li>
+
+<li>
+  <p>Compile the application package with test artifacts:</p>
+<pre>
+$ mvn package -Dvespa.compile.version="$(cat target/vespa.compile.version)"
+</pre>
+</li>
+
+<li>
+  <p>Submit the application package to Vespa Cloud for deployment:</p>
+<pre>
+$ mvn vespa:submit -DapiKeyFile=$HOME/Downloads/TENANTNAME.pem
+</pre>
+
+  <p>
+    The application revision is now being tested and (if successful) deployed to the production
+    zones prescribed in your <a href="reference/deployment">deployment.xml</a>.
+  </p>
+  <p>
+    You can track deployment progress and view logs in the <a href="http://console.vespa.ai">console</a>.
+  </p>
+</li>
+
+</ol>
+
+<p>
+  It is always safe to submit a new revision of your application.
+  You should now configure a continuous build job in your preferred build tool
+  to perform these three commands whenever a change
+  to your application source is checked in and merged.
+</p>
+
+
+<h2 id="next-steps">Next steps</h2>
+
+<p>
+  The Vespa Cloud application is now running in a production zone.  Congratulations!
+  After this you can further enhance the production application:
+</p>
+
+<ol class="howto">
+
+<li>
+  <p>
+    To have redundancy for business continuity, consider setting up multiple
+    <a href="reference/zones">production zones</a>
+    in <a href="reference/deployment">deployment.xml</a>,
+    and use a <a href="reference/deployment#endpoints">global endpoint</a>
+    for queries.
+  </p>
+</li>
+
+<li>
+  <p>To create more tests to protect your production deployments, see
+    <a href="automated-deployments.html#developing-tests">developing tests</a>.
+  </p>
+</li>
+
+<li>
+  <p>
+    Don't forget to set up a continuous build to initiate automatic deployment
+    of changes to your application by running the
+    <a href="#build-and-submit-the-application-revision">three commands above</a>.
+    See an example usiung GitHub actions
+    <a href="https://github.com/vespa-engine/sample-apps/blob/master/.github/workflows/deploy-vespa-documentation-search.yaml">here</a>.
+  </p>
+</li>
+
+</ol>
+
+<h2 id="removing-a-production-instance">Removing a production instance</h2>
+
+<p>
+  Follow the guide at <a href="automated-deployments#deleting-an-application">deleting an application</a>
+  to remove instances or applications from production.
+</p>

@@ -1,0 +1,287 @@
+---
+# Copyright Verizon Media. All rights reserved.
+title: "services.xml: Vespa Cloud"
+layout: page
+---
+
+<p>
+<em>services.xml</em> is the primary Vespa configuration file.
+This documents services.xml amendments for Vespa Cloud - see
+<a href="http://docs.vespa.ai/en/reference/services.html">services.xml at docs.vespa.ai</a>
+for the general reference.
+</p>
+
+
+
+<h2 id="nodes">&lt;nodes&gt;</h2>
+
+<p>In cloud applications nodes are specified by count and node resources. Example:</p>
+
+<pre>
+&lt;nodes count="4"&gt;
+  &lt;resources vcpu="2.5" memory="32Gb" disk="1Tb"/&gt;
+&lt;/nodes&gt;
+</pre>
+
+<p><b>Subelements:</b> <a href="#resources">resources</a></p>
+
+<p><b>Attributes:</b>
+<ul class="howto">
+  <li><b>count</b>: An integer or <a href="#autoscaling-ranges">range</a>. The number of nodes of the cluster.
+  <li><b>exclusive</b> (optional): true or false (default false). If true, the nodes of this cluster will be
+      placed on hosts shared only with other nodes of the same application.
+      This is useful for container clusters in applications storing sensitive data or secrets as it adds another layer of
+      protection against leaking sensitive information between applications sharing host.
+</ul>
+
+<p>In addition there are some attributes for specific cluster types, listed below.</p>
+
+
+<h3 id="nodes-for-container">&lt;nodes&gt; for &lt;container&gt;</h3>
+
+<ul class="howto">
+  <li><strong>of</strong> (optional): A content cluster id.
+    This attribute can be used to specify that this container service should run on the nodes of a content service.
+    If <em>of</em> is specified, only <em>jvmargs</em> can be set in addition.
+    No other attributes can be set, as the ones of the referenced content cluster will be used instead.
+  </li>
+</ul>
+
+
+<h3 id="nodes-for-content">&lt;nodes&gt; for &lt;content&gt;</h3>
+
+<ul class="howto">
+  <li><p><strong>groups</strong> (optional): Integer or <a href="#autoscaling-ranges">range</a>.
+    Sets the number of <em>groups</em> into which content nodes should be divided. 
+    Each group will have an equal share of the nodes and <em>redundancy</em> copies of the corpus,
+    and each query will be routed to just one group.
+    This allows <a href="https://docs.vespa.ai/en/performance/sizing-examples.html">scaling</a>
+    to a higher query load than within a single group.
+    </p><p>
+    Note that in Vespa Cloud,
+    <a href="https://docs.vespa.ai/en/reference/services-content.html#redundancy">redundancy</a>
+    means <em>replicas per group</em>.
+    In Open Source Vespa, <em>redundancy</em> is <em>total number of replicas across groups</em> -
+    <a href="https://docs.vespa.ai/en/performance/sizing-examples.html">details</a>.</p>
+  </li>
+</ul>
+
+
+<h3 id="nodes-for-controllers-slobroks-and-logservers">&lt;nodes&gt; for &lt;controllers&gt; &lt;slobroks&gt; and &lt;logservers&gt;</h3>
+
+<p>
+The nodes element nested in these elements allow specifying whether the nodes used should be dedicated to the service
+or if it should run on existing nodes. Attribute:
+<ul class="howto">
+  <li><strong>dedicated</strong> (optional): true or false (default false).
+    Whether or not separate nodes should be allocated for this service.</li>
+</ul>
+</p>
+
+
+
+<h2 id="resources">&lt;resources&gt;</h2>
+
+<p>Contained in the <a href="#nodes">nodes</a> element, specifies each node's resource requirements.
+Resources is a powerful way to optimize cost and performance.
+For new launches, allocate enough to reduce risk -
+then use the <a href="https://docs.vespa.ai/en/performance/">performance guides</a>
+to find the sweet spot to balance cost and free capacity, based on real production load.
+Migration to new capacity is automated,
+read more in <a href="https://docs.vespa.ai/en/elastic-vespa.html">elastic Vespa</a>.</p>
+
+<p>
+<b>Subelements:</b> None
+</p><p>
+<b>Attributes:</b>
+<table class="table">
+  <tr><td><b>vcpu</b></td><td>float or <a href="#autoscaling-ranges">range</a></td>
+    <td>CPU, virtual threads</td></tr>
+  <tr><td><b>memory</b></td><td>float or <a href="#autoscaling-ranges">range</a>, each followed by a byte unit, such as "Gb"</td>
+    <td>Memory</td></tr>
+  <tr><td><b>disk</b></td><td>float or <a href="#autoscaling-ranges">range</a>, each followed by a byte unit, such as "Gb"</td>
+    <td>Disk space</td></tr>
+  <tr><td><b>storage-type</b> (optional)<td>string (enum)</td>
+    <td>The type of storage to use. This is useful to specify local storage when network storage provides insufficient
+      io operations or too noisy io performance.
+      <table class="table">
+        <tr><td><code><b>local</b></code></td><td>Node-local storage is required.</td></tr>
+        <tr><td><code><b>remote</b></code></td><td>Network storage must be used.</td></tr>
+        <tr><td><code><b>any</b></code> (default)</td><td>Both remote or local storage may be used.</td></tr>
+      </table>
+    </td></tr>
+  <tr><td><b>disk-speed</b> (optional)<td>string (enum)</td>
+    <td>The required disk speed category.
+      <table class="table">
+      <tr><td><code><b>fast</b></code> (default)</td><td>SSD-like disk speed is required</td></tr>
+      <tr><td><code><b>slow</b></code></td><td>This is sized for spinning disk speed</td></tr>
+      <tr><td><code><b>any</b></code></td> <td>Performance does not depend on disk speed (often suitable for container clusters).</td></tr>
+      </table>
+    </td></tr>
+</table>
+
+<h2 id="autoscaling-ranges">Autoscaling ranges</h2>
+
+<p>Resources specified as a range will be autoscaled by the system. Ranges
+are expressed by the syntax <code>[lower-limit, upper-limit]</code>. Both limits
+are inclusive.</p>
+
+<p>Autoscaling will attempt to keep utilization of all allocated resources close to ideal,
+and will automatically reconfigure to the cheapest option allowed by the ranges when
+necessary.</p>
+
+<p>The ideal utilization takes into account that a node
+may be down or failing, that another region may be down causing doubling of traffic, and that we need headroom for
+maintenance operations and handling requests with low latency. It acts on what it has observed on your system
+in the recent past. If you need much more capacity in the near future than you do currently, you may want
+to set the <i>lower</i> limit to take this into account. <i>Upper</i> limits should be set to the maximum size
+that makes business sense.</p>
+
+<p>When a new cluster (or application) is deployed it will initially be configured with the minimal
+resources given by the ranges. When autoscaling is turned on for an existing cluster, it will continue
+unchanged until autoscaling determines that a change is beneficial.</p>
+
+<p><b>Examples:</b></p>
+
+<p>Autoscaling node count:</p>
+
+<pre>
+&lt;nodes count="[4, 8]"&gt;
+  &lt;resources vcpu="2.5" memory="32Gb" disk="100Gb" disk-speed="any"/&gt;
+&lt;/nodes&gt;
+</pre>
+
+<p>Autoscaling on all resources:</p>
+
+<pre>
+&lt;nodes count="[4, 8]" groups="[1, 2]"&gt;
+  &lt;resources vcpu="[2.5, 8]" memory="[32Gb, 150Gb]" disk="[100Gb, 1Tb]"/&gt;
+&lt;/nodes&gt;
+</pre>
+
+
+<h2 id="admin-version-4-0">&lt;admin version="4.0"&gt;</h2>
+
+<p>
+Admin version 4 is used for explicit control over the number of admin services running and whether these should run on 
+dedicated nodes or on some existing container cluster in the application.
+In most cases, there is no need to specify this explicitly.
+</p>
+
+
+<h3>Sub-elements</h3>
+
+<table class="table table-striped">
+  <thead>
+  <tr><th>Element<th>Quantity<th>Description</tr>
+  </thead><tbody>
+  <tr><td><code>&lt;slobroks&gt;&lt;nodes .../&gt;</code></td>
+      <td>0 or 1</td>
+      <td>Controls the nodes used for instance internal service location brokering</td></tr>
+  <tr><td><code>&lt;logservers&gt;&lt;nodes dedicated='true' .../&gt;</code></td>
+      <td>0 or 1</td>
+      <td>Controls the node used as log server. At most 1 node can be configured.</td></tr>
+  </tbody>
+</table>
+
+<h2 id="controllers">&lt;controllers&gt;</h2>
+
+<p>
+  Under <code>content</code> provides control over the nodes used as cluster controllers in this cluster on Vespa Cloud.
+  If this element is not specified, 3 nodes from the content cluster are assigned as cluster controllers
+  (from different groups if applicable).
+  If this is specified, there is one mandatory sub-element, <a href="#nodes">nodes</a>.
+</p>
+
+
+<h2 id="instance-environment-and-region-variants">Instance, environment and region variants</h2>
+
+<p>
+Application packages support defining different configuration settings
+for different <em>instances</em>, <em>environments</em> and <em>regions</em>.
+To use this you must import the <em>deploy</em> namespace:
+<pre>
+&lt;services version="1.0" <strong style="background-color: yellow;">xmlns:deploy="vespa"</strong>&gt;
+</pre>
+Deploy directives are used to specify in which instance, environment and/or region an XML element should be included:
+<pre>
+&lt;content version="1.0"&gt;
+  &lt;redundancy&gt;1&lt;/redundancy&gt;
+  &lt;documents&gt;
+    &lt;document type="music.sd" mode="index" /&gt;
+  &lt;/documents&gt;
+  &lt;nodes <strong style="background-color: yellow;">deploy:environment="dev"</strong> count="1" /&gt;
+  &lt;nodes <strong style="background-color: yellow;">deploy:environment="prod"</strong> <strong style="background-color: yellow;">deploy:region="aws-us-east-1c"</strong> count="20" /&gt;
+  &lt;nodes <strong style="background-color: yellow;">deploy:environment="prod"</strong> <strong style="background-color: yellow;">deploy:region="aws-ap-northeast-1a"</strong> count="40" /&gt;
+  &lt;nodes <strong style="background-color: yellow;">deploy:environment="prod"</strong> <strong style="background-color: yellow;">deploy:region="aws-ap-northeast-1a"</strong> <strong style="background-color: yellow;">deploy:instance="alpha"</strong> count="4" /&gt;
+&lt;/content&gt;
+</pre>
+This example configures a different node count depending on the deployment target.
+Deploying the application in the <em>dev</em> environment gives:
+<pre>
+&lt;content version="1.0"&gt;
+  &lt;redundancy&gt;1&lt;/redundancy&gt;
+  &lt;documents&gt;
+    &lt;document type="music.sd" mode="index" /&gt;
+  &lt;/documents&gt;
+  &lt;nodes count="1" /&gt;
+&lt;/content&gt;
+</pre>
+Whereas in <em>prod.us-west-1</em> it is:
+<pre>
+&lt;content version="1.0"&gt;
+  &lt;redundancy&gt;1&lt;/redundancy&gt;
+  &lt;documents&gt;
+    &lt;document type="music.sd" mode="index" /&gt;
+  &lt;/documents&gt;
+  &lt;nodes count="60" /&gt;
+&lt;/content&gt;
+</pre>
+<p>This can be used to modify any config by deployment target.</p>
+
+<p>
+  The deploy directives have a set of override rules:</p>
+<ul class="howto">
+  <li>A directive specifying more conditions will override one specifying fewer.</li>
+  <li>Directives are inherited in child elements.</li>
+  <li>When multiple XML elements with the same name is specified
+    (e.g. when specifying search or docproc chains), the <em>id</em> attribute of the element
+    is used together with the element name when applying directives.</li>
+</ul>
+
+<p>Some overrides are applied by default in some environments, see <a href="environments">environments</a>.
+Any override made explicitly for an environment will override the defaults for it.</p>
+
+
+<h3 id="advanced">Specifying multiple targets</h3>
+
+<p>More than one instance, region or environment can be specified in the attribute, separated by space. Notes:</p>
+
+<ul class="howto">
+  <li>The region attribute is only respected if given environment exists in multiple regions.
+      This is currently true for <em>prod</em> and <em>dev</em></li>
+  <li>An element which only specifies region, will match both prod and dev environment in that region</li>
+</ul>
+
+<p>The namespace can be applied to any element. Example:</p>
+<pre>
+&lt;container id="default" version="1.0" <span style="background: yellow">deploy:environment="perf test staging prod"</span>&gt;
+  &lt;search&gt;
+    &lt;chain id="default" inherits="vespa"&gt;
+      &lt;searcher bundle="basic-application" id="com.yahoo.example.ExampleSearcher"&gt;
+        &lt;config name="example.message"&gt;
+          &lt;message&gt;Hello from application config&lt;/message&gt;
+          &lt;message <span style="background: yellow">deploy:region="aws-us-east-1c"</span>&gt;Hello from east colo!&lt;/message&gt;
+        &lt;/config&gt;
+      &lt;/searcher&gt;
+    &lt;/chain&gt;
+  &lt;/search&gt;
+</pre>
+
+<p>
+Above, the <em>container</em> element is configured for the 4 environments only (it will not apply to <em>dev</em>) -
+and in region <em>aws-us-east-1c</em>, the config is different.
+</p>
+
+
+

@@ -1,0 +1,114 @@
+---
+# Copyright Verizon Media. All rights reserved.
+title: Dumping data
+layout: page
+---
+
+<p>
+This guide explains how to dump data from a Vespa cloud application.
+</p>
+
+<p>
+To get started, find the <em>namespace</em> and <em>document type</em> by listing a few IDs.
+Hit the <a href="https://docs.vespa.ai/en/reference/document-v1-api-reference.html">/document/v1/</a> ENDPOINT.
+Restrict to one CLUSTER, see <a href="https://docs.vespa.ai/en/reference/services-content.html">content clusters</a>:
+</p>
+
+<pre>
+$ curl --cert data-plane-public-cert.pem --key data-plane-private-key.pem \
+  "$ENDPOINT/document/v1/?cluster=$CLUSTER"
+</pre>
+
+<p>For ID dump only, use a <a href="https://docs.vespa.ai/en/documents.html#fieldsets">fieldset</a>:</p>
+<pre>
+$ curl --cert data-plane-public-cert.pem --key data-plane-private-key.pem \
+  "$ENDPOINT/document/v1/?cluster=$CLUSTER&fieldSet=%5Bid%5D"
+</pre>
+
+<p>From an ID, like <em>id:open:doc::open/documentation/schemas.html</em>, extract</p>
+<ul class="howto">
+    <li><p>NAMESPACE: open</p></li>
+    <li><p>DOCTYPE: doc</p></li>
+</ul>
+
+<p>Example script:</p>
+
+<pre>
+#!/bin/bash
+
+set -x
+
+# The ENDPOINT must be a regional endpoint, do not use '*.global.public.vespa.oath.cloud/'
+ENDPOINT="https://vespacloud-docsearch.vespa-team.aws-us-east-1c.public.vespa.oath.cloud"
+NAMESPACE=open
+DOCTYPE=doc
+CLUSTER=documentation
+
+continuation=""
+idx=0
+
+while [ "$continuation" != "continuation=" ]
+do
+  ((idx+=1))
+  echo "$continuation"
+  printf -v out "%05g" $idx
+  filename=${NAMESPACE}-${DOCTYPE}-${out}.data.gz
+  echo "Fetching data..."
+  curl -s --cert data-plane-public-cert.pem --key data-plane-private-key.pem \
+    "${ENDPOINT}/document/v1/${NAMESPACE}/${DOCTYPE}/docid?wantedDocumentCount=1000&amp;concurrency=4&amp;cluster=${CLUSTER}&amp;${continuation}" | gzip &gt; ${filename}
+  token=`jq -r .continuation &lt;(gunzip -c ${filename})`
+  if [ "${token}" != "null" ]
+  then
+    continuation="continuation=${token}"
+  else
+    continuation="continuation="
+  fi
+done
+</pre>
+
+<p>
+On <em>concurrency</em>: higher concurrency increases temporal memory use while dumping data, returning more documents per request.
+<em>wantedDocumentCount</em> is max 1000.
+</p>
+
+
+
+<h2 id="feed">Feed</h2>
+
+<p>
+Use the <a href="https://docs.vespa.ai/en/vespa-http-client.html">vespa-http-client</a>
+to feed documents in batches to endpoints - example:
+<pre>
+$ gunzip -c open-doc-00001.data.gz | <a href="https://stedolan.github.io/jq/">jq</a> '.documents[]' | \
+  java -jar $HOME/github/vespa-engine/vespa/vespa-http-client/target/vespa-http-client-jar-with-dependencies.jar \
+  --endpoint $ENDPOINT --disable-hostname-verification \
+  --useTls --certificate data-plane-public-cert.pem --privateKey data-plane-private-key.pem
+</pre>
+<p>
+Note that the data dump cannot be directly fed, as extra fields like continuation token are added -
+hence the <a href="https://stedolan.github.io/jq/">jq</a> command to extract <em>document</em> objects only.
+</p>
+
+
+<h2 id="delete">Delete</h2>
+
+<p>To purge all documents, generate a feed with remove-entries for all document IDs, like:</p>
+<pre>
+$ gunzip -c open-doc-00001.data.gz | jq '[ .documents[] | {remove: .id} ]' | head
+
+[
+  {
+    "remove": "id:open:doc::open/documentation/schemas.html"
+  },
+  {
+    "remove": "id:open:doc::open/documentation/securing-your-vespa-installation.html"
+  },
+</pre>
+Hence, extracts all IDs and feed to the endpoint to remove:
+<pre>
+$ gunzip -c open-doc-00001.data.gz | jq '[ .documents[] | {remove: .id} ]' | \
+  java -jar $HOME/github/vespa-engine/vespa/vespa-http-client/target/vespa-http-client-jar-with-dependencies.jar \
+  --endpoint $ENDPOINT --disable-hostname-verification \
+  --useTls --certificate data-plane-public-cert.pem --privateKey data-plane-private-key.pem
+</pre>
+<p>Pro Tip: Reduce file size by only dumping IDs using <code>&fieldSet=%5Bid%5D</code> (above).</p>

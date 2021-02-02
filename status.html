@@ -1,30 +1,52 @@
 ---
 # Data for this page is found in _data/status.yml
-layout: status
 title: Status
+layout: page
 ---
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <title>Vespa Cloud Status {{ site.time }}</title>
-        <link rel="stylesheet" href="/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://docs.vespa.ai/css/docs.css">
-    </head>
-    <body>
-        <div class="container">
-            <h1>Vespa Cloud Status</h1>
+
+<style>
+            .status-box {
+                width: 73px;
+                height: 24px;
+                line-height: 24px;
+                border-radius: 4px;
+                text-align: center;
+                vertical-align: middle;
+                padding: 0;
+                margin: 0;
+            }
+
+            .status-box.zone-ok {
+                background: rgba(21, 192, 70, 0.5);
+            }
+
+            .status-box.zone-failed {
+                background: rgba(234, 0, 0, 0.5);
+            }
+
+</style>
+
             <p>Last updated: {{ site.time }}</p>
             <p>
-                <table class="table" style="width: 90%; margin-left: auto; margin-right: auto;">
+                <table class="table">
                     <thead>
-                        <tr><th>Zone</th><th>Status</th></td></tr>
+                        <tr><th>Zone</th><th>Status</th></tr>
                     </thead>
                     {% if site.data.status.zones.size > 0 %}
                     <tbody>
                         {% for zone in site.data.status.zones %}
+                        {% assign status_lc = zone.status | lc %}
                         <tr>
                             <td>{{ zone.name }}</td>
-                            <td class="bg-{{ zone.status }}">{{ zone.message }}</td>
+                            <td>
+                                {% if status_lc == 'success' %}
+                                <div class="status-box zone-ok">
+                                {% else %}
+                                <div class="status-box zone-failed">
+                                {% endif %}
+                                    {{ zone.message }}
+                                </div>
+                            </td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -33,14 +55,16 @@ title: Status
             </p>
 
             <h3>Messages</h3>
+            <div style="overflow: auto">
             {% if site.data.status.messages[0] %}
-            {% assign datelimit = "now" | date: '%s' | minus:604800 %}
+            {% assign datelimit = 'now' | date: '%s' | minus:604800000 %}
+            {% assign sorted_messages = site.data.status.messages | sort: 'date' | reverse %}
             <table class="table" style="width: 90%; margin-left: auto; margin-right: auto;">
-            {% for message in site.data.status.messages %}
+            {% for message in sorted_messages %}
                 {% assign epoch = message.date | date: '%s' | ceil %}
                 {% if epoch >= datelimit %}
                 <tr>
-                    <td style="white-space: nowrap">{{ message.date }}</td>
+                    <td style="white-space: nowrap; width: 100px">{{ message.date }}</td>
                     <td>{{ message.message }}</td>
                 </tr>
                 {% endif %}
@@ -51,6 +75,4 @@ title: Status
                 No updates.
             </p>
             {% endif %}
-        </div>
-    </body>
-</html>
+            </div>

@@ -1,0 +1,158 @@
+---
+# Copyright Verizon Media. All rights reserved.
+title: Getting started, including Java development
+layout: page
+---
+
+<!-- If you change this also make the same change in getting-started -->
+
+<p>
+  Follow these steps to deploy your first application to the dev
+  <a href="reference/zones.html">zone</a> in the Vespa Cloud.
+</p>
+<p>
+  There is also <a href="getting-started">a version on this</a> that does not require maven and Java.
+</p>
+
+<p>Prerequisites: git, openssl, JDK 11 or higher, mvn 3.6 or higher.</p>
+
+<ol class="howto p-t-14">
+
+  <li>
+    <p><b>Create an application in the Vespa Cloud</b></p>
+    <p>
+      Log in to <a target="_blank" href="http://console.vespa.ai">console.vespa.ai</a> and click "Create application".
+    </p>
+    <p>
+      This requires a Google or GitHub account,
+      and will start your <a href="/pricing#free-trial">free trial</a> if you don't already have
+      a Vespa Cloud tenant.
+    </p>
+  </li>
+
+  <li>
+    <p><b>Make a local application source</b></p>
+    <p>To start with the album-recommendation-searcher sample app:</p>
+    <pre data-test="exec">
+$ git clone https://github.com/vespa-engine/sample-apps.git
+$ cd sample-apps/vespa-cloud/album-recommendation-searcher
+</pre>
+  </li>
+
+  <li>
+    <p><b>Create a self-signed certificate</b></p>
+    <p>This certificate and key will be used to send requests to Vespa Cloud later.</p>
+    <pre data-test="exec">
+$ openssl req -x509 -nodes -days 14 -newkey rsa:4096 \
+  -subj "/CN=cloud.vespa.example" \
+  -keyout data-plane-private-key.pem -out data-plane-public-cert.pem
+$ mkdir -p src/main/application/security
+$ cp data-plane-public-cert.pem src/main/application/security/clients.pem
+</pre>
+    <p>
+      See the <a href="security-model#data-plane">security model</a> for more details.
+    </p>
+  </li>
+
+  <li id="deploy">
+    <p><b>Create a deployment API key</b></p>
+    <p>
+      In the console <a href="http://console.vespa.ai">console.vespa.ai</a>,
+      choose tenant and click <em>Keys</em> to generate and save the <em>user API key</em>.
+      The key is saved to <code>$HOME/Downloads/USER.TENANTNAME.pem</code>.
+    </p>
+  </li>
+
+  <li>
+    <p><b>Set the tenant and application name in the source</b></p>
+    <p>
+      Update <code>pom.xml</code> with the <code>tenant</code> and <code>application</code> names
+      you chose when creating the application  in the console.
+    </p>
+  </li>
+
+  <li>
+    <p><b>Build and deploy the application</b></p>
+    <p>
+      This deploys an instance (with a name you choose here) of the application to the <code>dev</code> zone:
+<pre>
+$ mvn package vespa:deploy -DapiKeyFile=$HOME/Downloads/USER.TENANTNAME.pem -Dinstance=my-instance
+</pre>
+<pre data-test="exec" style="display:none">  <!-- Version of the above for automatic testing -->
+$ API_KEY=`echo $VESPA_TEAM_API_KEY | openssl base64 -A -a -d`
+$ mvn clean package vespa:deploy -DapiKey="$API_KEY" -Dinstance=my-instance
+</pre>
+    <p>The first deployment may take a few minutes.</p>
+  </li>
+
+  <li>
+    <p><b>Verify that you can reach the application endpoint</b></p>
+    <p>
+      The endpoint URL is printed in the <em>Install application</em> section when the deployment is successful.
+      Put this in an environment variable and verify it.
+  <pre data-test="exec">
+$ ENDPOINT=https://my-instance.album-rec-searcher.vespa-team.aws-us-east-1c.dev.public.vespa.oath.cloud # Change to your url
+$ curl --cert ./data-plane-public-cert.pem --key ./data-plane-private-key.pem $ENDPOINT
+</pre>
+    <p>You can also <a href="security-model#using-a-browser">do this in a browser</a>.</p>
+  </li>
+
+  <li>
+    <p><b>Write some data</b></p>
+    <p>Write three documents using the <a href="https://docs.vespa.ai/en/document-v1-api-guide.html">document api</a>:</p>
+<pre data-test="exec" data-test-assert-contains="id:mynamespace:music::">
+$ curl --cert ./data-plane-public-cert.pem --key ./data-plane-private-key.pem \
+  -H "Content-Type:application/json" --data-binary @src/test/resources/A-Head-Full-of-Dreams.json \
+  $ENDPOINT/document/v1/mynamespace/music/docid/1
+$ curl --cert ./data-plane-public-cert.pem --key ./data-plane-private-key.pem \
+  -H "Content-Type:application/json" --data-binary @src/test/resources/Love-Is-Here-To-Stay.json \
+  $ENDPOINT/document/v1/mynamespace/music/docid/2
+$ curl --cert ./data-plane-public-cert.pem --key ./data-plane-private-key.pem \
+  -H "Content-Type:application/json" --data-binary @src/test/resources/Hardwired...To-Self-Destruct.json \
+  $ENDPOINT/document/v1/mynamespace/music/docid/3
+</pre>
+  </li>
+
+  <li>
+    <p><b>Send queries</b></p>
+    <p>Send a user profile as a query to get album recommendations:</p>
+    <pre data-test="exec" data-test-assert-contains="id:mynamespace:music::">
+$ curl --cert data-plane-public-cert.pem --key data-plane-private-key.pem \
+"$ENDPOINT/search/?ranking=rank_albums&amp;yql=select%20%2A%20from%20sources%20%2A%20where%20sddocname%20contains%20%22music%22%3B&amp;ranking.features.query(user_profile)=%7B%7Bcat%3Apop%7D%3A0.8%2C%7Bcat%3Arock%7D%3A0.2%2C%7Bcat%3Ajazz%7D%3A0.1%7D"
+</pre>
+    <p>A few more examples:</p>
+    <p>Limit to albums with the term "to" in title:</p>
+    <pre data-test="exec" data-test-assert-contains="id:mynamespace:music::">
+$ curl --cert ./data-plane-public-cert.pem --key ./data-plane-private-key.pem \
+  "$ENDPOINT/search/?ranking=rank_albums&yql=select%20%2A%20from%20sources%20%2A%20where%20album%20contains%20%22to%22%3B&ranking.features.query(user_profile)=%7B%7Bcat%3Apop%7D%3A0.8%2C%7Bcat%3Arock%7D%3A0.2%2C%7Bcat%3Ajazz%7D%3A0.1%7D"
+</pre>
+    <p>Retrieve all document using <a href="https://docs.vespa.ai/en/content/visiting.html">visit</a>:</p>
+<pre data-test="exec" data-test-assert-contains="id:mynamespace:music::">
+$ curl --cert ./data-plane-public-cert.pem --key ./data-plane-private-key.pem \
+  "$ENDPOINT/document/v1/mynamespace/music/docid?wantedDocumentCount=100"
+</pre>
+  </li>
+
+</ol>
+
+
+<h3>Next steps</h3>
+
+<ul class="howto">
+
+  <li>
+    <p><a href="getting-to-production">Set up deployment to production</a>.</p>
+  </li>
+
+  <li>
+    <p>Learn more about Vespa in the <a href="https://docs.vespa.ai">Vespa documentation</a>.</p>
+  </li>
+
+  <li>
+    <p>Follow the <a href="https://blog.vespa.ai/">Vespa Blog</a> for product updates and use cases.</p>
+  </li>
+
+</ul>
+
+
+
