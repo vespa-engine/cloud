@@ -1,0 +1,322 @@
+---
+# Copyright Verizon Media. All rights reserved.
+title: Automated Deployments
+layout: page
+---
+
+
+
+<p>
+The Vespa cloud automates deployments to production using a safe procedure where changes
+are first tested, then rolled out to production zones, with optional verification tests and delays.
+The deployment process for an application is specified in <a href="reference/deployment">deployment.xml</a>,
+placed alongside services.xml in the application source.
+</p>
+
+<p>
+You can see status, access logs, and trigger and pause jobs in the <a href="http://console.vespa.ai">console</a>.
+</p>
+
+<p>
+The deployment process, including tests is reused when the Vespa Cloud upgrades your application.
+You can control at what times versions and application revisions are allowed to deploy in deployment.xml.
+</p>
+
+
+<h2 id="continuous-deployment">Continuous Deployment</h2>
+
+<p>
+<a href="getting-to-production">Getting to Production</a> details the steps needed to prepare and submit a
+production deployment. These steps should be executed by a build job triggered regularly or on changes
+to your application package source repo to get continuous deployment.
+</p>
+
+<p>
+Refer to
+<a href="https://github.com/vespa-engine/sample-apps/blob/master/.github/workflows/deploy-vespa-documentation-search.yaml">
+this example</a> using GitHub actions.
+</p>
+
+<p>
+Notice the trick of passing <code>sourceUrl</code> to point to the source revision.
+This is displayed in the console and makes it possible to keep track of what exactly is being deployed.
+</p>
+
+
+<h2 id="deployment-keys">Deployment keys</h2>
+
+<p>
+Deployment jobs use the
+<a href="reference/vespa-cloud-api#common-properties">application API key</a>.
+You can create new Application API keys in the console and store
+them as a secret in the repository, see the
+<a href="https://github.com/vespa-engine/sample-apps/blob/master/.github/workflows/deploy-vespa-documentation-search.yaml">
+GitHub actions example</a>.
+</p>
+
+<p>
+Some services like <a href="https://travis-ci.org">Travis CI</a> do not accept
+multi-line values for Environment Variables in Settings.
+A workaround is to use the output of
+</p>
+
+<pre>
+$ openssl base64 -A -a &lt; mykey.pem &amp;&amp; echo
+</pre>
+
+<p>in a variable, say VESPA_MYAPP_API_KEY, in Travis Settings.
+VESPA_MYAPP_API_KEY is exported in the Travis environment, example output:</p>
+
+<pre>
+Setting environment variables from repository settings
+$ export VESPA_MYAPP_API_KEY=[secure]
+</pre>
+
+<p>Then, before deploying/submitting to Vespa Cloud, regenerate the key value:</p>
+
+<pre>
+MY_API_KEY=`echo $VESPA_MYAPP_API_KEY | openssl base64 -A -a -d`
+</pre>
+
+<p>and use <code>${MY_API_KEY}</code> in the deploy/submit command.</p>
+
+
+<h2 id="vespa-compile-version">vespa:compileVersion</h2>
+
+<p>
+Vespa is <em>backwards compatible</em> on major versions (and major versions rarely change).
+This means that code compiled with an older version of Vespa APIs
+can always be deployed to Vespa Cloud on same major version.
+However, if the application package is compiled with a newer API version,
+then deployed to an older version currently used in production, it may fail.
+</p>
+<p>
+To avoid this small possibility,
+<code>vespa:compileVersion</code> returns the lowest
+version currently running the application in production.
+This version is then set in <code>vespa.compile.version</code> when building the application package.
+</p>
+
+
+<h2 id="deployment-verification">Deployment verification</h2>
+
+<p>
+Vespa applications may contain any number of tests that verify them as paert of deployments to
+production:
+</p>
+
+<ul class="howto">
+  <li>
+    <p>
+      <a href="reference/testing#system-tests">System tests</a> verifies application functionality and are run on an empty, downscaled application instance
+    </p>
+  </li>
+
+  <li>
+    <p>
+      <a href="reference/testing#staging-tests">Staging tests</a> verifies that switching to a new application or Vespa version works and involves
+      setting up an instance of the application revision and Vespa version in production before the change,
+      writing data, switching to the new revision and version and then verifying the system.
+    </p>
+  </li>
+
+  <li>
+    <p>
+    <a href="reference/testing#production-tests">Production tests</a> verifies that a production deployment in a zone did not have adverse effects,
+      typically by checking metrics after a delay. If these tests fail the change will not roll out to further production zones or instances.
+    </p>
+  </li>
+
+</ul>
+
+<p>
+System and staging tests are mandatory and always run. Production tests can be configured in
+<a href="reference/deployment">deployment.xml</a>.
+</p>
+
+<p>
+Vespa applications are <em>compiled</em> against one version of the Vespa Java artifacts, 
+and then deployed to nodes in the cloud where the <em>runtime</em> Vespa version is controlled by the system. 
+This runtime, or <em>platform</em>, version is also continuously updated, independently of application updates. 
+This leads to a number of possible combinations of application packages and platform versions for each application.
+</p>
+
+<p>
+Instead of a simple <em>pipeline</em>, Vespa deployments are <em>orchestrated</em> such that any deployment of an application package
+<code>X</code> to a production cluster with platform version <code>Y</code> is preceded by <em>system</em> and <em>staging</em>
+tests using the same version pair; and likewise for any upgrade of the platform to version <code>Y</code> of a production
+cluster running an application package <code>X</code>.
+System and staging tests therefore guard against both unfortunate changes in the application, and in the Vespa platform.
+</p>
+
+<p>
+In addition to tests the Vespa Cloud has an additional safety mechanism:
+Potentially destructive application changes, such as removing fields, are disallowed by default
+to avoid accidentally damaging production. Such changes require a
+<a href="https://docs.vespa.ai/en/reference/validation-overrides.html">validation override</a>
+as part of the application to ensure it is really intended.
+</p>
+
+<p>
+Status and logs of ongoing tests can be found under <em>Deployment</em> in the application view in the
+<a href="http://console.vespa.ai">console</a>.
+</p>
+
+
+<h2 id="developing-tests">Developing tests</h2>
+
+<p>
+System, staging and production tests are JUnit tests.
+To develop the tests you can deploy the application to <em>dev</em> and run tests from the command line against it:
+</p>
+<pre data-test="exec" data-test-assert-contains="BUILD SUCCESS">
+$ mvn test \
+  -Dtest.categories=system \
+  -DdataPlaneKeyFile=data-plane-private-key.pem -DdataPlaneCertificateFile=data-plane-public-cert.pem \
+  -DapiKey="$API_KEY"
+</pre>
+
+<p>
+The <code>apiKey</code> is used to fetch the <em>dev</em> instance's endpoints.
+The data plane key and certificate pair is used by
+<a href="https://github.com/vespa-engine/vespa/blob/master/tenant-cd-api/src/main/java/ai/vespa/hosted/cd/Endpoint.java">ai.vespa.hosted.cd.Endpoint</a>
+to access the application endpoint.
+More details can be found in <a href="reference/testing">testing</a> and
+<a href="reference/vespa-cloud-api.html">Vespa Cloud API</a>.
+</p>
+
+<p>
+To run tests against a deployment running in Docker on localhost (instead of using <em>dev</em>),
+configure endpoint location:
+</p>
+<pre>
+{
+    "localEndpoints": {
+        "container": "http://localhost:8080/"
+    }
+}
+</pre>
+<p>
+See <a href="reference/testing#system-tests">system tests</a> for details.
+Refer to <a href="https://github.com/vespa-engine/sample-apps/tree/master/album-recommendation-selfhosted">
+album-recommendation-selfhosted</a> for how to create the application package.
+</p>
+
+
+<h2 id="production-deployments">Production deployments</h2>
+
+<p>
+Production deployments run sequentially by default, but can be configured to
+<a href="reference/deployment">run in parallel</a>.
+Inside each zone, Vespa itself orchestrates the deployment,
+such that the change is applied without disruption to read or write traffic against the application.
+A production deployment in a zone is complete when the change has completed on all nodes.
+Most changes are applied to running nodes, which makes this a fast process.
+If restarts are needed, these will happen automatically and safely as part of the deployment.
+When this is necessary deployments will take longer to complete.
+</p>
+
+
+<h2 id="feature-switches-and-bucket-tests">Feature switches and bucket tests</h2>
+
+<p>
+With continuous deployment, it is not practical to hold off releasing a feature until it is done,
+test it manually until convinced it works and then release it to production.
+What to do instead?
+The answer is <em>feature switches</em>: release new features to production as they are developed,
+but include logic which keeps them deactivated until they are ready,
+or until they have been verified in production with a subset of users.
+</p>
+
+<p>
+<em>Bucket tests</em> is the practice of systematically testing new features or behavior for a controlled subset of users.
+This is common practice when releasing new science models,
+as they are difficult to verify in test, but can also be used for other features.
+</p>
+
+<p>
+To test new behavior in Vespa, use a combination of
+<a href="https://docs.vespa.ai/en/chained-components">search chains</a>
+and
+<a href="https://docs.vespa.ai/en/reference/schema-reference#rank-profile">rank profiles</a>,
+controlled by
+<a href="https://docs.vespa.ai/en/query-profiles">query profiles</a>,
+where one query profiles correspond to one bucket.
+These features support inheritance to make it easy to express variation without repetition.
+</p>
+
+<p>
+Some times a new feature require
+<a href="http://docs.vespa.ai/en/reference/schema-reference#modifying-schemas">
+incompatible changes to a data field</a>.
+To be able to CD such changes, it is necessary to create a new field containing the new version of the data.
+This costs extra resources but less than the alternative: standing up a new system copy with the new data.
+New fields can be added and populated while the system is live.
+</p>
+
+<p>
+One way to reduce the need for incompatible changes can be decreased by making the semantics of the fields more precise.
+E.g., if a field is defined as the "quality" of a document, where a higher number means higher quality,
+a new algorithm which produces a different range and distribution will typically be an incompatible change.
+However, if the field is defined more precisely as the average time spent on the document once it is clicked,
+then a new algorithm which produces better estimates of this value will not be an incompatible change.
+Using precise semantics also have the advantage of making it easier to understand
+if the use of the data and its statistical properties are reasonable.
+</p>
+
+
+
+<h2 id="integration_testing">Integration testing</h2>
+
+<p>
+Another challenge with continuous deployment is integration testing across multiple services:
+Another service depends on this Vespa application for its own integration testing.
+There are two ways to provide this: Either create an additional
+<a href="reference/deployment#instance">application instance</a> for testing
+or use test data in the production instance.
+Using test data in production requires that some thought is given to separating this data from the real
+data in queries.
+A separate instance gives complete isolation,
+but with some additional overhead,
+and may not produce quite as realistic testing of queries,
+as those will run only over the test data in the separate instance.
+</p>
+
+
+<h2 id="deleting-an-application">Deleting an application</h2>
+
+<p>
+  To delete an application, remove all production instances first.
+</p>
+
+<p>
+  <strong>WARNING!</strong> Following these steps will remove production instances and all data within them.
+  Data will be unrecoverable.
+</p>
+
+<ol class="howto">
+
+  <li>
+    <p>
+      Remove all instances in <a href="reference/deployment#instance">deployment.xml</a>
+    </p>
+    <pre>
+&lt;deployment version="1.0" /&gt;
+</pre>
+  </li>
+
+  <li>
+    <p>
+      Add or modify <a href="https://docs.vespa.ai/en/reference/validation-overrides.html">validation-overrides.xml</a>,
+      allowing Vespa Cloud to remove production deployments:
+    <pre>
+&lt;validation-overrides&gt;
+    &lt;allow until="2021-03-01" comment="Removing all deployments">deployment-removal&lt;/allow&gt;
+&lt;/validation-overrides&gt;
+</pre>
+  </li>
+
+  <li><p>Trigger a build and submit of the application package.</p></li>
+  <li><p>Delete the application in the <a href="http://console.vespa.ai">console</a>.</p></li>
+  <li><p>Remove your CI job that builds and submits application changes.</p></li>
+</ol>

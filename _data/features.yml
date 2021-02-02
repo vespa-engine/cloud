@@ -1,0 +1,297 @@
+- title: "24x7 operations"
+  heading: "Proactive 24/7 operations"
+  description: "We'll keep your system running so you can focus on innovation."
+  icon: d-chart-line-time
+  id: operations
+  image: "assets/console/zone-overview.png"
+  short: "<p>
+      Let your applications be operated by the team that's building Vespa and has years of experience operating it.
+      Setting up a Vespa instance for production is not hard, but
+      operating securely and with high availability over time is challenging.
+      </p>
+      <p>&nbsp;</p>
+      <p>
+      The Vespa cloud is already running business critical applications on behalf of many
+      organizations, handling about half a million user requests per second.
+      It performs all routine operations tasks automatically, which ensures
+      they are performed in a timely fashion, following best practices, every time.
+      </p>"
+  long: "<p>
+      Why not let the team that's building Vespa and has years of experience operating it
+      operate your applications as well?
+      Setting up a Vespa instance for production is not hard, but
+      operating securely and with high availability over time is challenging:
+      Keeping the Vespa version and OS up to date, handling failing nodes, making
+      continuous deployments safe and so on.
+      </p>
+      <p>
+      The Vespa cloud is already running business critical applications on behalf of many
+      organizations, handling about half a million user requests per second.
+      It performs all routine operations tasks automatically, which ensures
+      they are performed in a timely fashion, following best practices, every time.
+      This includes tasks such as
+      </p>
+      <ul class='list p-l-30 p-b-10'>
+      <li>Detecting and replacing nodes with hardware issues.</li>
+      <li>Rolling out <a href=\"en/automated-deployments.html\">application changes</a>.</li>
+      <li>Upgrading Vespa and operating system.</li>
+      <li><a href=\"en/autoscaling.html\">Optimizing hardware allocation</a> to fit the load.</li>
+      </ul>
+      <p>
+      This leaves room for the Vespa Cloud engineers to analyze and work to mitigate problems before they
+      have observable consequences. And for the rare time-critical issues that do happen,
+      our on-call staff is ready to assist 24/7.
+      </p>
+      <p>
+      Building out these capabilities is time-consuming and difficult, and manually operations
+      is expensive and error-prone. Leaving this to the Vespa Cloud to get the best results
+      at the lowest possible cost.
+      </p>"
+
+- title: "Support"
+  heading: "World-class support"
+  description: "Next-day support from the Vespa experts included."
+  icon: d-handshake
+  id: support
+  short: "<p>
+      Using the Vespa Cloud gives you access to the world's best Vespa support, period, and there's no
+      other way to buy it. This is because this support is provided by the team that develops Vespa,
+      and we prefer to provide support in an environment which we know is operated according to best practices.
+      </p>
+      <p>&nbsp;</p>
+      <p>
+      Just by using the Vespa Cloud, at no extra cost, you get access to next-business day support from the
+      Vespa team.
+      </p>"
+  long: "<p>
+      Using the Vespa Cloud gives you access to the world's best Vespa support, period, and there's no
+      other way to buy it. This is because this support is provided by the team that develops Vespa,
+      and we prefer to provide support in an environment which we know is operated according to best practices.
+      Just by using the Vespa Cloud, at no extra cost, you get access to next-business day support from the
+      Vespa team.
+      </p>"
+
+- title: "Continuous deployment"
+  heading: "Automatic, safe continuous deployment"
+  description: "Immediate, automatic and safe deployments of application changes."
+  icon: d-data-storage-check
+  id: continuous-deployment
+  image: "assets/console/continuous-deployment.png"
+  short: "<p>
+      Continuous deployment - automatically deploying changes as they are made to the application source -
+      has emerged as a best practice across the industry because deploying small increments quickly lowers risk
+      and increases efficiency. However, following this practice on stateful, distributed, always-available systems
+      like Vespa is challenging.
+      </p>
+      <p>&nbsp;</p>
+      <p>
+      The Vespa cloud provides continuous deployment for all applications with strong
+      safety features and application controls, making this actually work for always-on mission critical systems.
+      </p>"
+  long: "<p>
+      Continuous deployment - automatically deploying changes as they are made to the application source -
+      has emerged as a best practice across the industry because deploying small increments quickly lowers risk
+      and increases efficiency. However, following this practice on stateful, distributed, always-available systems
+      like Vespa is challenging, as deployments cannot cause service quality impact or risk of downtime.
+      </p>
+      <p>
+      The Vespa Cloud provides all the necessary mechanisms to implement safe continuous deployment.
+      Applications just create a job in their preferred CI tool which builds their application and submits
+      it to the cloud and Vespa handles the rest. Applications remain in control of how and when changes roll
+      out: The application package can specify allowed deployment time windows, the sequence and of deployment
+      across zones, the delay between them and criteria for progressing with a rollout.
+      </p>
+      <p>
+      Any deployment is validated in test zones before progressing to production zones: The <i>test</i>
+      zone runs application defined functional tests, and the <i>staging</i> zone validates that
+      the application can smoothly change from the current to the new application revision.
+      The Vespa Cloud console provides a visualization of the status of the whole process and surfaces
+      the information needed to diagnose any issues.
+      </p>
+      <p>
+      Deployments in each zone happens without service disruption by applying changes without causing restarts.
+      If restarts are necessary to apply changes, the Vespa Cloud will perform them automatically by taking
+      down a single node (or group) of each cluster at a time. When deployments specify a change to the
+      hardware running the application, the cloud will add the new hardware to it while leaving the old in place,
+      and then remove the old later once data is safely migrated. Potentially unsafe changes are detected,
+      and require a validation override as part of the deployment to ensure destructive changes are not
+      made inadvertently.
+      </p>
+      <p>
+      Continuous deployment is a transformative process that greatly increases productivity and reduces incidents,
+      however implementing it for services on Vespa's complexity level is too hard for teams to do on their own.
+      By deploying to the Vespa Cloud you get this capability out of the box, with safety features already
+      proven to work for large business critical systems where any service disruption is intolerable.
+      </p>
+      <p>
+      See the <a href=\"en/automated-deployments\">automated deployments</a> documentation for more in-depth
+      documentation and <a href=\"en/getting-to-production\">getting to production</a> to get started.
+      </p>"
+
+
+- title: "Strong security"
+  heading: "Strong security. Always."
+  description: "Hardened OS and VM. All communication secured with mTLS."
+  icon: d-security-verified
+  id: security
+  short: "<p>
+      Keeping online services secure is a never ending task. With the Vespa Cloud you get strong security by default
+      at no additional cost.
+      Application security is an area which must be taken seriously, especially in systems storing and
+      exposing data, and require dedicated experts to do well.
+      </p>
+      <p>&nbsp;</p>
+      <p>
+      With the Vespa Cloud your application
+      is secured with no additional effort required.
+      </p>"
+  long: "<p>
+      Keeping online services secure is a never ending task. New attack vectors and vulnerabilities
+      keep appearing and  requiring new defences. With the Vespa Cloud you get strong security by default
+      at no additional cost. All communication between nodes is protected by mutual
+      authentication and encryption, ensuring that only the intended nodes can communicate internally,
+      and that only authorized clients can access an application. Data can additionally be secured by encryption.
+      The Vespa security experts keeps Vespa and the underlying OS secure against the latest threats and
+      the cloud keep you updated with those defences.
+      </p>
+      <p>
+      Application security is an area which must be taken seriously, especially in systems storing and
+      exposing data, and require dedicated experts to do well. With the Vespa Cloud your application
+      is secured with no additional effort required.
+      </p>
+      <p>
+      See <a href=\"en/security-model\">the Vespa Clouds security model</a> for more details.
+      </p>"
+
+
+- title: "Autoscaling"
+  heading: "Automatically scale to meet your demand"
+  description: "Reduce cost by letting applications scale automatically with usage."
+  icon: d-scale-expand
+  id: autoscaling
+  short: "<p>
+      You want your application to use as few resources as possible to minimize cost,
+      but at the same time you don't want to run out of resources when traffic is high
+      or you feed more data.
+      </p>
+      <p>&nbsp;</p>
+      <p>
+      The Vespa Cloud allows you to get both things at once
+      by offering autoscaling on all clusters. This can often save 50% of cost
+      of an application by keeping it scaled to its actual needs at all times.
+      </p>"
+  long: "<p>
+      You want your application to use as few resources as possible to minimize cost,
+      but at the same time you don't want to run out of resources when traffic is high
+      or you feed more data. If you host yourself, you need to choose between
+      always allocating enough hardware to handle the most load you may theoretically see,
+      or risk running out of resources just when you need them the most.
+      </p>
+      <p>
+      With the Vespa Cloud you don't have to choose but can let clusters maintain the optimal allocation
+      required to handle the current load at any time. Stateless clusters can typically react to traffic
+      changes on the scale of a few minutes, while content clusters require more time as data need to be
+      redistributed on resource changes. Applications can typically save about half of their hardware cost by
+      enabling this feature, while removing the risk of failing queries during peak or blocking writes due
+      to feeding too much data. As always with the Vespa Cloud, applications remain in control and can set
+      max and min limits on resources to fit their business objectives.
+      </p>
+      <p>
+      See <a href=\"en/autoscaling\">the autoscaling documentation</a> for more details.
+      </p>"
+
+
+- title: "Automatic Vespa/OS upgrades"
+  heading: "Automatically keep your Vespa version and OS up to date"
+  description: "Receive features, fixes, and performance improvements daily."
+  icon: d-swap-horizontal-circle
+  id: upgrades
+  image: "assets/console/upgrade.png"
+  short: "<p>
+      You want to keep your applications running on the latest certified version of Vespa
+      to get bug fixes, performance improvements and new features.
+      And to make your service secure you <i>must</i> keep your Vespa and OS patch version up to date.
+      </p>
+      <p>&nbsp;</p>
+      <p>
+      With Vespa Cloud, upgrading and OS patching is a solved problem you never worry about: It just
+      happens - regularly and safely - with no effort on your part.
+      </p>"
+  long: "<p>
+      You want to keep your applications running on the latest certified version of Vespa
+      to get bug fixes, performance improvements and new features.
+      And to make your service secure you <i>must</i> keep your Vespa and OS patch version up to date.
+      Implementing a process for this is similar to automating deployment orchestration,
+      with some additional complexity added on top. This is why most teams who host their own Vespa instances
+      fail to do this and instead resort to spending manual effort and redundant hardware doubling the cost
+      to solve this.
+      </p>
+      <p>
+      With Vespa Cloud, upgrading and OS patching is a solved problem you never worry about.
+      We reuse the same mechanisms and tests used for continuous deployment to upgrade Vespa safely
+      every day by default. Applications remain in control by having the option to specify when
+      Vespa is allowed to upgrade. Similarly new OS versions are rolled out node by node in the background
+      by an automated process. This keeps Vespa applications current and secure with no additional effort required
+      on the application side.
+      </p>"
+
+
+- title: "Performance tune-up program eligibility"
+  heading: "Performance tuning by the Vespa experts"
+  description: "Typically reduces cost by 50%"
+  icon: d-currency-bag-dollar
+  id: performance
+  short: "<p>
+      Tuning performance on systems that mixes computation and data is a unique challenge with
+      many interesting subtleties. Expert tuning using live instrumentation can often reduce
+      cost by 50%. Included when you deploy to the Vespa Cloud is participation in the Vespa tune-up program where
+      our experts analyze your application for potential gains regularly at least yearly.
+      </p>"
+  long: "<p>
+      Tuning performance on systems that mixes computation and data is a unique challenge with
+      many interesting subtleties. At the same time, gains from tuning may be substantial -
+      it's often possible to cut cost in half.
+      Since Vespa Cloud applications are extensively instrumented automatically, it is feasible
+      for the performance specialists in the core Vespa team to analyze applications for performance
+      otpimizations with relatively little effort - applying their expert knowledge to realize these gains.
+      </p>
+      <p>
+      Included when you deploy to the Vespa Cloud is participation in the Vespa tune-up program where
+      our experts analyze your application for potential gains regularly at least yearly.
+      As applications evolve and Vespa gains new performance optimizations, new opportunities
+      for cost savings and performance improvements keep materializing, and the tune-up program ensures
+      your application is always performing at its best.
+      </p>"
+
+- title: "Developer Cloud"
+  heading: "Developer Cloud"
+  description: "Let developers experiment with their own applications in seconds."
+  icon: d-tools
+  id: developer-cloud
+  short: "<p>
+      Developer productivity is key to success for any organization.
+      To be effective developers should be able to experiment with new applications or copies of ones running
+      in production in seconds, but this is far from the reality most places.
+      </p>
+      <p>&nbsp;</p>
+      <p>
+      The Vespa Cloud lets developers deploy new applications and application copies by a single command,
+      ensuring they can spend their time productively.
+      </p>"
+  long: "<p>
+      The Vespa Cloud lets developers deploy new applications by a single command - whether they
+      are setting up a new application or a copy of one already running.
+      Applications deployed for development are automatically downscaled to avoid unnecessary cost,
+      and disused ones are automatically removed.
+      </p>
+      <p>
+      This makes it easy and fast for developers to experiment -
+      groups that have switched their Vespa development to our cloud service tell us that they see a
+      large increase in development velocity and innovation.
+      Whether or not you use the Vespa Cloud for production, you can take advantage of it to unleash
+      the full potential of your developers.
+      </p>
+      <p>
+      See <a href=\"en/developer-guide\">the developer guide</a> for more details, and
+      <a href=\"en/getting-started\">getting started</a> to start using the Vespa Cloud for development today.
+      </p>"

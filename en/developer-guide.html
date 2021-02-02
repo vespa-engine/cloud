@@ -1,0 +1,131 @@
+---
+# Copyright Verizon Media. All rights reserved.
+title: Developer Guide
+layout: page
+---
+
+<p>
+Using Vespa Cloud for development is easy.
+See <a href="getting-started">getting started</a> to make your first deployment.
+</p>
+
+<h2 id="instances">Instances</h2>
+
+<p>
+Each deployment of an application to the <code>dev</code> zone is a separate <i>instance</i>
+of the application. Using multiple instances lets developers work with the same application
+separately or collaboratively as they prefer.
+</p>
+
+<p>
+Consider the deploy command:
+
+<pre>
+$ mvn clean package vespa:deploy -DapiKeyFile=/path-to/uname.tname.pem \
+  -Denvironment=dev \
+  -Dregion=aws-us-east-1c \
+  -Dtenant=mytenant \
+  -Dapplication=vespacloud-docsearch \
+  -Dinstance=myuser
+</pre>
+
+<p>This is equivalent to the <code>vespa:deploy</code> used in the getting started page:
+
+<ul class="howto">
+<li><p><code>environment</code> and <code>region</code> defaults to the <code>dev</code> <a href="reference/zones">zone</a>.</p></li>
+<li><p><code>tenant</code> and <code>application</code> is normally set in <code>pom.xml</code>.</p></li>
+<li><p><code>instance</code> must be set and can be anything, e.g a user, experiment or team name.</p></li>
+</ul>
+
+
+<h2 id="auto-downsizing">Auto downsizing</h2>
+
+<p>
+Deployments to dev are downscaled to one small node by default so that prod
+applications can be deployed without changing services.xml.
+If you need more resources in the dev application, set nodes or resources
+explicitly by adding those tags to services.xml with a
+<code>deploy:environment="dev"</code>,
+see <a href="reference/services#instance-environment-and-region-variants">variants in services.xml</a>.
+</p>
+
+
+<h2 id="availability">Availability</h2>
+
+<p>
+The <code>dev</code> zone is not for production serving, and has no uptime guarantees.
+</p>
+
+<p>
+An automated Vespa software upgrade can be triggered by <code>vespa:deploy</code>
+and that may lead to some downtime if you have only one node per cluster
+(as with the default <a href="#auto-downsizing">auto downsizing</a>).
+</p>
+
+<p>
+To override the version, use
+</p>
+
+<pre>
+-Dvespa.runtime.version=&lt;current deployed version>
+</pre>
+
+<p>when deploying.</p>
+
+
+<h2 id="performance-testing">Performance testing</h2>
+
+<p>
+In addition to <code>dev</code> there is also a <code>perf</code> zone for performance testing.
+This does less downscaling of resources, such that tests that can be extrapolated to production
+are possible. In other ways this zone works the same way as dev. To deploy to perf, use
+</p>
+
+<pre>
+-Denvironment=dev
+</pre>
+
+<p>Read more in <a href="benchmarking">benchmarking</a>.</p>
+
+
+<h2 id="tips-and-troubleshooting">Tips and troubleshooting</h2>
+
+<ul>
+
+<li>
+  <p>
+    As Vespa Cloud upgrades daily, a deploy will some times pull the latest Vespa Version.
+    This takes minutes as opposed to the seconds it normally takes.
+    Start the day by deploying to avoid the wait!
+  </p>
+</li>
+
+<li>
+  <p>
+    A common mistake is <code>pom.xml</code> mismatch. <code>tenant</code> and <code>application</code>
+    is normally pulled from the pom -
+    <a href="reference/vespa-cloud-api">details</a>.
+    Errors here cause a 401 when deploying.
+  </p>
+</li>
+
+<li>
+  <p>
+    Likewise for data plane -
+    remember to copy the public sertificate to <code>src/main/application/security/clients.pem</code>
+    before building and deploying.
+  </p>
+</li>
+
+<li>
+  <p>
+    Set all keys in the IDE:
+  </p>
+<pre>
+-Dtest.categories=system
+-DapiKeyFile=/path-to/uname.tname.pem
+-DdataPlaneCertificateFile=/path-to/data-plane-public-cert.pem
+-DdataPlaneKeyFile=/path-to/data-plane-private-key.pem
+</pre>
+</li>
+</ul>

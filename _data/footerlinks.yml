@@ -1,0 +1,26 @@
+- header: Resources
+  links:
+    - title: Documentation
+      link: en/
+    - title: Vespa site
+      link: https://vespa.ai
+    - title: Open Source
+      link: https://github.com/vespa-engine/vespa
+
+- header: Contact
+  links:
+    - title: info@vespa.ai
+      link: mailto:info@vespa.ai
+    - title: Twitter
+      link: https://twitter.com/vespaengine
+    - title: Public issues
+      link: https://github.com/vespa-engine/vespa/issues
+
+- header: Community
+  links:
+    - title: Gitter
+      link: https://gitter.im/vespa-engine/Lobby
+    - title: Stack Overflow
+      link: https://stackoverflow.com/questions/tagged/vespa
+    - title: Contributing
+      link: https://github.com/vespa-engine/vespa/blob/master/CONTRIBUTING.md

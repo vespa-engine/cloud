@@ -1,0 +1,11 @@
+---
+layout: status
+# Data for this page is found in _data/status.yml
+---
+{
+    "last-updated": "{{ 'now' | date: '%s' }}",
+    "status": {
+        "zones": {{ site.data.status.zones | jsonify }},
+        "messages": {{ site.data.status.messages | sort: 'date' | reverse | jsonify }}
+    }
+}

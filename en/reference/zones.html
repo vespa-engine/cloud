@@ -1,0 +1,106 @@
+---
+# Copyright Verizon Media. All rights reserved.
+title: Zones
+layout: page
+---
+
+<p>
+An application can be deployed to a <em>zone</em>,
+which is a combination of an <a href="environments">environment</a>
+and a <em>region</em>.
+This lists all the zones which can be deployed to manually (dev and perf),
+deployed to in production using <a href="deployment">deployment.xml</a> (prod),
+or which is <a href="../automated-deployments">implicitly used to verify prod deployments</a>
+(test and staging).
+</p>
+
+<p>
+Available zones:
+<table class="table table-striped">
+<tr><th style="width:80px">Environment<th>Region</tr>
+<tr><td><a href="environments#dev">dev</a>        <td>aws-us-east-1c</tr>
+<tr><td><a href="environments#test">test</a>      <td>aws-us-east-1c</tr>
+<tr><td><a href="environments#staging">staging</a><td>aws-us-east-1c</tr>
+<tr><td><a href="environments#prod">prod</a>      <td>aws-us-east-1c</tr>
+<tr><td><a href="environments#prod">prod</a>      <td>aws-ap-northeast-1a</tr>
+<tbody>
+</table>
+
+<p>If your deployment requires zones not listed here, contact us to have it made available.</p>
+
+<p>
+If the application application requires zone-specific configuration,
+use <a href="services#instance-environment-and-region-variants">
+environment and region variants</a>.
+</p>
+
+
+
+<h2 id="routing-control">Routing control</h2>
+
+<p>Vespa Cloud has two mechanisms for manually controlling routing of requests to a zone:</p>
+
+<ul class="howto">
+  <li>Endpoint configuration. This is changed by updating
+      <a href="deployment">deployment.xml</a> and redeploying</li>
+  <li>The application API</li>
+</ul>
+
+<p>The example below describes the latter mechanism.</p>
+
+
+<h3>Inspect current routing status</h3>
+
+<p>
+With a tenant name <em>foo</em> and an application named <em>bar</em>,
+the routing status for the <em>default</em> instance of the application in
+zone <em>prod.aws-us-east-1c</em> can inspected at the following path:
+<pre>
+$ curl https://console.vespa.oath.cloud/api/routing/v1/status/tenant/foo/application/bar/instance/default/environment/prod/region/aws-us-east-1c | jq .
+{
+  "deployments": [
+    {
+      "routingMethod": "exclusive",
+      "instance": "foo:bar:default",
+      "environment": "prod",
+      "region": "aws-us-east-1c",
+      "status": "in",
+      "agent": "system",
+      "changedAt": 0
+    }
+  ]
+}
+</pre>
+
+<p>
+In this particular example, the status of zone <em>prod.aws-us-east-1c</em>
+is <em>in</em> and the zone should be receiving requests.
+</p>
+
+
+<h3>Set zone out</h3>
+
+<p>
+In case of a production emergency,
+a zone can be manully set out to prevent it from receiving requests:
+</p>
+
+<pre>
+$ curl -XPOST https://console.vespa.oath.cloud/api/routing/v1/inactive/tenant/foo/application/bar/instance/default/environment/prod/region/aws-us-east-1c | jq .
+{
+  "message": "Set global routing status for foo.bar in prod.aws-us-east-1c to OUT"
+}
+</pre>
+
+<p>Inspecting the status will now show the status set to <em>out</em>.</p>
+
+
+<h3>Set zone in</h3>
+
+<p>To set the zone back in and have it continue receiving requests:</p>
+<pre>
+$ curl -XDELETE https://console.vespa.oath.cloud/api/routing/v1/inactive/tenant/foo/application/bar/instance/default/environment/prod/region/aws-us-east-1c | jq .
+{
+  "message": "Set global routing status for foo.bar in prod.aws-us-east-1c to IN"
+}
+</pre>

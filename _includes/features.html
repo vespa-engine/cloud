@@ -1,0 +1,87 @@
+<style>
+  li {
+      list-style-position: outside;
+      font-size: 1.7rem;
+  }
+  p {
+      font-size: 1.7rem !important;
+  }
+  a {
+      font-size: 1.7rem !important;
+  }
+  .small {
+      font-size: 1.4rem !important;
+  }
+</style>
+
+<div class="container-full p-x-100 has-bg-brand-200 p-20">
+    <h3 class="is-brand-400">Included:</h3>
+    {% for feature in include.features %}
+    {% assign newrow = forloop.index0 | modulo: 2 %}
+    {% if newrow == 0 %}
+    <div class="row p-y-20">
+    {% endif %}
+        <div class="feature-box col">
+            <span class="d-icon {{feature.icon}} feature-icon"> </span><div class="feature-text feature-title"><a href="#{{feature.id}}">{{feature.title}}</a></div>
+            <div class="feature-text">{{feature.description}}</div>
+        </div>
+    {% if newrow == 1 %}
+    </div>
+    {% endif %}
+    {% endfor %}
+
+</div>
+
+
+{% for feature in include.features %}
+    {% assign reversed = forloop.index0 | modulo: 2 %}
+    <div class="container-full {% if reversed == 1 %} has-bg-brand-200 {% endif %} p-y-50" id="{{feature.id}}">
+        {% if feature.image %}
+            <div class="row p-x-50">
+                {% if reversed == 0 %}
+                    <div class="col-6-12 p-x-25 sm-hide xs-hide pagination-centered align-self-center">
+                        {% include image-modal.html image=feature.image %}
+                    </div>
+                    <div class="xs-col-12-12 sm-col-12-12 md-col-6-12 lg-col-6-12 xl-col-6-12 p-x-25 align-self-center">
+                        <h1>{{feature.heading}}</h1>
+                        {{feature.short}}
+                        <a class="m-t-16" href="features#{{feature.id}}">More <i class="d-icon d-arrow-right is-small"></i></a>
+                    </div>
+                {% else %}
+                    <div class="xs-col-12-12 sm-col-12-12 md-col-6-12 lg-col-6-12 xl-col-6-12 p-x-25 align-self-center">
+                        <h1>{{feature.heading}}</h1>
+                        {{feature.short}}
+                        <a class="m-t-16" href="features#{{feature.id}}">More <i class="d-icon d-arrow-right is-small"></i></a>
+                    </div>
+                    <div class="col-6-12 p-x-25 sm-hide xs-hide pagination-centered align-self-center">
+                        {% include image-modal.html image=feature.image %}
+                    </div>
+                {% endif %}
+            </div>
+        {% else %}
+            <div class="row p-x-50">
+                <div class="xs-col-12-12 sm-col-12-12 md-col-off-1-12 md-col-10-12 lg-col-off-1-12 lg-col-10-12 xl-col-off-1-12 xl-col-10-12 p-x-25 align-self-center">
+                    <h1>{{feature.heading}}</h1>
+                    {{feature.short}}
+                    <a class="m-t-16" href="features#{{feature.id}}">More <i class="d-icon d-arrow-right is-small"></i></a>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endfor %}
+
+<div class="container-full p-y-50">
+    <div class="row p-x-50">
+        <div class="col-off-1-12 col-4-12 p-x-25 align-self-center pagination-centered">
+            <p>
+                Try out developing with the Vespa Cloud today!
+                No credit card required.
+            </p>
+        </div>
+        <div class="col-2-12 p-x-25">
+            <div class="row section-trial align-self-center">
+                <a class="button is-solid is-large" href="en/getting-started">Start your free trial</a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,33 @@
+# Copyright Verizon Media. All rights reserved.
+zones:
+  # List all zones and status. Valid status is "success", "warning" or "danger". 
+  # Message should be "OK", "Partial outage", "Degraded service", "Down" or similar short string.
+  - name: "test"
+    status: success
+    message: "OK"
+  - name: "staging"
+    status: success
+    message: "OK"
+  - name: "aws-us-east-1c"
+    status: success
+    message: "OK"
+  - name: "aws-ap-northeast-1a"
+    status: success
+    message: "OK"
+messages:
+  # Detailed operational messages displayed below status overview. The HTML page will only show 
+  # messages < 7 days old while JSON will include everything.
+  # Example:
+  # - date: 2020-02-20
+  #   message: "Issues with query serving in aws.us-east-1c - currently investigating."
+  - date: 2020-03-23
+    message: "The aws-ap-northeast-1a zone in Tokyo, JP region is now online!"
+  - date: 2020-06-26
+    message: "Builds are now working correctly."
+  - date: 2020-10-21
+    message: |
+      A DNS issue in one AWS zone is causing intermittent failures in provisioning new nodes in test zones and aws-us-east-1c.
+      Work around test zone problems by deploying without tests in the Vespa Console.
+      The Vespa Team has implemented a fix, expected to roll out Monday 26. October.
+  - date: 2020-10-26
+    message: Underlying issue has been fixed and all services are back to normal.

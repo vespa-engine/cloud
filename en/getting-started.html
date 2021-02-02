@@ -1,0 +1,135 @@
+---
+# Copyright Verizon Media. All rights reserved.
+title: Getting Started with the Vespa Cloud
+layout: page
+---
+
+<!-- If you change this also make the same change in getting-started-java -->
+
+<p>
+  Follow these steps to deploy your first application to the dev
+  <a href="reference/zones.html">zone</a> in the Vespa Cloud.
+</p>
+<p>
+  There is also <a href="getting-started-java">a version on this</a> that requires Maven and Java
+  if you plan to add Java components to your application.
+</p>
+
+<p>Prerequisites: git, openssl.</p>
+
+<ol class="p-t-14 howto">
+
+  <li>
+    <p><b>Create an application in the Vespa Cloud</b></p>
+    <p>
+      Log in to <a target="_blank" href="http://console.vespa.ai">console.vespa.ai</a> and click "Create application".
+    </p>
+    <p>
+      This requires a Google or GitHub account,
+      and will <b>start your <a href="/pricing#free-trial">free trial</a></b> if you don't already have
+      a Vespa Cloud tenant.
+    </p>
+  </li>
+
+  <li>
+    <p><b>Make a local application source</b></p>
+    <p>To start with the album-recommendation sample app:</p>
+<pre>
+$ git clone https://github.com/vespa-engine/sample-apps.git
+$ cd sample-apps/vespa-cloud/album-recommendation
+</pre>
+  </li>
+
+  <li>
+    <p><b>Create a self-signed certificate</b></p>
+    <p>This certificate and key will be used to send requests to Vespa Cloud later.</p>
+<pre>
+$ openssl req -x509 -nodes -days 14 -newkey rsa:4096 \
+  -subj "/CN=cloud.vespa.example" \
+  -keyout data-plane-private-key.pem -out data-plane-public-cert.pem
+$ mkdir -p src/main/application/security
+$ cp data-plane-public-cert.pem src/main/application/security/clients.pem
+</pre>
+    <p>
+      See the <a href="security-model#data-plane">security model</a> for more details.
+    </p>
+  </li>
+
+  <li>
+    <p><b>Create the application package</b></p>
+<pre>
+$ (cd src/main/application &amp;&amp; zip -r ../../../application.zip .)
+</pre>
+    <p>You can also do this with maven: <code>mvn package</code></p>
+  </li>
+
+  <li>
+    <p><b>Deploy the application</b></p>
+    <p>
+      In the Vespa console, click <em>Deploy</em> on the application created in the start of this guide.
+      In the "Deploy to dev" section, upload <em>application.zip</em> - click <em>Deploy</em>.
+    </p>
+    <p>You can also do this <a href="getting-started-java.html#deploy">on the command line with maven</a>.</p>
+    <p>The first deployment may take a few minutes.</p>
+  </li>
+
+  <li>
+    <p><b>Verify that you can reach the application endpoint</b></p>
+    <p>You can find the endpoint in the console.</p>
+<pre>
+$ ENDPOINT=https://your.endpoint.name
+$ curl --cert data-plane-public-cert.pem --key data-plane-private-key.pem $ENDPOINT
+</pre>
+    <p>You can also <a href="security-model#using-a-browser">do this in a browser</a>.</p>
+  </li>
+
+  <li>
+    <p><b>Write some data</b></p>
+    <p>Write three documents using the <a href="https://docs.vespa.ai/en/document-v1-api-guide.html">document api</a>:</p>
+<pre>
+$ curl --cert data-plane-public-cert.pem --key data-plane-private-key.pem \
+  -H "Content-Type:application/json" --data-binary @src/test/resources/A-Head-Full-of-Dreams.json \
+  $ENDPOINT/document/v1/mynamespace/music/docid/1
+$ curl --cert data-plane-public-cert.pem --key data-plane-private-key.pem \
+  -H "Content-Type:application/json" --data-binary @src/test/resources/Love-Is-Here-To-Stay.json \
+  $ENDPOINT/document/v1/mynamespace/music/docid/2
+$ curl --cert data-plane-public-cert.pem --key data-plane-private-key.pem \
+  -H "Content-Type:application/json" --data-binary @src/test/resources/Hardwired...To-Self-Destruct.json \
+  $ENDPOINT/document/v1/mynamespace/music/docid/3
+</pre>
+  </li>
+
+  <li>
+    <p><b>Send queries</b></p>
+    <p>Send a user profile as a query to get album recommendations:</p>
+<pre>
+$ curl --cert data-plane-public-cert.pem --key data-plane-private-key.pem \
+"$ENDPOINT/search/?ranking=rank_albums&amp;yql=select%20%2A%20from%20sources%20%2A%20where%20sddocname%20contains%20%22music%22%3B&amp;ranking.features.query(user_profile)=%7B%7Bcat%3Apop%7D%3A0.8%2C%7Bcat%3Arock%7D%3A0.2%2C%7Bcat%3Ajazz%7D%3A0.1%7D"
+</pre>
+  </li>
+
+</ol>
+
+
+<h3>Next steps</h3>
+
+<ul class="howto">
+
+  <li>
+    <p><a href="getting-to-production">Set up deployment to production</a>.</p>
+  </li>
+
+  <li>
+    <p><a href="getting-started-java">Try a version of this application with Java components</a>.</p>
+  </li>
+
+  <li>
+    <p>Learn more about Vespa in the <a href="https://docs.vespa.ai">Vespa documentation</a>.</p>
+  </li>
+
+  <li>
+    <p>Follow the <a href="https://blog.vespa.ai/">Vespa Blog</a> for product updates and use cases.</p>
+  </li>
+
+</ul>
+
