@@ -83,11 +83,11 @@ $ mvn clean package vespa:deploy -DapiKey="$API_KEY" -Dinstance=my-instance
     Now is a good time to read <a href="/automated-deployments">automated-deployments</a>,
     as first time deployments takes a few minutes.
     The endpoint URL is printed in the <em>Install application</em> section when the deployment is successful -
-    store this (change <em>root</em> to actual name) for later steps and test it
+    store this for later steps and test it
     (the massive JSON output is expected).
     Also see <a href="/security-model#using-a-browser">using a browser</a>:
 <pre data-test="exec">
-$ ENDPOINT=https://root.album-rec-searcher.vespa-team.aws-us-east-1c.dev.public.vespa.oath.cloud
+$ ENDPOINT=https://my-instance.album-rec-searcher.vespa-team.aws-us-east-1c.dev.public.vespa.oath.cloud
 $ curl --cert ./data-plane-public-cert.pem --key ./data-plane-private-key.pem $ENDPOINT
 </pre>
   </p></li><li><p>
