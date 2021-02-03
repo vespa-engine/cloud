@@ -1,7 +1,7 @@
 - header: Resources
   links:
     - title: Documentation
-      link: en/
+      link: /en/
     - title: Vespa site
       link: https://vespa.ai
     - title: Open Source
