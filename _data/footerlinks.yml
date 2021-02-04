@@ -13,6 +13,7 @@
       link: mailto:info@vespa.ai
     - title: Twitter
       link: https://twitter.com/vespaengine
+      link-check: data-proofer-ignore
     - title: Public issues
       link: https://github.com/vespa-engine/vespa/issues
 

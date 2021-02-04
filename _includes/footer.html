@@ -7,7 +7,7 @@
                     <div class="flex-column">
                         <h4 class="upper section-footer--header">{{column.header}}</h4>
                         {% for link in column.links %}
-                            <a class="section-footer--link" href="{{link.link}}">{{link.title}}</a><br>
+                            <a class="section-footer--link" href="{{link.link}}" {{link.link-check}}>{{link.title}}</a><br>
                         {% endfor %}
                     </div>
                 {% endfor %}

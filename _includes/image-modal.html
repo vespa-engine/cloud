@@ -1,8 +1,8 @@
 {% assign modalid = "now" | date: "%N" %}
-<a href="#open-modal-{{modalid}}"><img src="{{include.image}}" /></a>
+<a href="#open-modal-{{modalid}}" data-proofer-ignore><img src="{{include.image}}" /></a>
 <div id="open-modal-{{modalid}}" class="modal">
     <div class="modal-container">
-        <a href="#close-{{modalid}}" class="close"><i class="d-icon d-close"></i></a>
+        <a href="#close-{{modalid}}" class="close" data-proofer-ignore><i class="d-icon d-close"></i></a>
         <div class="modal-content">
             <img src="{{include.image}}" class="modal-image" />
         </div>
