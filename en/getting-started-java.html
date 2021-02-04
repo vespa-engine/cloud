@@ -78,7 +78,8 @@ $ cp data-plane-public-cert.pem src/main/application/security/clients.pem
 <pre>
 $ mvn package vespa:deploy -DapiKeyFile=$HOME/Downloads/USER.TENANTNAME.pem -Dinstance=my-instance
 </pre>
-<pre data-test="exec" style="display:none">  <!-- Version of the above for automatic testing -->
+<!-- Version of the above for automatic testing -->    
+<pre data-test="exec" style="display:none">
 $ API_KEY=`echo $VESPA_TEAM_API_KEY | openssl base64 -A -a -d`
 $ mvn clean package vespa:deploy -DapiKey="$API_KEY" -Dinstance=my-instance
 </pre>
