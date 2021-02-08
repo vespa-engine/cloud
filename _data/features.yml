@@ -295,3 +295,31 @@
       See <a href=\"en/developer-guide\">the developer guide</a> for more details, and
       <a href=\"en/getting-started\">getting started</a> to start using the Vespa Cloud for development today.
       </p>"
+
+- title: "Universal Configuration"
+  heading: "Universal Configuration"
+  description: "All Vespa.ai features included, no migration."
+  icon: d-lock-open-source
+  id: universal-configuration
+  short: "<p>
+      Application configuration in Vespa self-hosted and Vespa Cloud is exactly the same -
+      all vespa.ai features included, no migration needed!
+      This both eliminates risk and guarantees all the great Vespa.ai features are available, just a deployment away.
+      </p>"
+  long: "<p>
+      Application configuration in Vespa self-hosted and Vespa Cloud is exactly the same -
+      all vespa.ai features included, no migration needed!
+      This both eliminates risk and guarantees all the great Vespa.ai features are available, just a deployment away.
+      </p>
+      <p>
+      Something on ease: docker container on laptop,
+      deploy to self-hosted prod, dev Cloud, prod cloud - all the same!
+      </p>
+      <p>
+      More on <strong>no lock-in</strong>: Open source, no risk, no small print / hidden features.
+      Vespa Cloud is Vespa.ai and more
+      </p>
+      <p>
+      Closing remarks: this is available through the Vespa.ai application package, with schema and services.xml -
+      deployment.xml and resources in services.xml provides the Vespa Cloud features. (Note how mimnimal this is!)
+      </p>"
