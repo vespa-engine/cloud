@@ -5,11 +5,12 @@ layout: page
 ---
 
 <p>
-This guide explains how to dump data from a Vespa cloud application.
+This guide explains how to dump data from a Vespa cloud application, how to copy documents from
+one application to another, and how to do mass updates or removals.
 </p>
 
 <p>
-To get started, find the <em>namespace</em> and <em>document type</em> by listing a few IDs.
+To get started with a data dump, find the <em>namespace</em> and <em>document type</em> by listing a few IDs.
 Hit the <a href="https://docs.vespa.ai/en/reference/document-v1-api-reference.html">/document/v1/</a> ENDPOINT.
 Restrict to one CLUSTER, see <a href="https://docs.vespa.ai/en/reference/services-content.html">content clusters</a>:
 </p>
@@ -22,7 +23,7 @@ $ curl --cert data-plane-public-cert.pem --key data-plane-private-key.pem \
 <p>For ID dump only, use a <a href="https://docs.vespa.ai/en/documents.html#fieldsets">fieldset</a>:</p>
 <pre>
 $ curl --cert data-plane-public-cert.pem --key data-plane-private-key.pem \
-  "$ENDPOINT/document/v1/?cluster=$CLUSTER&fieldSet=%5Bid%5D"
+  "$ENDPOINT/document/v1/?cluster=$CLUSTER&amp;fieldSet=%5Bid%5D"
 </pre>
 
 <p>From an ID, like <em>id:open:doc::open/documentation/schemas.html</em>, extract</p>
@@ -47,28 +48,27 @@ CLUSTER=documentation
 continuation=""
 idx=0
 
-while [ "$continuation" != "continuation=" ]
-do
+while
   ((idx+=1))
   echo "$continuation"
   printf -v out "%05g" $idx
   filename=${NAMESPACE}-${DOCTYPE}-${out}.data.gz
   echo "Fetching data..."
-  curl -s --cert data-plane-public-cert.pem --key data-plane-private-key.pem \
-    "${ENDPOINT}/document/v1/${NAMESPACE}/${DOCTYPE}/docid?wantedDocumentCount=1000&amp;concurrency=4&amp;cluster=${CLUSTER}&amp;${continuation}" | gzip &gt; ${filename}
-  token=`jq -r .continuation &lt;(gunzip -c ${filename})`
-  if [ "${token}" != "null" ]
-  then
-    continuation="continuation=${token}"
-  else
-    continuation="continuation="
-  fi
+  token=$( curl -s --cert data-plane-public-cert.pem --key data-plane-private-key.pem \
+           "${ENDPOINT}/document/v1/${NAMESPACE}/${DOCTYPE}/docid?wantedDocumentCount=1000&amp;concurrency=4&amp;cluster=${CLUSTER}&amp;${continuation}" \
+           | tee &gt;( gzip &gt; ${filename} ) | jq -re .continuation )
+do
+  continuation="continuation=${token}"
 done
 </pre>
 
 <p>
-On <em>concurrency</em>: higher concurrency increases temporal memory use while dumping data, returning more documents per request.
-<em>wantedDocumentCount</em> is max 1000.
+If only a few documents are returned per response, <em>wantedDocumentCount</em> (default 1, max 1024) can be
+specified for a lower bound on the number of documents per response, if that many documents still remain.</p>
+</p><p>
+Specifying <em>concurrency</em> (default 1, max 100) increases throughput, at the cost of resource usage. 
+This also increases the number of documents per response, and <em>could</em> lead to excessive memory usage
+in the HTTP container when many large documents are buffered to be returned in the same response. 
 </p>
 
 
@@ -77,7 +77,7 @@ On <em>concurrency</em>: higher concurrency increases temporal memory use while 
 
 <p>
 Use the <a href="https://docs.vespa.ai/en/vespa-http-client.html">vespa-http-client</a>
-to feed documents in batches to endpoints - example:
+to feed documents in batches to endpoints—example:
 <pre>
 $ gunzip -c open-doc-00001.data.gz | <a href="https://stedolan.github.io/jq/">jq</a> '.documents[]' | \
   java -jar $HOME/github/vespa-engine/vespa/vespa-http-client/target/vespa-http-client-jar-with-dependencies.jar \
@@ -85,14 +85,43 @@ $ gunzip -c open-doc-00001.data.gz | <a href="https://stedolan.github.io/jq/">jq
   --useTls --certificate data-plane-public-cert.pem --privateKey data-plane-private-key.pem
 </pre>
 <p>
-Note that the data dump cannot be directly fed, as extra fields like continuation token are added -
+Note that the data dump cannot be directly fed, as extra fields like continuation token are added—
 hence the <a href="https://stedolan.github.io/jq/">jq</a> command to extract <em>document</em> objects only.
+</p><p>
+It's also possible to feed the stream of documents from one deployment directly to another, by replacing the
+<code>tee &gt;( gzip &gt; ${filename} )<code> in the sample script by the compound parse/feed command above!
 </p>
 
 
 <h2 id="delete">Delete</h2>
 
-<p>To purge all documents, generate a feed with remove-entries for all document IDs, like:</p>
+<p>To remove all documents in a Vespa deployment—or a selection of them—perform a deletion visit.
+Use the <code>DELETE</code> HTTP method, and fetch only the continuation token from the response:
+<pre>
+#!/bin/bash
+
+set -x
+
+# The ENDPOINT must be a regional endpoint, do not use '*.global.public.vespa.oath.cloud/'
+ENDPOINT="https://vespacloud-docsearch.vespa-team.aws-us-east-1c.public.vespa.oath.cloud"
+NAMESPACE=open
+DOCTYPE=doc
+CLUSTER=documentation
+SELECTION='doc.path%3D~%22%5E%2Fold%2F%22'  # doc.path =~ "^/old/" -- all documents under the /old/ directory 
+
+continuation=""
+
+while
+  token=$( curl -X DELETE -s --cert data-plane-public-cert.pem --key data-plane-private-key.pem \
+           "${ENDPOINT}/document/v1/${NAMESPACE}/${DOCTYPE}/docid?selection=${SELECTION}&amp;cluster=${CLUSTER}&amp;${continuation}" \
+           | tee &gt;( jq . &gt; /dev/tty ) | jq -re .continuation )
+do
+  continuation="continuation=${token}"
+done
+</pre>
+<p>Each request will return a response after roughly one minute—change this by specifying <em>timeChunk</em> (default 60).</p>
+
+<p>To purge all documents in a data dump (above), generate a feed with <code>remove</code>-entries for each document ID, like:</p>
 <pre>
 $ gunzip -c open-doc-00001.data.gz | jq '[ .documents[] | {remove: .id} ]' | head
 
@@ -104,11 +133,41 @@ $ gunzip -c open-doc-00001.data.gz | jq '[ .documents[] | {remove: .id} ]' | hea
     "remove": "id:open:doc::open/documentation/securing-your-vespa-installation.html"
   },
 </pre>
-Hence, extracts all IDs and feed to the endpoint to remove:
+Complete example for a single chunk:
 <pre>
 $ gunzip -c open-doc-00001.data.gz | jq '[ .documents[] | {remove: .id} ]' | \
   java -jar $HOME/github/vespa-engine/vespa/vespa-http-client/target/vespa-http-client-jar-with-dependencies.jar \
   --endpoint $ENDPOINT --disable-hostname-verification \
   --useTls --certificate data-plane-public-cert.pem --privateKey data-plane-private-key.pem
 </pre>
-<p>Pro Tip: Reduce file size by only dumping IDs using <code>&fieldSet=%5Bid%5D</code> (above).</p>
+
+
+<h2 id="update">Update</h2>
+
+<p>To update all documents in a Vespa deployment—or a selection of them—perform an update visit.
+Use the <code>PUT</code> HTTP method, and specify a partial update in the request body:
+<pre>
+#!/bin/bash
+
+set -x
+
+# The ENDPOINT must be a regional endpoint, do not use '*.global.public.vespa.oath.cloud/'
+ENDPOINT="https://vespacloud-docsearch.vespa-team.aws-us-east-1c.public.vespa.oath.cloud"
+NAMESPACE=open
+DOCTYPE=doc
+CLUSTER=documentation
+SELECTION='doc.inlinks%3D%3D%22some-url%22'  # doc.inlinks == "some-url" -- the weightedset&lt;string&gt; inlinks has the key "some-url"
+
+continuation=""
+
+while
+  token=$( curl -X PUT -s --cert data-plane-public-cert.pem --key data-plane-private-key.pem \
+           --data '{ "fields": { "inlinks": { "remove": { "some-url": 0 } } } }' \
+           "${ENDPOINT}/document/v1/${NAMESPACE}/${DOCTYPE}/docid?selection=${SELECTION}&amp;cluster=${CLUSTER}&amp;${continuation}" \
+           | tee &gt;( jq . &gt; /dev/tty ) | jq -re .continuation )
+do
+  continuation="continuation=${token}"
+done
+</pre>
+<p>Each request will return a response after roughly one minute—change this by specifying <em>timeChunk</em> (default 60).</p>
+
