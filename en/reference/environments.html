@@ -13,36 +13,43 @@ A <a href="zones">list of all zones</a> is also available.
 </p>
 
 <table class="table">
-  <tr><th style="width:100px">Name</th><th>Description</th><th>Expiry</th><th>Cluster sizes</th></tr>
-  <tr id="dev">
-    <td><code>dev</code></td>
+  <thead>
+    <tr><th style="width:100px">Name</th><th>Description</th><th>Expiry</th><th>Cluster sizes</th></tr>
+  </thead>
+  <tbody>
+  <tr>
+    <td id="dev"><code>dev</code></td>
     <td>Used for manual development testing.</td>
-    <td>14 days</td>
+    <td>7 days</td> <!-- https://git.vzbuilders.com/vespa/vespa-yahoo/blob/master/hosted/zone-specification/src/main/java/com/yahoo/vespa/hosted/spec/Zones.java#L1291 -->
     <td><code>1</code></td>
-  </tr><tr id="perf">
-    <td><code>perf</code></td>
+  </tr><tr>
+    <td id="perf"><code>perf</code></td>
     <td>Used for manual performance testing.</td>
     <td>7 days</td>
     <td><code>min(3, spec)</code></td>
-  </tr><tr id="test">
-    <td><code>test</code></td>
+  </tr><tr>
+    <td id="test"><code>test</code></td>
     <td>Used for <a href="testing#system-tests">automated system tests</a>.</td>
     <td>2 hours</td>
     <td><code>1</code></td>
-  </tr><tr id="staging">
-    <td><code>staging</code></td>
+  </tr><tr>
+    <td id="staging"><code>staging</code></td>
     <td>Used for <a href="testing#staging-tests">automated staging tests</a>.</td>
     <td>6 hours</td>
     <td><code>min(max(2, 0.1 * spec), spec)</code></td>
-  </tr><tr id="prod">
-    <td><code>prod</code></td>
+  </tr><tr>
+    <td id="prod"><code>prod</code></td>
     <td>Hosts all production deployments.</td>
     <td>No expiry</td>
     <td><code>max(2, spec)</code></td>
   </tr>
+  </tbody>
 </table>
 
+<!--
 
+
+-->
 
 <h2 id="production">Production</h2>
 
