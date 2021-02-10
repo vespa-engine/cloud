@@ -11,19 +11,21 @@ and a <em>region</em>.
 This lists all the zones which can be deployed to manually (dev and perf),
 deployed to in production using <a href="deployment">deployment.xml</a> (prod),
 or which is <a href="../automated-deployments">implicitly used to verify prod deployments</a>
-(test and staging).
+(test and staging):
 </p>
-
-<p>
-Available zones:
 <table class="table table-striped">
-<tr><th style="width:80px">Environment<th>Region</tr>
-<tr><td><a href="environments#dev">dev</a>        <td>aws-us-east-1c</tr>
-<tr><td><a href="environments#test">test</a>      <td>aws-us-east-1c</tr>
-<tr><td><a href="environments#staging">staging</a><td>aws-us-east-1c</tr>
-<tr><td><a href="environments#prod">prod</a>      <td>aws-us-east-1c</tr>
-<tr><td><a href="environments#prod">prod</a>      <td>aws-ap-northeast-1a</tr>
-<tbody>
+  <thead>
+    <tr><th style="width:80px">Environment</th><th>Region</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><a href="environments#dev">dev</a>        <td>aws-us-east-1c</tr>
+    <tr><td><a href="environments#test">test</a>      <td>aws-us-east-1c</tr>
+    <tr><td><a href="environments#staging">staging</a><td>aws-us-east-1c</tr>
+    <tr><td><a href="environments#prod">prod</a>      <td>aws-us-east-1c</tr>
+    <tr><td><a href="environments#prod">prod</a>      <td>aws-us-west-2a</tr>
+    <tr><td><a href="environments#prod">prod</a>      <td>aws-eu-west-1a</tr>
+    <tr><td><a href="environments#prod">prod</a>      <td>aws-ap-northeast-1a</tr>
+  </tbody>
 </table>
 
 <p>If your deployment requires zones not listed here, contact us to have it made available.</p>
