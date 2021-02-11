@@ -89,31 +89,89 @@ which is a combination of an <em>environment</em> and a <em>region</em>.
   use <a href="services#instance-environment-and-region-variants">
   environment and region variants</a>.
 </p>
+<p>
+  Use the <em>application</em> view in the Vespa Console to list instances in the various zones.
+</p>
 
 
 
 <h2 id="dev-and-perf-environments">Dev and Perf environments</h2>
 <p>
   Instances in <em>dev</em> and <em>perf</em> environments are deployed to manually,
-  used for manual development/performance testing.
-</p>
-<p>
-  In order to easily deploy application packages from prod applications,
-  resources are downscaled in <em>dev</em> and <em>perf</em>.
-  To control the resources you get in these zones,
-  specify them explicitly for the environment in question (<em>dev</em> or <em>perf</em>) as described in
-  <a href="services#instance-environment-and-region-variants">environment and region variants</a>.
-</p>
-<p>
+  using <a href="vespa-cloud-api">mvn vespa:deploy</a>.
+  These environments are used for manual development/performance testing.
   The <em>dev</em> environment is default, to deploy to the <em>perf</em> environment, use:
 </p>
 <pre>
 $ mvn package vespa:deploy -Denvironment=perf
 </pre>
+<p>
+  <em>dev</em> and <em>perf</em> are optimized for cost and developer friendliness/ease:
+</p>
+<ul class="howto">
+  <li>
+    In order to easily deploy application packages from prod applications,
+    resources are downscaled in <em>dev</em> and <em>perf</em> -
+    see cluster size in the table above.
+    To control the resources you get in these zones,
+    specify them explicitly for the environment in question (<em>dev</em> or <em>perf</em>) as described in
+    <a href="services#instance-environment-and-region-variants">environment and region variants</a>, e.g:
+<pre>
+&lt;nodes deploy:environment="dev" count="3"/&gt;
+</pre>
+  </li>
+  <li>
+    The latest active Vespa version is used when deploying.
+    An instance is not upgraded, unless deployed to.
+    This means that some times, a deploy takes longer than normal,
+    as it invokes a Vespa upgrade before deploying the application package.
+  </li>
+  <li>
+    Instances in these environments are expired automatically after 7 days of last deployment -
+    data is then auto deleted.
+    Make sure to deploy to the instance at least weekly to keep it alive.
+  </li>
+</ul>
+<p>
+  <strong>Important note:</strong> <em>dev</em> and <em>perf</em> environments do not have availability guarantees.
+  Also, the default redundancy in <em>dev</em> is 1 due to the node count downscaling -
+  if nodes fail / are swapped, data is lost.
+  Do not use instances in <em>dev</em> or <em>perf</em> for other purposes than manual testing.
+</p>
 
 
 
-<h2 id="test-and-staging-environments">Test and staging environments</h2>
+<h2 id="production-environment">Production environment</h2>
+<p>
+  <em>prod</em> instances are deployed to using <a href="vespa-cloud-api">mvn vespa:submit</a>.
+  Use <a href="deployment">deployment.xml</a> to configure with regions to submit to.
+  Find details in <a href="/en/automated-deployments">automated deployments</a>.
+</p>
+<p>
+  <em>prod</em> is optimized for safety, operability and production stability:
+</p>
+<ul class="howto">
+  <li>
+    Operating system and Vespa software is continuously upgraded,
+    taking down one node (or a subset) at a time.
+    This means, instances in <em>prod</em> must have at least one more node than required to handle peak load.
+  </li>
+  <li>
+    A cluster is a <em>container</em> or <em>content</em> cluster,
+    and a regular application has a container <em>and</em> a content cluster.
+    A minimal, typical <em>prod</em> deployment therefore has 4 nodes,
+    as the minimum cluster size is 2 (see table above).
+  </li>
+  <li>
+    Submissions to <em>prod</em> invoke automatic testing using ephemeral instances
+    in <em>test</em> and <em>staging</em> environments.
+    Refer to <a href="/en/automated-deployments">automated deployments</a>.
+  </li>
+</ul>
+
+
+
+<h2 id="test-and-staging-environments">Test and Staging environments</h2>
 <p>
   Whenever an application package is submitted to <em>prod</em>,
   instances are set up in <em>test</em> and <em>staging</em> to
@@ -121,31 +179,6 @@ $ mvn package vespa:deploy -Denvironment=perf
   See <a href="testing#system-tests">automated system tests</a> and
   <a href="testing#staging-tests">automated staging tests</a>.
 </p>
-
-
-
-<h2 id="production-environment">Production environment</h2>
-<p>
-  Hosts all production deployments.
-  deployed to in production using <a href="deployment">deployment.xml</a> (prod),
-</p>
-<p>
-  Deployments in <em>prod</em> must have at least one more node than required to handle peak load.
-  A cluster is a <em>container</em> or <em>content</em> cluster,
-  and a regular application has a container <em>and</em> a content cluster.
-  A minimal, typical <em>prod</em> deployment therefore has 4 nodes.
-</p>
-
-
-<h2 id="vespa-version">Vespa version</h2>
-<p>
-  In <em>dev</em> and <em>perf</em>, the latest active Vespa version is used when deploying.
-  An instance is not upgraded, unless deployed to.
-  This means that some times, a deploy takes longer than normal,
-  as it invokes a Vespa upgrade before deploying the application package.
-</p>
-
-
 
 
 
