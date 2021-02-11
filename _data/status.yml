@@ -2,6 +2,12 @@
 zones:
   # List all zones and status. Valid status is "success", "warning" or "danger". 
   # Message should be "OK", "Partial outage", "Degraded service", "Down" or similar short string.
+  - name: "dev"
+    status: success
+    message: "OK"
+  - name: "perf"
+    status: success
+    message: "OK"
   - name: "test"
     status: success
     message: "OK"
@@ -9,6 +15,12 @@ zones:
     status: success
     message: "OK"
   - name: "aws-us-east-1c"
+    status: success
+    message: "OK"
+  - name: "aws-us-west-2a"
+    status: success
+    message: "OK"
+  - name: "aws-eu-west-1a"
     status: success
     message: "OK"
   - name: "aws-ap-northeast-1a"
@@ -31,3 +43,5 @@ messages:
       The Vespa Team has implemented a fix, expected to roll out Monday 26. October.
   - date: 2020-10-26
     message: Underlying issue has been fixed and all services are back to normal.
+  - date: 2021-02-11
+    message: "The aws-us-west-2a and aws-eu-west-1a zones are now online!"
