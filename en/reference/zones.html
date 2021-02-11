@@ -1,41 +1,151 @@
 ---
 # Copyright Verizon Media. All rights reserved.
-title: Zones
+title: "Zones: environments and regions"
 layout: page
 ---
 
+<!-- ToDo: move to style sheet later -->
+<style>
+    td { vertical-align: top; }
+</style>
+
+
 <p>
-An application can be deployed to a <em>zone</em>,
-which is a combination of an <a href="environments">environment</a>
-and a <em>region</em>.
-This lists all the zones which can be deployed to manually (dev and perf),
-deployed to in production using <a href="deployment">deployment.xml</a> (prod),
-or which is <a href="../automated-deployments">implicitly used to verify prod deployments</a>
-(test and staging):
+An application can be deployed to one or more <em>zones</em>,
+which is a combination of an <em>environment</em> and a <em>region</em>.
 </p>
-<table class="table table-striped">
+
+<table class="table">
   <thead>
-    <tr><th style="width:80px">Environment</th><th>Region</th></tr>
+  <tr><th>Name</th><th>Expiry</th><th>Cluster sizes</th><th>Regions</th></tr>
   </thead>
   <tbody>
-    <tr><td><a href="environments#dev">dev</a>        <td>aws-us-east-1c</tr>
-    <tr><td><a href="environments#perf">perf</a>      <td>aws-us-east-1c</tr>
-    <tr><td><a href="environments#test">test</a>      <td>aws-us-east-1c</tr>
-    <tr><td><a href="environments#staging">staging</a><td>aws-us-east-1c</tr>
-    <tr><td><a href="environments#prod">prod</a>      <td>aws-us-east-1c</tr>
-    <tr><td><a href="environments#prod">prod</a>      <td>aws-us-west-2a</tr>
-    <tr><td><a href="environments#prod">prod</a>      <td>aws-eu-west-1a</tr>
-    <tr><td><a href="environments#prod">prod</a>      <td>aws-ap-northeast-1a</tr>
+  <tr>
+    <td id="dev">dev</td>
+    <td>7 days</td> <!-- https://git.vzbuilders.com/vespa/vespa-yahoo/blob/master/hosted/zone-specification/src/main/java/com/yahoo/vespa/hosted/spec/Zones.java#L1291 -->
+    <td>1</td>
+    <td>
+      <table class="table">
+        <tbody>
+        <tr><td>aws-us-east-1c</td></tr>
+        </tbody>
+      </table>
+    </td>
+  </tr><tr>
+    <td id="perf">perf</td>
+    <td>7 days</td>
+    <td>min(3, spec)</td>
+    <td>
+      <table class="table">
+        <tbody>
+        <tr><td>aws-us-east-1c</td></tr>
+        </tbody>
+      </table>
+    </td>
+  </tr><tr>
+    <td id="test">test</td>
+    <td>2 hours</td>
+    <td>1</td>
+    <td>
+      <table class="table">
+        <tbody>
+        <tr><td>aws-us-east-1c</td></tr>
+        </tbody>
+      </table>
+    </td>
+  </tr><tr>
+    <td id="staging">staging</td>
+    <td>6 hours</td>
+    <td>min(max(2, 0.1 * spec), spec)</td>
+    <td>
+      <table class="table">
+        <tbody>
+        <tr><td>aws-us-east-1c</td></tr>
+        </tbody>
+      </table>
+    </td>
+  </tr><tr>
+    <td id="prod">prod</td>
+    <td>No expiry</td>
+    <td>max(2, spec)</td>
+    <td>
+      <table class="table">
+        <tbody>
+          <tr><td>aws-us-east-1c</td></tr>
+          <tr><td>aws-us-west-2a</td></tr>
+          <tr><td>aws-eu-west-1a</td></tr>
+          <tr><td>aws-ap-northeast-1a</td></tr>
+        </tbody>
+      </table>
+    </td>
+  </tr>
   </tbody>
 </table>
-
-<p>If your deployment requires zones not listed here, contact us to have it made available.</p>
-
 <p>
-If the application application requires zone-specific configuration,
-use <a href="services#instance-environment-and-region-variants">
-environment and region variants</a>.
+  If your deployment requires zones not listed here, contact the Vespa Team to have it made available.
 </p>
+<p>
+  If the application requires instance/zone-specific configuration,
+  use <a href="services#instance-environment-and-region-variants">
+  environment and region variants</a>.
+</p>
+
+
+
+<h2 id="dev-and-perf-environments">Dev and Perf environments</h2>
+<p>
+  Instances in <em>dev</em> and <em>perf</em> environments are deployed to manually,
+  used for manual development/performance testing.
+</p>
+<p>
+  In order to easily deploy application packages from prod applications,
+  resources are downscaled in <em>dev</em> and <em>perf</em>.
+  To control the resources you get in these zones,
+  specify them explicitly for the environment in question (<em>dev</em> or <em>perf</em>) as described in
+  <a href="services#instance-environment-and-region-variants">environment and region variants</a>.
+</p>
+<p>
+  The <em>dev</em> environment is default, to deploy to the <em>perf</em> environment, use:
+</p>
+<pre>
+$ mvn package vespa:deploy -Denvironment=perf
+</pre>
+
+
+
+<h2 id="test-and-staging-environments">Test and staging environments</h2>
+<p>
+  Whenever an application package is submitted to <em>prod</em>,
+  instances are set up in <em>test</em> and <em>staging</em> to
+  <a href="../automated-deployments">verify prod deployments</a>.
+  See <a href="testing#system-tests">automated system tests</a> and
+  <a href="testing#staging-tests">automated staging tests</a>.
+</p>
+
+
+
+<h2 id="production-environment">Production environment</h2>
+<p>
+  Hosts all production deployments.
+  deployed to in production using <a href="deployment">deployment.xml</a> (prod),
+</p>
+<p>
+  Deployments in <em>prod</em> must have at least one more node than required to handle peak load.
+  A cluster is a <em>container</em> or <em>content</em> cluster,
+  and a regular application has a container <em>and</em> a content cluster.
+  A minimal, typical <em>prod</em> deployment therefore has 4 nodes.
+</p>
+
+
+<h2 id="vespa-version">Vespa version</h2>
+<p>
+  In <em>dev</em> and <em>perf</em>, the latest active Vespa version is used when deploying.
+  An instance is not upgraded, unless deployed to.
+  This means that some times, a deploy takes longer than normal,
+  as it invokes a Vespa upgrade before deploying the application package.
+</p>
+
+
 
 
 

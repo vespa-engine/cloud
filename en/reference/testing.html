@@ -113,8 +113,9 @@ This runs a system test against an instance in the <em>dev</em> environment on V
 
 <p>
 The default behavior of <code>mvn package vespa:deploy</code> is to deploy to the
-<a href="environments#dev">dev</a> environment,
-and the default behavior of <code>mvn test -Dtest.categories=system</code> is to run system tests against this dev deployment.
+<a href="zones#dev-and-perf-environments">dev</a> environment,
+and the default behavior of <code>mvn test -Dtest.categories=system</code>
+is to run system tests against this dev deployment.
 The <em>tenant</em> and <em>application</em> properties (can be set in <em>pom.xml</em>),
 together with the <em>instance</em> property which defaults to the current user's username,
 determines the deployment to create or test.
@@ -126,7 +127,7 @@ determines the deployment to create or test.
 
 <p>
 During <a href="../automated-deployments">automated tests</a>,
-a fresh deployment is made to the <a href="environments#test">test environment</a>.
+a fresh deployment is made to the <a href="zones#test-and-staging-environments">test environment</a>.
 When tests are run, the endpoints from the test deployment are used.
 The test deployment is empty when the test execution begins,
 documents must be fed as part of the system test.
@@ -192,7 +193,8 @@ The staging test then consists of the following steps:
 </p>
 
 <ol class="howto">
-  <li>Deploy the initial pair <code>X, Y</code> to the <a href="environments#staging">staging environment</a>.</li>
+  <li>Deploy the initial pair <code>X, Y</code> to the
+    <a href="zones#test-and-staging-environments">staging environment</a>.</li>
   <li>Populate the deployment with data, making it reasonably similar to a production deployment.
       This is done by the <code>@StagingSetup</code>-annotated code, which typically feeds a set of static documents.</li>
   <li>Upgrade the deployment to the target pair <code>X+1, Y+1</code>.</li>

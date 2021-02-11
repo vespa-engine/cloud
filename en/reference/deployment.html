@@ -169,7 +169,8 @@ in the PT time zone:</p>
 <table class="table">
   <tr>
   <td><code>&lt;deployment&gt;</code> <code>&lt;instance&gt;</code></td>
-  <td>If present, the application is deployed to the <a href="environments.html#test"><code>test</code></a> environment,
+  <td>If present, the application is deployed to the
+    <a href="zones#test-and-staging-environments"><code>test</code></a> environment,
     and system tested there, even if no prod zones are deployed to.
     If present in an <code>&lt;instance&gt;</code> element, system tests are run for that specific instance before any
     production deployments of the instance may proceed — otherwise, previous system tests for any instance are acceptable.</td>
@@ -187,7 +188,8 @@ in the PT time zone:</p>
 
 <p>
 In <code>&lt;deployment&gt;</code>, or <code>&lt;instance&gt;</code>.
-If present, the application is deployed to the <a href="environments.html#staging"><code>staging</code></a> environment,
+If present, the application is deployed to the
+<a href="zones#test-and-staging-environments"><code>staging</code></a> environment,
 and tested there, even if no prod zones are deployed to.
 If present in an <code>&lt;instance&gt;</code> element, staging tests are run for that specific instance before any
 production deployments of the instance may proceed — otherwise, previous staging tests for any instance are acceptable.
