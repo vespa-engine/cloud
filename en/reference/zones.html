@@ -59,7 +59,7 @@ With a tenant name <em>foo</em> and an application named <em>bar</em>,
 the routing status for the <em>default</em> instance of the application in
 zone <em>prod.aws-us-east-1c</em> can inspected at the following path:
 <pre>
-$ curl https://console.vespa.oath.cloud/api/routing/v1/status/tenant/foo/application/bar/instance/default/environment/prod/region/aws-us-east-1c | jq .
+$ curl https://api.vespa-external.aws.oath.cloud/routing/v1/status/tenant/foo/application/bar/instance/default/environment/prod/region/aws-us-east-1c | jq .
 {
   "deployments": [
     {
@@ -89,7 +89,7 @@ a zone can be manully set out to prevent it from receiving requests:
 </p>
 
 <pre>
-$ curl -XPOST https://console.vespa.oath.cloud/api/routing/v1/inactive/tenant/foo/application/bar/instance/default/environment/prod/region/aws-us-east-1c | jq .
+$ curl -XPOST https://api.vespa-external.aws.oath.cloud/routing/v1/inactive/tenant/foo/application/bar/instance/default/environment/prod/region/aws-us-east-1c | jq .
 {
   "message": "Set global routing status for foo.bar in prod.aws-us-east-1c to OUT"
 }
@@ -102,7 +102,7 @@ $ curl -XPOST https://console.vespa.oath.cloud/api/routing/v1/inactive/tenant/fo
 
 <p>To set the zone back in and have it continue receiving requests:</p>
 <pre>
-$ curl -XDELETE https://console.vespa.oath.cloud/api/routing/v1/inactive/tenant/foo/application/bar/instance/default/environment/prod/region/aws-us-east-1c | jq .
+$ curl -XDELETE https://api.vespa-external.aws.oath.cloud/routing/v1/inactive/tenant/foo/application/bar/instance/default/environment/prod/region/aws-us-east-1c | jq .
 {
   "message": "Set global routing status for foo.bar in prod.aws-us-east-1c to IN"
 }
