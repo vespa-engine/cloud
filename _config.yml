@@ -1,7 +1,4 @@
 # Copyright Verizon Media. All rights reserved.
-# Global settings
-exclude:
-    - test
 
 # Site settings
 title: Vespa Cloud
@@ -34,8 +31,16 @@ search:
 markdown: kramdown
 
 exclude: # avoid regenerating loop
+    - Gemfile
+    - Gemfile.lock
+    - node_modules
+    - vendor/bundle/
+    - vendor/cache/
+    - vendor/gems/
+    - vendor/ruby/
     - cloud_index.json
     - .idea
+    - test
 
 plugins:
     - jekyll-redirect-from
