@@ -10,10 +10,12 @@ module Jekyll
         priority :lowest
 
         def generate(site)
-            namespace = site.config["search"]["namespace"]
+            namespace  = site.config["search"]["namespace"]
+            excluded   = ["/redirects.json"]
             operations = []
+
             site.pages.each do |page|
-                if page.data["index"] == true
+                if page.data["index"] == true && !excluded.include?(page.url)
                     operations.push({
                         :fields => {
                             :path => page.url,
