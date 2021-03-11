@@ -11,7 +11,12 @@ module Jekyll
 
         def generate(site)
             namespace  = site.config["search"]["namespace"]
-            noindex    = ["/redirects.json"]
+            noindex    = ["/redirects.json",
+                          "/status.json",
+                          "/css/denali-theme-vespa-light.css",
+                          "/css/denali-theme-vespa.css",
+                          "/css/style-light.css",
+                          "/css/style.css"]
             operations = []
 
             site.pages.each do |page|
