@@ -244,15 +244,17 @@
   icon: d-tools
   id: developer-cloud
   short: "<p>
-      Built by developers for developers.
-      Develop code and configuration and deploy exactly the same package to an instance running on your computer,
-      Vespa Dev Cloud or Vespa Production.
-      All features from Vespa.ai included; no extra cost or licenses.
+      The Vespa Cloud includes a development zone which lets developers deploy new applications and copies of
+      running application by a single command, ensuring they can spend their time productively.
+      Application copies are scaled down automatically and expired when not used, ensuring cost stays low
+      while making it effortless for developers to experiment.
+      All features of Vespa are included; no extra cost or licenses.
       </p>
       <p>&nbsp;</p>
       <p>
-      The Vespa Cloud lets developers deploy new applications and application copies by a single command,
-      ensuring they can spend their time productively.
+      The development zone allows you to deploy applications running on your own data centers as well -
+      even teams that run their own instances in production often use the Vespa Cloud for development
+      as it makes their teams more efficient.
       </p>"
   long: "<p>
       The Vespa Cloud lets developers deploy new applications by a single command - whether they
