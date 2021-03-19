@@ -72,15 +72,18 @@
   icon: d-handshake
   id: support
   short: "<p>
-      Tuning performance on systems that mixes computation and data is a unique challenge with many subtleties.
-      Expert tuning using live instrumentation can often reduce cost by 50%.
-      Annual tune-up by Vespa Performance team this is included on Vespa Cloud.
+      Formal support by the very team that develops Vespa is included when you use the Vespa Cloud.
+      We guarantee responses by next business day, and since all applications run in a controlled environment
+      where we have access to detailed telemetry we are able to resolve most problems quickly - often before
+      they become observable by you or your users.
       </p>
       <p>&nbsp;</p>
       <p>
-      Using the Vespa Cloud gives you access to the world's best Vespa support
-      by the very team that develops Vespa in an environment
-      that allows us to provide detailed support without any delay.
+      But we don't stop there. Tuning performance on systems that mixes computation and data is a unique
+      challenge with many subtleties, and expert tuning using live instrumentation can often reduce cost by 50%.
+      When you deploy to the Vespa Cloud we also include enrollment in the annual tune-up program provided
+      by the Vespa Performance team, which will ensure that your application stays efficient even as data and
+      usage keeps evolving.
       </p>"
   long: "<p>
       Using the Vespa Cloud gives you access to the world's best Vespa support, period, and there's no
