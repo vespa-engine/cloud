@@ -46,4 +46,4 @@ messages:
   - date: 2021-02-11
     message: "The aws-us-west-2a and aws-eu-west-1a zones are now online!"
   - date: 2021-03-24
-    message: Issues with certificate issuer: Impact is that no new applications can be deployed to Vespa Cloud.
+    message: "Issues with certificate issuer: Impact is that no new applications can be deployed to Vespa Cloud."
