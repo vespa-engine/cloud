@@ -51,5 +51,5 @@ messages:
     message: "The aws-us-west-2a and aws-eu-west-1a zones are now online!"
     status: success
   - date: 2021-03-24
-    message: "External certificate issuer outage: No new applications can be deployed."
-    status: warning
+    message: "External certificate issuer has been resolved: New applications can be deployed."
+    status: success
