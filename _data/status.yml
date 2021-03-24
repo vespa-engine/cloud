@@ -3,11 +3,11 @@ zones:
   # List all zones and status. Valid status is "success", "warning" or "danger". 
   # Message should be "OK", "Partial outage", "Degraded service", "Down" or similar short string.
   - name: "dev"
-    status: warning
-    message: "Degraded service"
+    status: success
+    message: "OK"
   - name: "perf"
-    status: warning
-    message: "Degraded service"
+    status: success
+    message: "OK"
   - name: "test"
     status: success
     message: "OK"
@@ -15,17 +15,17 @@ zones:
     status: success
     message: "OK"
   - name: "aws-us-east-1c"
-    status: warning
-    message: "Degraded service"
+    status: success
+    message: "OK"
   - name: "aws-us-west-2a"
-    status: warning
-    message: "Degraded service"
+    status: success
+    message: "OK"
   - name: "aws-eu-west-1a"
-    status: warning
-    message: "Degraded service"
+    status: success
+    message: "OK"
   - name: "aws-ap-northeast-1a"
-    status: warning
-    message: "Degraded service"
+    status: success
+    message: "OK"
 messages:
   # Detailed operational messages displayed below status overview. The HTML page will only show 
   # messages < 7 days old while JSON will include everything.
