@@ -34,16 +34,22 @@ messages:
   #   message: "Issues with query serving in aws.us-east-1c - currently investigating."
   - date: 2020-03-23
     message: "The aws-ap-northeast-1a zone in Tokyo, JP region is now online!"
+    status: success
   - date: 2020-06-26
     message: "Builds are now working correctly."
+    status: success
   - date: 2020-10-21
     message: |
       A DNS issue in one AWS zone is causing intermittent failures in provisioning new nodes in test zones and aws-us-east-1c.
       Work around test zone problems by deploying without tests in the Vespa Console.
       The Vespa Team has implemented a fix, expected to roll out Monday 26. October.
+    status: warning
   - date: 2020-10-26
     message: Underlying issue has been fixed and all services are back to normal.
+    status: success
   - date: 2021-02-11
     message: "The aws-us-west-2a and aws-eu-west-1a zones are now online!"
+    status: success
   - date: 2021-03-24
-    message: "Issues with certificate issuer: Impact is that no new applications can be deployed to Vespa Cloud."
+    message: "External certificate issuer outage: No new applications can be deployed."
+    status: warning
