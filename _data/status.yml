@@ -29,6 +29,7 @@ zones:
 messages:
   # Detailed operational messages displayed below status overview. The HTML page will only show 
   # messages < 7 days old while JSON will include everything.
+  # Add messages to the end, /status and console will sort with newest first regardless
   # Example:
   # - date: 2020-02-20
   #   message: "Issues with query serving in aws.us-east-1c - currently investigating."
