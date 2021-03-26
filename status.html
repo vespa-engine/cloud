@@ -11,61 +11,75 @@ layout: page
             }
 </style>
 
-            <p>Last updated: {{ site.time }}</p>
+            <p>Last updated: {{ site.time | to_utc | date: '%Y-%m-%d %H:%M %Z' }}</p>
             <p>
                 <table class="table">
                     <thead>
                         <tr><th><p>Zone</p></th><th><p>Status</p></th></tr>
                     </thead>
-                    {% if site.data.status.zones.size > 0 %}
+                    {%- if site.data.status.zones.size > 0 -%}
                     <tbody>
-                        {% for zone in site.data.status.zones %}
-                        {% assign status_lc = zone.status | lc %}
+                        {%- for zone in site.data.status.zones -%}
+                        {%- assign status_lc = zone.status | lc -%}
                         <tr>
                             <td>{{ zone.name }}</td>
                             <td>
-                                {% if status_lc == 'success' %}
+                                {%- if status_lc == 'success' -%}
                                 <span class="d-icon d-check" style="color:#0c0"></span>
-                                {% else %}
+                                {%- else -%}
                                 <span class="d-icon d-warning" style="color:#f90"></span>
-                                {% endif %}
+                                {%- endif -%}
                                 {{ zone.message }}
                             </td>
                         </tr>
-                        {% endfor %}
+                        {%- endfor -%}
                     </tbody>
-                    {% endif %}
+                    {%- endif -%}
                 </table>
             </p>
 
-            <h3>Messages</h3>
+            <h3>Messages (last 30 days)</h3>
             <div style="overflow: auto">
-            {% if site.data.status.messages[0] %}
-            {% assign datelimit = 'now' | date: '%s' | minus:604800000 %}
-            {% assign sorted_messages = site.data.status.messages | sort: 'date' | reverse %}
+            {%- assign num_messages = 0 -%}
+            {%- if site.data.status.messages[0] -%}
+            {%- assign datelimit = 'now' | date: '%s' | minus:259200 -%}
+            {%- assign sorted_messages = site.data.status.messages | sort: 'date' | reverse -%}
             <table class="table">
-            {% for message in sorted_messages %}
-                {% assign epoch = message.date | date: '%s' | ceil %}
-                {% if epoch >= datelimit %}
+            {%- for message in sorted_messages -%}
+                {%- assign timestamp = message.date | date: '%s' | ceil -%}
+                {%- assign date = message.date | date: '%Y-%m-%d' -%}
+                {%- assign time = message.date | date: '%R %Z' -%}
+                {%- assign hour = message.date | date: '%k' -%}
+                {%- assign minutes = message.date | date: '%M' -%}
+                {%- if timestamp >= datelimit -%}
+                {%- assign num_messages = num_message | plus: 1 -%}
                 <tr>
-                    <td style="white-space: nowrap; width: 100px">{{ message.date }}</td>
+                    <td style="white-space: nowrap; width: 100px">
+                        {{ date }}
+                        {%- if hour != '0' and minutes != '00' -%}
+                        <br>({{time}})
+                        {%- endif -%}
+                    </td>
                     <td>
-                    {% if message.status == 'success' %}
+                    {%- if message.status == 'success' -%}
                     <span class="d-icon d-check" style="color:#0c0"></span>
-                    {% else %}
+                    {%- else -%}
                     <span class="d-icon d-warning" style="color:#f90"></span>
-                    {% endif %}
+                    {%- endif -%}
                     </td>
                     <td>
                     {{ message.message }}
                     </td>
                 </tr>
-                {% endif %}
-            {% endfor %}
+                {%- endif -%}
+            {%- endfor -%}
+            {%- if num_messages == 0 -%}
+                <tr><td numspan="3">No updates.</td></tr>
+            {%- endif -%}
             </table>
-            {% else %}
+            {%- else -%}
             <p>
                 No updates.
             </p>
-            {% endif %}
+            {%- endif -%}
             </div>
