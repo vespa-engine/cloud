@@ -1,6 +1,7 @@
 ---
-layout: status
+# Copyright Verizon Media. All rights reserved.
 # Data for this page is found in _data/status.yml
+layout: status
 ---
 {
     "last-updated": "{{ 'now' | date: '%s' }}",
