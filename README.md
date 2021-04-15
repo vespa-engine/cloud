@@ -1,6 +1,7 @@
 # Vespa Cloud
+[![Vespa Cloud Documentation Search Feed](https://github.com/vespa-engine/cloud/actions/workflows/feed.yml/badge.svg)](https://github.com/vespa-engine/cloud/actions/workflows/feed.yml)
+[![/cloud link checker](https://cd.screwdriver.cd/pipelines/7036/link-checker-cloud/badge)](https://cd.screwdriver.cd/pipelines/7036/)
 
-[![Vespa Cloud Documentation Search Feed](https://github.com/vespa-engine/cloud/workflows/Vespa%20Cloud%20Documentation%20Search%20Feed/badge.svg?branch=master)](https://github.com/vespa-engine/cloud/actions?query=workflow%3A%22Vespa+Cloud+Documentation+Search+Feed%22)
 
 Refer to [vespa-engine/documentation](https://github.com/vespa-engine/documentation) for how to write documentation,
 how to serve locally and how changes are fed to
