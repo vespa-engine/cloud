@@ -62,3 +62,6 @@ messages:
   - date: "2021-03-24T17:06Z"
     message: "External certificate issuer problem has been resolved: New applications can now be deployed again."
     status: success
+  - date: "2021-04-20T17:15Z"
+    message: "Issues with console login due to unplanned downtime at our login provider. Existing deployments are not affected"
+    status: warning
