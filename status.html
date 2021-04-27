@@ -16,6 +16,27 @@ layout: page
             <p>
                 <table class="table">
                     <thead>
+                        <tr><th><p>Service</p></th><th><p>Status</p></th></tr>
+                    </thead>
+                    {%- if site.data.status.services.size > 0 -%}
+                    <tbody>
+                        {%- for service in site.data.status.services -%}
+                        {%- assign status_lc = service.status | lc -%}
+                        <tr>
+                            <td>{{ service.name }}</td>
+                            <td>
+                                {%- if status_lc == 'success' -%}
+                                <span class="d-icon d-check" style="color:#0c0"></span>
+                                {%- else -%}
+                                <span class="d-icon d-warning" style="color:#f90"></span>
+                                {%- endif -%}
+                                {{ zone.message }}
+                            </td>
+                        </tr>
+                        {%- endfor -%}
+                    </tbody>
+                    {%- endif -%}
+                    <thead>
                         <tr><th><p>Zone</p></th><th><p>Status</p></th></tr>
                     </thead>
                     {%- if site.data.status.zones.size > 0 -%}

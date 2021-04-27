@@ -1,6 +1,11 @@
 # Copyright Verizon Media. All rights reserved.
+services:
+  # List of all the services outside the zones we want to provide status for
+  - name: "controller"
+    status: success
+    message: "OK"
 zones:
-  # List all zones and status. Valid status is "success", "warning" or "danger". 
+  # List all components (zones, controller) and status. Valid status is "success", "warning" or "danger". 
   # Message should be "OK", "Partial outage", "Degraded service", "Down" or similar short string.
   - name: "dev"
     status: success
