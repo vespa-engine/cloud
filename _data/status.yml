@@ -1,7 +1,7 @@
 # Copyright Verizon Media. All rights reserved.
 services:
   # List of all the services outside the zones we want to provide status for
-  - name: "controller"
+  - name: "Console"
     status: success
     message: "OK"
 zones:
