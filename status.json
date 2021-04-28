@@ -6,6 +6,7 @@ layout: status
 {
     "last-updated": "{{ 'now' | date: '%s' }}",
     "status": {
+        "services": {{ site.data.status.services | jsonify }},
         "zones": {{ site.data.status.zones | jsonify }},
         "messages": {{ site.data.status.messages | sort: 'date' | reverse | jsonify }}
     }
