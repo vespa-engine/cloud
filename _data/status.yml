@@ -1,13 +1,18 @@
 # Copyright Verizon Media. All rights reserved.
+services:
+  # List of all the services outside the zones we want to provide status for
+  - name: "Console"
+    status: success
+    message: "OK"
 zones:
-  # List all zones and status. Valid status is "success", "warning" or "danger". 
+  # List all components (zones, controller) and status. Valid status is "success", "warning" or "danger". 
   # Message should be "OK", "Partial outage", "Degraded service", "Down" or similar short string.
   - name: "dev"
-    status: warning
-    message: "Degraded service"
+    status: success
+    message: "OK"
   - name: "perf"
-    status: warning
-    message: "Degraded service"
+    status: success
+    message: "OK"
   - name: "test"
     status: success
     message: "OK"
@@ -15,35 +20,56 @@ zones:
     status: success
     message: "OK"
   - name: "aws-us-east-1c"
-    status: warning
-    message: "Degraded service"
+    status: success
+    message: "OK"
   - name: "aws-us-west-2a"
-    status: warning
-    message: "Degraded service"
+    status: success
+    message: "OK"
   - name: "aws-eu-west-1a"
-    status: warning
-    message: "Degraded service"
+    status: success
+    message: "OK"
   - name: "aws-ap-northeast-1a"
-    status: warning
-    message: "Degraded service"
+    status: success
+    message: "OK"
 messages:
-  # Detailed operational messages displayed below status overview. The HTML page will only show 
-  # messages < 7 days old while JSON will include everything.
+  # Detailed operational messages displayed below status overview. Use ISO 8601 formatted date; time is optional.
+  # The HTML page will only show messages < 7 days old while JSON will include everything.
+  # Add messages to the end, /status and console will sort with newest first regardless
+  # NOTE: Dates must be surrounded by quotes!
   # Example:
-  # - date: 2020-02-20
+  # - date: "2020-02-20T20:00Z"
   #   message: "Issues with query serving in aws.us-east-1c - currently investigating."
-  - date: 2020-03-23
+  #   status: warning
+  # - date: "2020-02-19"
+  #   message: "All systems are go!"
+  #   status: success
+  - date: "2020-03-23"
     message: "The aws-ap-northeast-1a zone in Tokyo, JP region is now online!"
-  - date: 2020-06-26
+    status: success
+  - date: "2020-06-26"
     message: "Builds are now working correctly."
-  - date: 2020-10-21
+    status: success
+  - date: "2020-10-21"
     message: |
       A DNS issue in one AWS zone is causing intermittent failures in provisioning new nodes in test zones and aws-us-east-1c.
       Work around test zone problems by deploying without tests in the Vespa Console.
       The Vespa Team has implemented a fix, expected to roll out Monday 26. October.
-  - date: 2020-10-26
+    status: warning
+  - date: "2020-10-26"
     message: Underlying issue has been fixed and all services are back to normal.
-  - date: 2021-02-11
+    status: success
+  - date: "2021-02-11"
     message: "The aws-us-west-2a and aws-eu-west-1a zones are now online!"
-  - date: 2021-03-24
+    status: success
+  - date: "2021-03-24T12:08Z"
     message: "Issues with certificate issuer: Impact is that no new applications can be deployed to Vespa Cloud."
+    status: warning
+  - date: "2021-03-24T17:06Z"
+    message: "External certificate issuer problem has been resolved: New applications can now be deployed again."
+    status: success
+  - date: "2021-04-20T17:15Z"
+    message: "Issues with console login due to unplanned downtime at our login provider. Existing deployments are not affected"
+    status: warning
+  - date: "2021-04-21T06:37Z"
+    message: "Issues with console login have been resolved."
+    status: success
