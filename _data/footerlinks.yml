@@ -19,8 +19,8 @@
 
 - header: Community
   links:
-    - title: Gitter
-      link: https://gitter.im/vespa-engine/Lobby
+    - title: Slack
+      link: http://slack.vespa.ai
     - title: Stack Overflow
       link: https://stackoverflow.com/questions/tagged/vespa
     - title: Contributing
