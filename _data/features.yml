@@ -40,14 +40,13 @@
       <li><a href=\"en/autoscaling.html\">Optimizing hardware allocation</a> to fit the load.</li>
       </ul>
       <p>
-      This leaves room for the Vespa Cloud engineers to analyze and work to mitigate problems before they
+      This leaves the Vespa Cloud engineers to analyze and work to mitigate problems before they
       have observable consequences. And for the rare time-critical issues that do happen,
       our on-call staff is ready to assist 24/7.
       </p>
       <p>
-      Building out these capabilities is time-consuming and difficult, and manually operations
-      is expensive and error-prone. Leaving this to the Vespa Cloud to get the best results
-      at the lowest possible cost.
+      Building out these capabilities is time-consuming and difficult, and performing operations manually
+      is expensive and error-prone. Leaving this to the Vespa Cloud gives the best results at the lowest possible cost.
       </p>
       <p>
       You want to keep your applications running on the latest certified version of Vespa
