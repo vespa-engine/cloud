@@ -94,6 +94,7 @@ read more in <a href="https://docs.vespa.ai/en/elastic-vespa.html">elastic Vespa
 <b>Subelements:</b> None
 </p><p>
 <b>Attributes:</b>
+</p>
 <table class="table">
   <tr><td><b>vcpu</b></td><td>float or <a href="#autoscaling-ranges">range</a></td>
     <td>CPU, virtual threads</td></tr>
@@ -119,6 +120,14 @@ read more in <a href="https://docs.vespa.ai/en/elastic-vespa.html">elastic Vespa
       </table>
     </td></tr>
 </table>
+<p>
+  See <a href="../index-bootstrap.html">index bootstrap</a> for how to set resources in a step-by-step procedure,
+  estimating settings by feeding smaller subsets.
+  Also note that autoscaling described below is not designed for index bootstrapping,
+  as a bootstrap normally is must quicker than a cluster will autoscale.
+</p>
+
+
 
 <h2 id="autoscaling-ranges">Autoscaling ranges</h2>
 
