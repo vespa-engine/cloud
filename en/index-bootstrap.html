@@ -12,35 +12,36 @@ layout: page
 </style>
 
 <p>
-  When bootstrapping an index, there are a few decisions to make:
-</p>
-<ul class="list">
-  <li>Node resource configuration</li>
-  <li>Number of nodes needed</li>
-</ul>
-<p>
+  When bootstrapping an index, one must consider node resource configuration and number of nodes.
   The strategy is to iterate:
 </p>
+<img src="../assets/index-bootstrap.svg" width="465"/>
 <ol class="list">
-  <li>feed smaller chunks of data</li>
-  <li>evaluate</li>
-  <li>deploy new resource configurations</li>
-  <li>wait for data migration to complete</li>
-  <li>evaluate</li>
+  <li>Feed smaller chunks of data</li>
+  <li>Evaluate</li>
+  <li>Deploy new node counts / node resource configuration</li>
+  <li>Wait for data migration to complete</li>
+  <li>Evaluate</li>
 </ol>
 <p>
-  While doing this, ensure the cluster is never more than 50% full -
+  While doing this, ensure the cluster is <strong>never more than 50% full</strong> -
   this gives headroom to later increase/shrink the index
   and change schema configuration easily using automatic reindexing.
-  Remember it is very easy to downscale resources after the bootstrap,
-  and it saves a lot of time keeping the clusters within limits - hence max 50% during these steps.
+  It is easy to downscale resources after the bootstrap,
+  and it saves a lot of time keeping the clusters within limits - hence max 50%.
 </p>
+<p>
+  Review the <a href="https://docs.vespa.ai/en/overview.html">Vespa Overview</a> to understand
+  the different between <em>container</em> and <em>content</em> clusters before continuing.
+</p>
+
 
 
 <h2 id="preparations">Preparations</h2>
 <p>
-  The content node resource configuration should not have ranges for index bootstrap -
-  this is a good starting point (make sure there are no ranges like [2,3]):
+  The content node resource configuration should not have ranges for index bootstrap,
+  as autoscaling will interfere with the evaluation in this step.
+  This is a good starting point, <strong>make sure there are no ranges like [2,3]</strong>:
 </p>
 <pre>
 &lt;nodes count="2"&gt;
@@ -86,6 +87,64 @@ $ curl --cert data-plane-public-cert.pem --key data-plane-private-key.pem \
 <p>
   Once able to dump the metrics above, you are ready to bootstrap the index.
 </p>
+<p>
+  For performance, feed using the <a href="https://docs.vespa.ai/en/vespa-http-client.html">vespa-http-client</a> -
+  download the client and test it using your own endpoints and schema:
+</p>
+<pre>
+$ curl -L -o vespa-http-client-jar-with-dependencies.jar \
+    https://search.maven.org/classic/remotecontent?filepath=com/yahoo/vespa/vespa-http-client/7.391.28/vespa-http-client-7.391.28-jar-with-dependencies.jar
+
+$ cat docs.json
+{
+    "put": "id:mynamespace:music::123",
+    "fields": {
+        "album": "A Head Full of Dreams",
+        "artist": "Coldplay",
+        "year": 2015,
+        "category_scores": {
+            "cells": [
+                { "address" : { "cat" : "pop" },  "value": 1 },
+                { "address" : { "cat" : "rock" }, "value": 0.2 },
+                { "address" : { "cat" : "jazz" }, "value": 0 }
+            ]
+        }
+    }
+}
+
+$ ENDPOINT=https://vespacloud-docsearch.vespa-team.aws-us-east-1c.public.vespa.oath.cloud/
+
+$ java -jar vespa-http-client-jar-with-dependencies.jar \
+    --useTls --certificate data-plane-public-cert.pem --privateKey data-plane-private-key.pem \
+    --endpoint $ENDPOINT \
+    --file docs.json
+
+$ curl --cert data-plane-public-cert.pem --key data-plane-private-key.pem \
+    $ENDPOINT/document/v1/mynamespace/music/docid/
+{
+  "pathId": "/document/v1/mynamespace/music/docid/",
+  "documents": [
+    {
+      "id": "id:mynamespace:music::123",
+      "fields": {
+        "artist": "Coldplay",
+        "year": 2015,
+        "category_scores": {
+          "cells": [
+            { "address": { "cat": "pop" }, "value": 1 },
+            { "address": { "cat": "rock" }, "value": 0.20000000298023224 },
+            { "address": { "cat": "jazz" },"value": 0 }
+          ]
+        },
+        "album": "A Head Full of Dreams"
+      }
+    }
+  ],
+  "continuation": "AAAACAAAAAAAAAAGAAAAAAAAAAUAAAAAAAABAAAAAAEgAAAAAAAAoAAAAAAAAAAA",
+  "documentCount": 1
+}
+</pre>
+
 
 
 <h2 id="bootstrap">Bootstrap</h2>
@@ -95,23 +154,17 @@ $ curl --cert data-plane-public-cert.pem --key data-plane-private-key.pem \
   </thead>
   <tbody>
   <tr>
-    <td>1% feed</td>
+    <td><strong>1% feed</strong></td>
     <td>
       <p>
-        The purpose of this step is to feed a small step of the corpus to:
+        The purpose of this step is to feed a tiny chunk of the corpus to:
       </p>
         <ol class="list">
           <li>Estimate the memory and disk resource configuration</li>
-          <li>Estimate the number of nodes required for the 10% phase</li>
+          <li>Estimate the number of nodes required for the 10% step</li>
         </ol>
       <p>
         Feed a small data set, observing the util metrics, stop no later than 50% memory/disk util.
-        We recommend using the <a href="https://docs.vespa.ai/en/vespa-http-client.html">vespa-http-client</a>
-        for feeding.
-        <!-- ToDo: Cut'n paste example here -->
-      </p>
-      <p>
-        The memory/disk sweet spot is a little tighter on memory than disk.
         The resource configuration should be modified so disk is in the 50-80% range of memory.
         Example: if memory util is 50%, disk util should be 30-45%.
         The reasoning is that memory is a more expensive component than disk,
@@ -157,16 +210,15 @@ $ curl --cert data-plane-public-cert.pem --key data-plane-private-key.pem \
     </td>
   </tr>
   <tr>
-    <td>10% feed</td>
+    <td><strong>10% feed</strong></td>
     <td>
       <p>
         Feed the 10% corpus, still observing util metrics.
       </p>
       <p>
         As the content cluster capacity is increased,
-        it is normal to eventually be CPU bound in the container or content cluster,
-        see the <a href="https://docs.vespa.ai/en/overview.html">Vespa Overview</a>.
-        To find CPU utilization, add this to the JSON print in the "preparations" section:
+        it is normal to eventually be CPU bound in the container or content cluster.
+        To find CPU utilization, add this to the JSON print in the <a href="#preparations">preparations</a>:
 <pre>
 "cpu.util": .node.metrics[] | select(.values."cpu.util") | .values."cpu.util",
 </pre>
@@ -187,7 +239,7 @@ $ curl --cert data-plane-public-cert.pem --key data-plane-private-key.pem \
     </td>
   </tr>
   <tr>
-    <td>100% feed</td>
+    <td><strong>100% feed</strong></td>
     <td>
       <p>
         Feed the full data set, observing the metrics.
@@ -212,6 +264,21 @@ $ curl --cert data-plane-public-cert.pem --key data-plane-private-key.pem \
   </tr>
   </tbody>
 </table>
+
+
+
+<h2 id="troubleshooting">Troubleshooting</h2>
+<p>
+  Make sure you are able to feed and access documents as the example in <a href="#preparations">preparations</a>.
+  Read <a href="security-model.html">security model</a> for cert/key usage.
+</p>
+<p>
+  Feeding too much causes a <a href="https://docs.vespa.ai/en/reads-and-writes.html#feed-block">feed blocked</a> state.
+  Add a node to the full content cluster in services.xml, and wait for data migration to complete -
+  i.e. wait for the <code>vds.idealstate.merge_bucket.pending.average</code> metric to go to zero.
+  It is better to add a node than increasing node resources, as data migration is quicker.
+</p>
+
 
 
 <h2 id="further-reading">Further reading</h2>
