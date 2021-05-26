@@ -239,6 +239,9 @@ button.section-searchbar {
 .section-footer--copyright {
     align-self: flex-end;
     align-items: flex-end;
+    h6 > a {
+        font-size: inherit !important;
+    }
 }
 /* Fix anchored links being hidden under navbar */
 *[id]:before {
