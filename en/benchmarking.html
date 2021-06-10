@@ -61,14 +61,14 @@ Run a test query to test credentials - count all documents using schema _music_ 
 $ curl --cert data-plane-public-cert.pem --key data-plane-private-key.pem \
        -H "Content-Type: application/json" \
        --data '{"yql" : "select * from sources * where sddocname contains \"music\";"}' \
-       https://myapp.mytenant.aws-us-east-1c.public.vespa.oath.cloud/search/
+       https://myapp.mytenant.aws-us-east-1c.z.vespa-app.cloud/search/
 </pre>
 
 <p>Equivalently, using GET:</p>
 
 <pre>
 $ curl --cert data-plane-public-cert.pem --key data-plane-private-key.pem \
-       https://myapp.mytenant.aws-us-east-1c.public.vespa.oath.cloud/search/?yql=select%20%2A%20from%20sources%20%2A%20where%20sddocname%20contains%20%22music%22%3B%0A
+       https://myapp.mytenant.aws-us-east-1c.z.vespa-app.cloud/search/?yql=select%20%2A%20from%20sources%20%2A%20where%20sddocname%20contains%20%22music%22%3B%0A
 </pre>
 
 <p>Make sure the response is a proper Vespa query response - minimal example:</p>
@@ -84,7 +84,7 @@ $ docker run -v $(pwd):/files -w /files --entrypoint '' vespaengine/vespa \
          /usr/bin/java -jar /opt/vespa/lib/jars/vespa-http-client-jar-with-dependencies.jar \
          --useTls --caCertificates /etc/ssl/certs/ca-bundle.crt \
          --certificate data-plane-public-cert.pem --privateKey data-plane-private-key.pem \
-         --file docs.json --endpoint https://myapp.mytenant.aws-us-east-1c.public.vespa.oath.cloud
+         --file docs.json --endpoint https://myapp.mytenant.aws-us-east-1c.z.vespa-app.cloud
 </pre>
 
 <p>Expected reponse:</p>
@@ -115,7 +115,7 @@ $ docker run -v $(pwd):/files -w /files --entrypoint '' vespaengine/vespa \
     /opt/vespa/bin/vespa-fbench \
     -C data-plane-public-cert.pem -K data-plane-private-key.pem -T /etc/ssl/certs/ca-bundle.crt \
     -n 1 -q query001.txt -s 1 -c 0 \
-    myapp.mytenant.aws-us-east-1c.public.vespa.oath.cloud 443
+    myapp.mytenant.aws-us-east-1c.z.vespa-app.cloud 443
 
   Starting clients...
   Stopping clients
@@ -213,7 +213,7 @@ $ ssh -i key.pem ec2-user@ec2-xx-xxx-xxx-xxx.compute-1.amazonaws.com
               /opt/vespa/bin/vespa-fbench \
               -C data-plane-public-cert.pem -K data-plane-private-key.pem -T /etc/ssl/certs/ca-bundle.crt \
               -n 1 -q query001.txt -s 1 -c 0 \
-              myapp.mytenant.aws-us-east-1c.public.vespa.oath.cloud 443
+              myapp.mytenant.aws-us-east-1c.z.vespa-app.cloud 443
 </pre>
 </li>
 
@@ -233,7 +233,7 @@ Use <a href="https://docs.vespa.ai/en/reference/metrics.html">metrics/v2</a> to 
 </p>
 <pre>
 $ curl --cert data-plane-public-cert.pem --key data-plane-private-key.pem \
-       https://myapp.mytenant.aws-us-east-1c.dev.public.vespa.oath.cloud/metrics/v2/values | \
+       https://myapp.mytenant.aws-us-east-1c.dev.z.vespa-app.cloud/metrics/v2/values | \
        jq '.nodes[] | select(.role=="content/mysearchcluster/0/0") | .node.metrics[].values'
 </pre>
 
@@ -254,7 +254,7 @@ watching the <code>vds.idealstate.merge_bucket.pending.average_ metric</code>:
 
 <pre>
 $ while true; do curl -s --cert data-plane-public-cert.pem --key data-plane-private-key.pem \
-        https://myapp.mytenant.aws-us-east-1c.dev.public.vespa.oath.cloud/metrics/v2/values?consumer=Vespa | \
+        https://myapp.mytenant.aws-us-east-1c.dev.z.vespa-app.cloud/metrics/v2/values?consumer=Vespa | \
         jq '.nodes[] | select(.role=="content/search/0/1") | .services[] | select (.name=="vespa.distributor") | .metrics[].values."vds.idealstate.merge_bucket.pending.average"'; \
         sleep 10; done
 </pre>

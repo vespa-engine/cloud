@@ -92,7 +92,7 @@ $ mvn clean package vespa:deploy -DapiKey="$API_KEY" -Dinstance=my-instance
       The endpoint URL is printed in the <em>Install application</em> section when the deployment is successful.
       Put this in an environment variable and verify it.
   <pre data-test="exec">
-$ ENDPOINT=https://my-instance.album-rec-searcher.vespa-team.aws-us-east-1c.dev.public.vespa.oath.cloud
+$ ENDPOINT=https://my-instance.album-rec-searcher.vespa-team.aws-us-east-1c.dev.z.vespa-app.cloud
 $ curl --cert ./data-plane-public-cert.pem --key ./data-plane-private-key.pem $ENDPOINT
 </pre>
     <p>You can also <a href="security-model#using-a-browser">do this in a browser</a>.</p>
