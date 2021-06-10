@@ -20,13 +20,13 @@ See the <a href="https://docs.vespa.ai/en/monitoring.html">Vespa metrics documen
 
 <pre>
 $ curl -s --cert data-plane-public-cert.pem --key data-plane-private-key.pem \
-  'https://vespacloud-docsearch.vespa-team.aws-us-east-1c.public.vespa.oath.cloud/metrics/v2/values'
+  'https://vespacloud-docsearch.vespa-team.aws-us-east-1c.z.vespa-app.cloud/metrics/v2/values'
 </pre>
 
 <p>Example: use <a href="https://stedolan.github.io/jq/">jq</a> to extract relevant metrics:</p>
 <pre>
 $ curl -s --cert data-plane-public-cert.pem --key data-plane-private-key.pem \
-  'https://vespacloud-docsearch.vespa-team.aws-us-east-1c.public.vespa.oath.cloud/metrics/v2/values' | \
+  'https://vespacloud-docsearch.vespa-team.aws-us-east-1c.z.vespa-app.cloud/metrics/v2/values' | \
   jq -r -c '.nodes[] | .hostname as $h | select(.services[].metrics[].values."content.proton.documentdb.documents.total.last") |'\
   '.services[].metrics[] | select(.values."content.proton.documentdb.documents.total.last") |'\
   '[$h, .dimensions.documenttype, .values."content.proton.documentdb.documents.total.last"] | @tsv'
@@ -42,7 +42,7 @@ h577a.prod.aws-us-east-1c.vespa-external.aws.oath.cloud	doc	230
 
 <pre>
 $ curl -s --cert data-plane-public-cert.pem --key data-plane-private-key.pem \
-  'https://vespacloud-docsearch.vespa-team.aws-us-east-1c.public.vespa.oath.cloud/prometheus/v1/values'
+  'https://vespacloud-docsearch.vespa-team.aws-us-east-1c.z.vespa-app.cloud/prometheus/v1/values'
 </pre>
 
 

@@ -38,8 +38,8 @@ $ curl --cert data-plane-public-cert.pem --key data-plane-private-key.pem \
 
 set -x
 
-# The ENDPOINT must be a regional endpoint, do not use '*.global.public.vespa.oath.cloud/'
-ENDPOINT="https://vespacloud-docsearch.vespa-team.aws-us-east-1c.public.vespa.oath.cloud"
+# The ENDPOINT must be a regional endpoint, do not use '*.g.vespa-app.cloud/'
+ENDPOINT="https://vespacloud-docsearch.vespa-team.aws-us-east-1c.z.vespa-app.cloud"
 NAMESPACE=open
 DOCTYPE=doc
 CLUSTER=documentation
@@ -101,8 +101,8 @@ It's also possible to feed the stream of documents from one deployment directly 
 
 set -x
 
-# The ENDPOINT must be a regional endpoint, do not use '*.global.public.vespa.oath.cloud/'
-ENDPOINT="https://vespacloud-docsearch.vespa-team.aws-us-east-1c.public.vespa.oath.cloud"
+# The ENDPOINT must be a regional endpoint, do not use '*.g.vespa-app.cloud/'
+ENDPOINT="https://vespacloud-docsearch.vespa-team.aws-us-east-1c.z.vespa-app.cloud"
 NAMESPACE=open
 DOCTYPE=doc
 CLUSTER=documentation
@@ -152,8 +152,8 @@ $ gunzip -c open-doc-00001.data.gz | jq '[ .documents[] | {remove: .id} ]' | \
 
 set -x
 
-# The ENDPOINT must be a regional endpoint, do not use '*.global.public.vespa.oath.cloud/'
-ENDPOINT="https://vespacloud-docsearch.vespa-team.aws-us-east-1c.public.vespa.oath.cloud"
+# The ENDPOINT must be a regional endpoint, do not use '*.g.vespa-app.cloud/'
+ENDPOINT="https://vespacloud-docsearch.vespa-team.aws-us-east-1c.z.vespa-app.cloud"
 NAMESPACE=open
 DOCTYPE=doc
 CLUSTER=documentation
