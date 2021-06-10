@@ -54,7 +54,7 @@ layout: page
 <!-- ToDo: verify this is the correct metrics -->
 <pre>
 $ curl --cert data-plane-public-cert.pem --key data-plane-private-key.pem \
-  https://vespacloud-docsearch.vespa-team.aws-us-east-1c.public.vespa.oath.cloud/metrics/v2/values | \
+  https://vespacloud-docsearch.vespa-team.aws-us-east-1c.z.vespa-app.cloud/metrics/v2/values | \
   jq '.nodes[] | select(.role|startswith("content/documentation")) |
   {   hostname:    .hostname,
       "disk.util": .node.metrics[] | select(.values."disk.util") | .values."disk.util",
@@ -112,7 +112,7 @@ $ cat docs.json
     }
 }
 
-$ ENDPOINT=https://vespacloud-docsearch.vespa-team.aws-us-east-1c.public.vespa.oath.cloud/
+$ ENDPOINT=https://vespacloud-docsearch.vespa-team.aws-us-east-1c.z.vespa-app.cloud/
 
 $ java -jar vespa-http-client-jar-with-dependencies.jar \
     --useTls --certificate data-plane-public-cert.pem --privateKey data-plane-private-key.pem \
@@ -193,7 +193,7 @@ $ curl --cert data-plane-public-cert.pem --key data-plane-private-key.pem \
       </p>
 <pre>
 $ curl --cert data-plane-public-cert.pem --key data-plane-private-key.pem \
-  https://vespacloud-docsearch.vespa-team.aws-us-east-1c.public.vespa.oath.cloud/metrics/v2/values?consumer=Vespa | \
+  https://vespacloud-docsearch.vespa-team.aws-us-east-1c.z.vespa-app.cloud/metrics/v2/values?consumer=Vespa | \
   jq '.nodes[] | select(.role|startswith("content/documentation")) |
     .services[] | select (.name=="vespa.distributor") |
       .metrics[].values."vds.idealstate.merge_bucket.pending.average"'
