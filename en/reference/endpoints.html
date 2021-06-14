@@ -1,0 +1,105 @@
+---
+# Copyright Verizon Media. All rights reserved.
+title: "Endpoints: Vespa Cloud"
+layout: page
+---
+
+<p>
+  By default all your Vespa application deployments will have an endpoint specific
+  for the zone they are deployed in.  In addition you can configure one
+  or more global endpoint for the services in your application.  This allows your
+  application to support cross-zone failover.
+</p>
+
+<table class="table">
+  <tr>
+    <td><code>*.z.vespa-app.cloud</code></td>
+    <td>The endpoint for a deployment running in Zone</td>
+  </tr>
+  <tr>
+    <td><code>*.g.vespa-app.cloud</code></td>
+    <td>A global endpoint as defined in <a href="/en/reference/deployment.html">deployment.xml</a></td>
+  </tr>
+</table>
+
+<h2>Zone endpoint</h2>
+<p>
+  A zone endpoint has the format <code>{service}.{instance}.{application}.{tenant}.{zone}.z.vespa-app.cloud</code>.
+</p>
+
+<table class="table">
+  <tr>
+    <td><code>service</code></td>
+    <td class="is-top">Optional</td>
+    <td>
+      The name of the Vespa service as defined in services.xml <a href="https://docs.vespa.ai/documentation/reference/services-container.html">container id</a>
+      attribute.  Can be omitted if the <code>id</code> is <code>default</code>.
+    </td>
+  </tr>
+  <tr>
+    <td><code>instance</code></td>
+    <td>Optional</td>
+    <td>
+      The name of the Vespa application instance as defined in <a href="/en/reference/deployment">deployment.xml</a>.  Can be omitted if the instance name is <code>default</code>.
+    </td>
+  </tr>
+  <tr>
+    <td><code>application</code></td>
+    <td>Mandatory</td>
+    <td>
+      The name of your application.
+    </td>
+  </tr>
+  <tr>
+    <td><code>tenant</code></td>
+    <td>Mandatory</td>
+    <td>The name of your tenant.</td>
+  </tr>
+  <tr>
+    <td><code>zone</code></td>
+    <td>Mandatory</td>
+    <td>The zone you deployed your application in, as defined in <a href="/en/reference/deployment">deployment.xml</a>.</td>
+  </tr>
+</table>
+
+<h2>Global endpoint</h2>
+<p>
+  A global endpoint is an endpoint that can use all your deployments regardless of the zone which it is in.  Using a global endpoint
+  will allow for BCP support for your Vespa application.
+</p>
+<p>
+  A global endpoint has the format <code>{name}.{instance}.{application}.{tenant}.g.vespa-app.cloud</code>
+</p>
+<p class="alert is-inline has-bg-status-warning">
+  <b>Warning!</b> Do not use global endpoints for feeding documents.  Requests are sent to only one zone.
+</p>
+
+<table class="table">
+  <tr>
+    <td><code>name</code></td>
+    <td>Mandatory</td>
+    <td>
+      The name of the Vespa service as defined in services.xml <a href="https://docs.vespa.ai/documentation/reference/services-container.html">container id</a>
+      attribute.  Can be omitted if the <code>id</code> is <code>default</code>.
+    </td>
+  </tr>
+  <tr>
+    <td><code>instance</code></td>
+    <td>Optional</td>
+    <td>
+      The name of the Vespa application instance as defined in <a href="/en/reference/deployment">deployment.xml</a>.  Can be omitted if the instance name is <code>default</code>.
+    </td>
+  </tr>
+  <tr>
+    <td><code>application</code></td>
+    <td>Mandatory</td>
+    <td>
+      The name of your application.
+    </td>
+  </tr>
+  <tr>
+    <td><code>tenant</code></td>
+    <td>Mandatory</td>
+    <td>The name of your tenant.</td>
+  </tr>
+</table>
