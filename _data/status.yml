@@ -73,3 +73,6 @@ messages:
   - date: "2021-04-21T06:37Z"
     message: "Issues with console login have been resolved."
     status: success
+  - date: "2021-06-14T11:48Z"
+    message: "Reduced reliability on TLS certificate generation. Deployments of new applications may time out. Existing applications not affected."
+    status: warning
