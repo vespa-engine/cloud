@@ -76,3 +76,6 @@ messages:
   - date: "2021-06-14T11:48Z"
     message: "Reduced reliability on TLS certificate generation. Deployments of new applications may time out. Existing applications not affected."
     status: warning
+  - date: "2021-06-15T09:06Z"
+    message: "TLS certificate generation has recovered. Deployments of new applications now work as normal."
+    status: success
