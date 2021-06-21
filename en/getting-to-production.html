@@ -103,7 +103,7 @@ redirect_from: /getting-to-production.html
 <li>
   <p>Add the Vespa Cloud compile version to the application package:</p>
 <pre>
-$ mvn vespa:compileVersion -DapiKeyFile=$HOME/Downloads/TENANTNAME.pem
+$ mvn vespa:compileVersion -DapiKeyFile=$HOME/Downloads/USER.TENANTNAME.priv.pem
 </pre>
 </li>
 
@@ -117,7 +117,7 @@ $ mvn package -Dvespa.compile.version="$(cat target/vespa.compile.version)"
 <li>
   <p>Submit the application package to Vespa Cloud for deployment:</p>
 <pre>
-$ mvn vespa:submit -DapiKeyFile=$HOME/Downloads/TENANTNAME.pem
+$ mvn vespa:submit -DapiKeyFile=$HOME/Downloads/USER.TENANTNAME.priv.pem
 </pre>
 
   <p>
