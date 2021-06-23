@@ -2,8 +2,8 @@
 services:
   # List of all the services outside the zones we want to provide status for
   - name: "Console"
-    status: success
-    message: "OK"
+    status: warning
+    message: "The certificate for the console has expired, we will update it within a few hours"
 zones:
   # List all components (zones, controller) and status. Valid status is "success", "warning" or "danger". 
   # Message should be "OK", "Partial outage", "Degraded service", "Down" or similar short string.
@@ -43,6 +43,9 @@ messages:
   # - date: "2020-02-19"
   #   message: "All systems are go!"
   #   status: success
+  - date: "2020-06-23"
+    message: "The certificate for the console has expired, we will update it within a few hours"
+    status: warning  
   - date: "2020-03-23"
     message: "The aws-ap-northeast-1a zone in Tokyo, JP region is now online!"
     status: success
