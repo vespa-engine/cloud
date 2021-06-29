@@ -15,7 +15,7 @@ placed alongside services.xml in the application source.
   Find status, access logs, and trigger and pause jobs in the <a href="http://console.vespa.ai">console</a>.
 </p>
 <p>
-  The deployment process, including tests is reused when the Vespa Cloud upgrades your application.
+  The deployment process, including tests is used when the Vespa Cloud upgrades the application.
   Control at what times versions and application revisions are allowed to deploy in deployment.xml.
 </p>
 <p>
@@ -37,7 +37,8 @@ placed alongside services.xml in the application source.
       Application packages are <code>submitted</code> to <code>prod</code> zones with orchestration
       defined in <a href="reference/deployment.html">deployment.xml</a>.
       A submit will invoke tests in <code>test</code> and <code>staging</code> environments implicitly,
-      the application package is hence required to have minimum one system- and staging-test.
+      it is not needed to configure these in <em>deployment.xml</em>.
+      The application package is hence required to have minimum one system- and staging-test.
     </td>
   </tr>
 </table>
@@ -96,24 +97,12 @@ $ (cd src/main/application && zip -r ../../../application.zip .)
   Use <a href="#vespa-compile-version">vespa:compileVersion</a> to find the lowest version used in Vespa Cloud,
   build using this version and submit
   using the <a href="reference/vespa-cloud-api.html#submission-properties">Vespa maven plugin</a>
-  to the Vespa Cloud production environment -
-  example <em>cd.screwdriver.yaml</em> excerpt:
+  to the Vespa Cloud production environment - example:
 </p>
 <pre>
-    - set-compile-version: |
-        $MAVEN_BUILD clean vespa:compileVersion
-        compileVersion="$(cat target/vespa.compile.version)"
-    - package: $MAVEN_BUILD -P fat-test-application -Dvespa.compile.version="$compileVersion" package
-    - submit: |
-        if [[ -z "$SD_PULL_REQUEST" ]]; then
-            $MAVEN_BUILD
-              -Drepository="$GIT_URL"
-              -Dbranch="$GIT_BRANCH"
-              -Dcommit="$SD_BUILD_SHA"
-              -DprojectId="$SD_PIPELINE_ID"
-              -DauthorEmail="$(git log -1 --no-merges --format=%aE)"
-              vespa:submit
-        fi
+$ mvn clean vespa:compileVersion
+$ mvn -P fat-test-application -Dvespa.compile.version="$(cat target/vespa.compile.version)" package
+$ mvn -DsourceUrl="$GIT_URL" -DauthorEmail="$AUTHOR_EMAIL" vespa:submit
 </pre>
 <p>
   Note the optional arguments to <code>vespa:submit</code>,
