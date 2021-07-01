@@ -106,7 +106,12 @@ read more in <a href="https://docs.vespa.ai/en/elastic-vespa.html">elastic Vespa
     <td>The type of storage to use. This is useful to specify local storage when network storage provides insufficient
       io operations or too noisy io performance.
       <table class="table">
-        <tr><td><code><b>local</b></code></td><td>Node-local storage is required.</td></tr>
+        <tr><td><code><b>local</b></code></td>
+          <td>Node-local storage is required.
+            Note that node-local storage has size constraints, depending on vcpu and memory resources -
+            <code>No allocation possible</code> is found in the Deployment-view output when there is a mismatch.
+            To remedy, increase disk size using the hints from <code>Nearest allowed node resources</code>
+            in the deploy output.</td></tr>
         <tr><td><code><b>remote</b></code></td><td>Network storage must be used.</td></tr>
         <tr><td><code><b>any</b></code> (default)</td><td>Both remote or local storage may be used.</td></tr>
       </table>
