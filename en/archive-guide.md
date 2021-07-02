@@ -1,75 +1,78 @@
-# access-log-lambda
+---
+# Copyright Verizon Media. All rights reserved.
+title: Archive guide
+layout: page
+---
 
-## Steps
+Vespa Cloud exports log data to S3 buckets -
+use this guide to list, download or process this data.
 
-**Clone repository**
+![Archive view](../assets/archive-screen.png)
 
-<pre>
-$ git clone https://github.com/chunnoo/AccessLogLambda.git
-$ cd AccessLogLambda
-</pre>
+Assign roles and policies in the console.
 
+Refer to [access-log-lambda](https://github.com/vespa-engine/sample-apps/blob/master/vespa-cloud/vespa-documentation-search/access-log-lambda/README.md)
+for how to install and use `aws cli`, which can be used to download logs as in the illustration,
+or e.g. list objects:
 
-**Dependencies**
+```
+$ aws s3 ls --profile=archive --request-payer=requester \
+  s3://vespa-cloud-data-prod.aws-us-east-1c-9eb633/vespa-team/
 
-<pre>
-$ brew install awscli
-$ brew install nvm
-$ nvm install 14
-$ nvm use 14
-$ npm install
-</pre>
+        PRE album-rec-searcher/
+        PRE cord-19/
+        PRE vespacloud-docsearch/
+```
 
+In the example above, the S3 bucket name is _vespa-cloud-data-prod.aws-us-east-1c-9eb633_
+and the tenant name is _vespa-team_ (for that particular prod zone).
+Archiving is per tenant, and a log file is normally stored with a key like:
 
-**Configure AWS**
+    /vespa-team/vespacloud-docsearch/default/h2946a/logs/access/JsonAccessLog.default.20210629100001.zst
 
-<pre>
-$ aws configure
-</pre>
-See <https://docs.aws.amazon.com/IAM/latest/UserGuide/getting-started_create-admin-group.html> for description of how to set up relevant keys.
+The URI to this object is hence:
 
+    s3://vespa-cloud-data-prod.aws-us-east-1c-9eb633/vespa-team/vespacloud-docsearch/default/h2946a/logs/access/JsonAccessLog.default.20210629100001.zst
 
-**Create parameter for vespa private key**
-
-In AWS System Manager - Parameter Store, create a new parameter named **AccessLogPrivateKey** with the value of the private key to the Vespa application where queries should be fed.
-
-
-**Set endpoint and public certificate**
-
-In *index.js*, set **vespaHostname** to the endpoint of the Vespa application where queries should be fed and set *publicCert* to the public certificate of the same Vespa application.
+Objects are exported once generated - access log files are compressed and exported per hour.
 
 
-**Create lambda function**
 
-Create a lambda function named **access-log-lambda**
+## Lambda processing
 
+When processing logs using a lambda function,
+write a minimal function to list objects,
+to sort out access / keys / roles:
 
-**Role permissions**
+```
+const aws = require("aws-sdk");
+const s3 = new aws.S3({ apiVersion: "2006-03-01" });
 
-Give the lambda functions role the permissions **AmazonS3ReadOnlyAccess** and **AmazonSSMReadOnlyAccess**
+const findRelevantKeys = ({ Bucket, Prefix }) => {
+  console.log(`Finding relevant keys in bucket ${Bucket}`);
+  return s3
+    .listObjectsV2({ Bucket: Bucket, Prefix: Prefix, RequestPayer: "requester" })
+    .promise()
+    .then((res) =>
+      res.Contents.map((content) => ({ Bucket, Key: content.Key }))
+    )
+    .catch((err) => Error(err));
+};
 
+exports.handler = async (event, context) => {
+  const options = { Bucket: "vespa-cloud-data-prod.aws-us-east-1c-9eb633", Prefix: "MY-TENANT-NAME/" };
+  return findRelevantKeys(options)
+    .then((res) => {
+      console.log("response: ", res);
+      return { statusCode: 200 };
+    })
+    .catch((err) => ({ statusCode: 500, message: err }));
+};
+```
 
-**Setup trigger**
+Note: Always set `RequestPayer: "requester"` to access the objects -
+transfer cost is assigned to the requester.
 
-Setup a trigger on the S3 Bucket with access logs with the event type **ObjectCreatedByPut**
-
-
-**Configure lambda**
-
-For running the lambda with the example access log, the lambda should be configured to use 256MB of memory and have an execution time of 30 seconds. The execution time should probably be increased when running on production logs.
-
-
-**Zip**
-
-<pre>
-$ zip -r function.zip index.js node_modules/
-</pre>
-
-
-**Deploy**
-
-<pre>
-$ aws lambda update-function-code --function-name access-log-lambda --zip-file fileb://function.zip
-</pre>
-
-Alternatively upload manually from the AWS Console.
+Once the above lists the log files from S3,
+review [access-log-lambda](https://github.com/vespa-engine/sample-apps/blob/master/vespa-cloud/vespa-documentation-search/access-log-lambda/README.md)
+for how to write a function to decompress and handle the log data.
