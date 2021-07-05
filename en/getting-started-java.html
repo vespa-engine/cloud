@@ -59,9 +59,7 @@ $ cp data-plane-public-cert.pem src/main/application/security/clients.pem
     <p>
       In the console <a href="http://console.vespa.ai">console.vespa.ai</a>,
       choose tenant and click <em>Keys</em> to generate and save the <em>user API key</em>.
-      The key is generated in the browser and appears as two file downloads; the public
-      and the private key.  The files are named <code>USER.TENANTNAME.pub.pem</code> for the
-      public key and <code>USER.TENANTNAME.priv.pem</code> for the private key.
+      The key is saved to <code>$HOME/Downloads/USER.TENANTNAME.pem</code>.
     </p>
   </li>
 
@@ -78,7 +76,7 @@ $ cp data-plane-public-cert.pem src/main/application/security/clients.pem
     <p>
       This deploys an instance (with a name you choose here) of the application to the <code>dev</code> zone:
 <pre>
-$ mvn package vespa:deploy -DapiKeyFile=$HOME/Downloads/USER.TENANTNAME.priv.pem -Dinstance=my-instance
+$ mvn package vespa:deploy -DapiKeyFile=$HOME/Downloads/USER.TENANTNAME.pem -Dinstance=my-instance
 </pre>
 <!-- Version of the above for automatic testing -->    
 <pre data-test="exec" style="display:none">
