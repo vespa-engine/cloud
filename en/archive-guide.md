@@ -34,7 +34,7 @@ The URI to this object is hence:
 
     s3://vespa-cloud-data-prod.aws-us-east-1c-9eb633/vespa-team/vespacloud-docsearch/default/h2946a/logs/access/JsonAccessLog.default.20210629100001.zst
 
-Objects are exported once generated - access log files are compressed and exported per hour.
+Objects are exported once generated - access log files are compressed and exported at least once per hour.
 
 
 
