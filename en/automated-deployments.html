@@ -360,37 +360,42 @@ as those will run only over the test data in the separate instance.
 
 
 
-<h2 id="deleting-an-application">Deleting an application</h2>
+<h2 id="deleting-an-instance-application">Deleting an instance / application</h2>
 <p>
-  To delete an application, remove all production instances first.
+  To delete an application, including all instances, use the console at
+  <em>https://console.vespa.oath.cloud/tenant/tenant-name/application/app-name/prod/deploy</em>.
+  To remove instances (i.e. prod zone deployments) of an application,
+  modify <em>deployment.xml</em> and <em>validation-overrides.xml</em>.
 </p>
 <p>
   <strong>WARNING!</strong> Following these steps will remove production instances and all data within them.
   Data will be unrecoverable.
 </p>
 <ol class="howto">
-
   <li>
     <p>
-      Remove all instances in <a href="reference/deployment#instance">deployment.xml</a>
+      Remove <code>&lt;prod&gt;</code> instances in <a href="reference/deployment#instance">deployment.xml</a>:
     </p>
-    <pre>
-&lt;deployment version="1.0" /&gt;
+<pre>
+&lt;deployment version="1.0"&gt;
+  &lt;prod&gt;
+    &lt;region active="true"&gt;aws-us-east-1c&lt;/region&gt;
+    &lt;test&gt;aws-us-east-1c&lt;/test&gt;
+  &lt;/prod&gt;
+&lt;/deployment&gt;
 </pre>
   </li>
-
   <li>
     <p>
       Add or modify <a href="https://docs.vespa.ai/en/reference/validation-overrides.html">validation-overrides.xml</a>,
-      allowing Vespa Cloud to remove production deployments:
-    <pre>
+      allowing Vespa Cloud to remove production instances:
+<pre>
 &lt;validation-overrides&gt;
-    &lt;allow until="2021-03-01" comment="Removing all deployments">deployment-removal&lt;/allow&gt;
+    &lt;allow until="2021-03-01" comment="Remove instance">deployment-removal&lt;/allow&gt;
 &lt;/validation-overrides&gt;
 </pre>
   </li>
-
-  <li><p>Trigger a build and submit of the application package.</p></li>
+  <li><p>Build and submit the application package.</p></li>
   <li><p>Delete the application in the <a href="http://console.vespa.ai">console</a>.</p></li>
-  <li><p>Remove your CI job that builds and submits application changes.</p></li>
+  <li><p>Remove the CI job that builds and submits application packages.</p></li>
 </ol>
